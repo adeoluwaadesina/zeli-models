@@ -21,8 +21,6 @@ import {
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 
-const HEIGHT_RE = /^\d{1,2}'\d{1,2}"?$/;
-
 type ImageItem =
   | { id: string; kind: "existing"; url: string }
   | { id: string; kind: "new"; file: File; previewUrl: string };
@@ -113,6 +111,12 @@ function SortableRow({
   );
 }
 
+function parseHeight(height: string): { feet: string; inches: string } {
+  const m = /^(\d{1,2})'(\d{1,2})/.exec(height.trim());
+  if (!m) return { feet: "", inches: "" };
+  return { feet: m[1] ?? "", inches: m[2] ?? "" };
+}
+
 export function AdminClient({ initial }: { initial: ZeliModel[] }) {
   const [models, setModels] = React.useState<ZeliModel[]>(initial);
   const [status, setStatus] = React.useState<string>("");
@@ -128,6 +132,8 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
   });
   const [, setNewFiles] = React.useState<File[]>([]);
   const [heightError, setHeightError] = React.useState<string>("");
+  const [heightFeet, setHeightFeet] = React.useState("");
+  const [heightInches, setHeightInches] = React.useState("");
   const [imageItems, setImageItems] = React.useState<ImageItem[]>([]);
 
   const cleanupNewPreviews = React.useCallback(() => {
@@ -176,6 +182,8 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
     setDraft({ id: "", name: "", height: "", bio: "", images: [] });
     setNewFiles([]);
     setImageItems([]);
+    setHeightFeet("");
+    setHeightInches("");
     setEditorOpen(true);
   };
 
@@ -184,6 +192,9 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
     setDraft({ ...m, images: [...m.images] });
     setNewFiles([]);
     setImageItems(m.images.slice(0, 5).map((url, i) => ({ id: `ex-${i}-${url}`, kind: "existing", url })));
+    const parsed = parseHeight(m.height);
+    setHeightFeet(parsed.feet);
+    setHeightInches(parsed.inches);
     setEditorOpen(true);
   };
 
@@ -193,6 +204,8 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
     setNewFiles([]);
     setImageItems([]);
     setHeightError("");
+    setHeightFeet("");
+    setHeightInches("");
   };
 
   const onPickFiles = (files: FileList | null) => {
@@ -243,15 +256,24 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
 
   const saveDraft = async () => {
     const name = draft.name.trim();
-    const height = draft.height.trim();
+    const feet = heightFeet.trim();
+    const inches = heightInches.trim();
+    const height = `${feet}'${inches}"`;
     const bio = draft.bio.trim();
     if (!name || !height || !bio) {
       setStatus("Please fill name, height, and bio.");
       return;
     }
 
-    if (!HEIGHT_RE.test(height)) {
-      setHeightError(`Use format like 5'10 or 5'10"`);
+    if (!/^\d{1,2}$/.test(feet) || !/^\d{1,2}$/.test(inches)) {
+      setHeightError("Enter feet and inches as numbers.");
+      setStatus("Invalid height.");
+      return;
+    }
+
+    const inchesNum = Number(inches);
+    if (Number.isNaN(inchesNum) || inchesNum < 0 || inchesNum > 11) {
+      setHeightError('Inches must be between 0 and 11.');
       setStatus("Invalid height format.");
       return;
     }
@@ -458,25 +480,37 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
                   <label className={styles.label} htmlFor="m-height">
                     Height
                   </label>
-                  <input
-                    id="m-height"
-                    className={styles.input}
-                    value={draft.height}
-                    onChange={(e) =>
-                      setDraft((d) => {
-                        const next = e.target.value
-                          .replace(/[^\d'"]/g, "")
-                          .slice(0, 6);
+                  <div className={styles.heightRow}>
+                    <input
+                      id="m-height"
+                      className={`${styles.input} ${styles.heightPart}`}
+                      value={heightFeet}
+                      onChange={(e) => {
                         setHeightError("");
-                        return { ...d, height: next };
-                      })
-                    }
-                    placeholder={`e.g. 5'10"`}
-                    inputMode="numeric"
-                    pattern="\\d{1,2}'\\d{1,2}"
-                    maxLength={6}
-                    aria-invalid={heightError ? "true" : "false"}
-                  />
+                        setHeightFeet(e.target.value.replace(/\D/g, "").slice(0, 2));
+                      }}
+                      placeholder="ft"
+                      inputMode="numeric"
+                      aria-label="Height feet"
+                    />
+                    <span className={styles.heightSep} aria-hidden="true">
+                      '
+                    </span>
+                    <input
+                      className={`${styles.input} ${styles.heightPart}`}
+                      value={heightInches}
+                      onChange={(e) => {
+                        setHeightError("");
+                        setHeightInches(e.target.value.replace(/\D/g, "").slice(0, 2));
+                      }}
+                      placeholder="in"
+                      inputMode="numeric"
+                      aria-label="Height inches"
+                    />
+                    <span className={styles.heightSep} aria-hidden="true">
+                      "
+                    </span>
+                  </div>
                   {heightError ? (
                     <div className={styles.meta} role="alert">
                       {heightError}
