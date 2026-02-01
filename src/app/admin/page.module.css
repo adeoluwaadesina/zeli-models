@@ -1,0 +1,91 @@
+.page {
+  min-height: 100vh;
+  background: var(--zeli-bg);
+}
+
+.top {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(42, 26, 20, 0.06);
+  padding: 22px 0;
+}
+
+.title {
+  font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  margin: 0;
+}
+
+.subtitle {
+  margin: 8px 0 0 0;
+  color: rgba(42, 26, 20, 0.65);
+  max-width: 72ch;
+  line-height: 1.6;
+}
+
+.card {
+  margin-top: 26px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+  padding: 18px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(42, 26, 20, 0.08);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.name {
+  font-weight: 650;
+}
+
+.meta {
+  margin-top: 6px;
+  font-size: 13px;
+  color: rgba(42, 26, 20, 0.6);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  border: 1px solid rgba(42, 26, 20, 0.18);
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn:hover {
+  background: rgba(42, 26, 20, 0.04);
+}
+
+.btnPrimary {
+  background: rgba(26, 14, 10, 0.92);
+  color: rgba(255, 255, 255, 0.92);
+  border-color: rgba(26, 14, 10, 0.92);
+}
+
+.btnPrimary:hover {
+  background: rgba(26, 14, 10, 0.98);
+}
+
+.toolbar {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+

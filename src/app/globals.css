@@ -1,0 +1,66 @@
+:root {
+  --zeli-bg: #f6f0ea;
+  --zeli-surface: #ffffff;
+  --zeli-ink: #2a1a14;
+  --zeli-muted: rgba(42, 26, 20, 0.7);
+  --zeli-line: rgba(42, 26, 20, 0.18);
+
+  --zeli-hero-1: #120806;
+  --zeli-hero-2: #2b1510;
+  --zeli-hero-3: #0f0706;
+
+  --zeli-accent: #8b6f55;
+  --zeli-card-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+
+  --container: 1120px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--zeli-bg);
+  color: var(--zeli-ink);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.hairline {
+  width: 54px;
+  height: 2px;
+  background: var(--zeli-accent);
+  opacity: 0.9;
+  border-radius: 999px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+

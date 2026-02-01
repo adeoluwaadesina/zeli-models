@@ -1,0 +1,60 @@
+import * as React from "react";
+
+type IconProps = React.SVGProps<SVGSVGElement> & { title?: string };
+
+export function IconChevronLeft(props: IconProps) {
+  const { title = "Previous", ...rest } = props;
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...rest}>
+      <title>{title}</title>
+      <path
+        fill="currentColor"
+        d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+      />
+    </svg>
+  );
+}
+
+export function IconChevronRight(props: IconProps) {
+  const { title = "Next", ...rest } = props;
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...rest}>
+      <title>{title}</title>
+      <path
+        fill="currentColor"
+        d="m8.59 16.59 1.41 1.41 6-6-6-6-1.41 1.41L13.17 12z"
+      />
+    </svg>
+  );
+}
+
+export function IconPerson(props: IconProps) {
+  const { title = "Model", ...rest } = props;
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...rest}>
+      <title>{title}</title>
+      <path
+        fill="currentColor"
+        d="M12 12a4.5 4.5 0 1 0-4.5-4.5A4.5 4.5 0 0 0 12 12Zm0 2.25c-4.05 0-7.5 2.04-7.5 4.5V21h15v-2.25c0-2.46-3.45-4.5-7.5-4.5Z"
+      />
+    </svg>
+  );
+}
+
+export function IconWhatsapp(props: IconProps) {
+  const { title = "WhatsApp", ...rest } = props;
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false" {...rest}>
+      <title>{title}</title>
+      <path
+        fill="currentColor"
+        d="M19.11 17.9c-.25-.13-1.5-.74-1.73-.82-.23-.08-.4-.13-.57.13-.17.25-.66.82-.8.99-.15.17-.29.19-.54.06-.25-.13-1.05-.38-2-.1-1.9-.56-3.17-2.77-3.27-2.96-.1-.19 0-.29.11-.41.1-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.13-.57-1.37-.78-1.88-.2-.48-.4-.42-.57-.43h-.49c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.7 4.29 3.79.6.26 1.07.42 1.43.54.6.19 1.15.16 1.58.1.48-.08 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.1-.23-.16-.48-.29Z"
+      />
+      <path
+        fill="currentColor"
+        d="M16 3C9.37 3 4 8.3 4 14.85c0 2.3.69 4.43 1.87 6.22L4 29l8.14-1.73A12.2 12.2 0 0 0 16 26.7c6.63 0 12-5.3 12-11.85C28 8.3 22.63 3 16 3Zm0 21.58c-1.3 0-2.58-.25-3.76-.74l-.27-.11-4.83 1.03 1-4.7-.17-.27a9.7 9.7 0 0 1-1.56-5.2C6.4 9.7 10.74 5.4 16 5.4s9.6 4.3 9.6 9.18-4.34 9.99-9.6 9.99Z"
+      />
+    </svg>
+  );
+}
+

@@ -1,0 +1,54 @@
+.header {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(42, 26, 20, 0.06);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 0;
+}
+
+.brand {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1;
+}
+
+.brandTop {
+  font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  font-size: 22px;
+}
+
+.brandBottom {
+  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 3.2px;
+  font-size: 11px;
+  opacity: 0.62;
+}
+
+.nav {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+.navLink {
+  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  letter-spacing: 2.6px;
+  text-transform: uppercase;
+  opacity: 0.72;
+}
+
+.navLink:hover {
+  opacity: 1;
+}
+

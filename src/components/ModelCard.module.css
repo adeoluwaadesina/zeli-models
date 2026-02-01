@@ -1,0 +1,54 @@
+.card {
+  background: var(--zeli-surface);
+  border-radius: 0px;
+  box-shadow: var(--zeli-card-shadow);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.mediaWrap {
+  padding: 22px 22px 0 22px;
+}
+
+.body {
+  padding: 18px 22px 22px 22px;
+}
+
+.name {
+  font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: 0.2px;
+  margin: 0;
+}
+
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+  color: rgba(42, 26, 20, 0.55);
+  font-size: 14px;
+}
+
+.metaIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0.9;
+}
+
+.divider {
+  width: 34px;
+  height: 2px;
+  background: rgba(42, 26, 20, 0.18);
+  margin: 14px 0 14px 0;
+}
+
+.bio {
+  margin: 0;
+  color: rgba(42, 26, 20, 0.62);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
