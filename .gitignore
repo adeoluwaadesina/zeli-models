@@ -15,8 +15,9 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# local env files
+# local env files (secrets)
 .env
+.env.local
 .env.*.local
 
 # OS / editor
@@ -24,3 +25,5 @@ pnpm-debug.log*
 Thumbs.db
 .vscode
 
+# uploaded media (local dev only)
+public/uploads

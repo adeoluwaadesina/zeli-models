@@ -34,3 +34,13 @@ Next step is wiring this to authentication + persistence (database) so the busin
 - Upload 5 images per model
 - Reorder the grid (what shows at the top)
 
+### Admin login
+
+Admin access is protected.
+
+- Set credentials in `.env.local`:
+  - `ADMIN_USERNAME`
+  - `ADMIN_PASSWORD`
+
+See `.env.example` for the keys.
+

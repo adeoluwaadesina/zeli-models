@@ -8,6 +8,7 @@
   grid-template-columns: 1fr;
   gap: 12px;
   margin-bottom: 40px;
+  justify-items: center;
 }
 
 .title {
@@ -18,7 +19,7 @@
 }
 
 .titleCenter {
-  text-align: left;
+  text-align: center;
 }
 
 .hairlineWrap {
@@ -42,9 +43,13 @@
   .section {
     padding: 58px 0 70px;
   }
+  .section :global(.container) {
+    padding: 0 16px;
+  }
   .grid {
     grid-template-columns: 1fr;
     gap: 26px;
+    justify-items: center;
   }
 }
 

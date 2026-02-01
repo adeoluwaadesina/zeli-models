@@ -1,10 +1,53 @@
 .frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  --gap: 12px;
+  /* Slide size tuned to match Canva cards (2.x slides visible) */
+  --tile: 170px;
+  height: var(--tile);
   overflow: hidden;
+  background: transparent;
+  border-radius: 0px;
+}
+
+.viewport {
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-inline: calc((100% - var(--tile)) / 2);
+  cursor: grab;
+  user-select: none;
+  scrollbar-width: none; /* Firefox */
+}
+
+.viewport::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.dragging {
+  cursor: grabbing;
+}
+
+.track {
+  height: 100%;
+  display: flex;
+  gap: var(--gap);
+  align-items: stretch;
+}
+
+.slide {
+  position: relative;
+  width: var(--tile);
+  height: var(--tile);
+  flex: 0 0 var(--tile);
   background: rgba(42, 26, 20, 0.06);
-  border-radius: 6px;
+  overflow: hidden;
+  border-radius: 0px;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
 }
 
 .image {
@@ -37,37 +80,15 @@
 }
 
 .left {
-  left: 14px;
+  left: 12px;
 }
 
 .right {
-  right: 14px;
+  right: 12px;
 }
 
 .icon {
   width: 22px;
   height: 22px;
-}
-
-.dots {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 12px;
-  display: flex;
-  gap: 7px;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.dotActive {
-  background: rgba(255, 255, 255, 0.85);
 }
 

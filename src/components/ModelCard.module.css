@@ -52,3 +52,11 @@
   line-height: 1.55;
 }
 
+@media (max-width: 640px) {
+  /* Match Canva mobile: centered floating cards */
+  .card {
+    width: 100%;
+    max-width: 520px;
+  }
+}
+

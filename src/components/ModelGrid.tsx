@@ -1,9 +1,10 @@
 import * as React from "react";
-import { MODELS } from "@/data/models";
+import { readModels } from "@/lib/modelsStore";
 import { ModelCard } from "./ModelCard";
 import styles from "./ModelGrid.module.css";
 
-export function ModelGrid() {
+export async function ModelGrid() {
+  const models = await readModels();
   return (
     <section className={styles.section} id="portfolio">
       <div className="container">
@@ -17,7 +18,7 @@ export function ModelGrid() {
         </div>
 
         <div className={styles.grid}>
-          {MODELS.map((m) => (
+          {models.map((m) => (
             <ModelCard key={m.id} model={m} />
           ))}
         </div>

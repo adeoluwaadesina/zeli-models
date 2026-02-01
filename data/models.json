@@ -1,0 +1,81 @@
+{
+  "models": [
+    {
+      "id": "adeolu",
+      "name": "Adeolu",
+      "height": "6'7",
+      "bio": "I just dey waka",
+      "images": [
+        "/uploads/adeolu/img-1769913613438-1.jpg",
+        "/uploads/adeolu/img-1769913613438-2.jpg",
+        "/uploads/adeolu/img-1769913613438-3.jpg",
+        "/uploads/adeolu/img-1769914378999-1.jpg"
+      ]
+    },
+    {
+      "id": "sophia-chen",
+      "name": "Sophia Chen",
+      "height": "5'9\"",
+      "bio": "Versatile editorial model. Known for strong portfolio and professional demeanor.",
+      "images": [
+        "/work/work-1.svg",
+        "/work/work-2.svg",
+        "/work/work-3.svg",
+        "/work/work-4.svg",
+        "/work/work-5.svg"
+      ]
+    },
+    {
+      "id": "isabella-romano",
+      "name": "Isabella Romano",
+      "height": "5'11\"",
+      "bio": "High fashion runway model. Walked for major designers at fashion weeks worldwide.",
+      "images": [
+        "/work/work-1.svg",
+        "/work/work-2.svg",
+        "/work/work-3.svg",
+        "/work/work-4.svg",
+        "/work/work-5.svg"
+      ]
+    },
+    {
+      "id": "emma-larsson",
+      "name": "Emma Larsson",
+      "height": "5'8\"",
+      "bio": "Commercial and editorial specialist. Dynamic on camera with natural charisma.",
+      "images": [
+        "/work/work-1.svg",
+        "/work/work-2.svg",
+        "/work/work-3.svg",
+        "/work/work-4.svg",
+        "/work/work-5.svg"
+      ]
+    },
+    {
+      "id": "natasha-volkova",
+      "name": "Natasha Volkova",
+      "height": "5'10\"",
+      "bio": "Eastern European beauty with striking features. Successful runway and print work.",
+      "images": [
+        "/work/work-1.svg",
+        "/work/work-2.svg",
+        "/work/work-3.svg",
+        "/work/work-4.svg",
+        "/work/work-5.svg"
+      ]
+    },
+    {
+      "id": "maya-okafor",
+      "name": "Maya Okafor",
+      "height": "5'9\"",
+      "bio": "Editorial and commercial model. Brings authenticity and presence to every shoot.",
+      "images": [
+        "/work/work-1.svg",
+        "/work/work-2.svg",
+        "/work/work-3.svg",
+        "/work/work-4.svg",
+        "/work/work-5.svg"
+      ]
+    }
+  ]
+}

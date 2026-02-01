@@ -76,6 +76,55 @@
   opacity: 0.5;
 }
 
+.socialRow {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+.socialBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+}
+
+.socialBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.socialIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.adminRow {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.adminLink {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.4;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.adminLink:hover {
+  opacity: 0.72;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 @media (max-width: 640px) {
   .section {
     padding: 78px 0 62px;

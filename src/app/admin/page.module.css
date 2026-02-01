@@ -9,6 +9,24 @@
   padding: 22px 0;
 }
 
+.topRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.topActions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding-top: 2px;
+}
+
+.linkBtn {
+  text-decoration: none;
+}
+
 .title {
   font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
   font-size: 34px;
@@ -38,6 +56,54 @@
   border-bottom: 1px solid rgba(42, 26, 20, 0.08);
 }
 
+.rowLeft {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.dragHandle {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(42, 26, 20, 0.12);
+  background: rgba(42, 26, 20, 0.04);
+  cursor: grab;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+.dragHandle:hover {
+  background: rgba(42, 26, 20, 0.06);
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.dragDots {
+  width: 16px;
+  height: 16px;
+  opacity: 0.65;
+  background-image: radial-gradient(currentColor 1.2px, transparent 1.3px);
+  background-size: 6px 6px;
+  background-position: 0 0;
+}
+
+.rowDragging {
+  opacity: 0.65;
+}
+
+.rowLifted {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.12);
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 6px 0;
+  border: 1px solid rgba(42, 26, 20, 0.08);
+}
+
 .row:last-child {
   border-bottom: none;
 }
@@ -56,6 +122,7 @@
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .btn {
@@ -87,5 +154,160 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   margin-top: 10px;
+}
+
+.toolbarLeft {
+  justify-content: space-between;
+}
+
+.status {
+  font-size: 12px;
+  color: rgba(42, 26, 20, 0.6);
+  align-self: center;
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 100;
+}
+
+.modal {
+  width: min(760px, 100%);
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+}
+
+.modalHeader {
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(42, 26, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modalTitle {
+  font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  margin: 0;
+}
+
+.modalBody {
+  padding: 16px 18px 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 160px);
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(42, 26, 20, 0.6);
+}
+
+.input,
+.textarea {
+  border: 1px solid rgba(42, 26, 20, 0.18);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 14px;
+  width: 100%;
+  min-width: 0;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  outline: 3px solid rgba(139, 111, 85, 0.35);
+  outline-offset: 0px;
+}
+
+.textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.thumb {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: rgba(42, 26, 20, 0.06);
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.thumbBtn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(26, 14, 10, 0.72);
+  color: rgba(255, 255, 255, 0.92);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.thumbBtn:hover {
+  background: rgba(26, 14, 10, 0.86);
+}
+
+.thumbX {
+  font-size: 16px;
+  line-height: 1;
+  transform: translateY(-1px);
+}
+
+.thumbDragging {
+  opacity: 0.7;
+}
+
+.modalFooter {
+  padding: 14px 18px 18px;
+  border-top: 1px solid rgba(42, 26, 20, 0.08);
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+@media (max-width: 640px) {
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+  .thumbs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
