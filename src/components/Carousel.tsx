@@ -21,6 +21,9 @@ export function Carousel({
   const viewportRef = React.useRef<HTMLDivElement | null>(null);
   const [viewportW, setViewportW] = React.useState(0);
   const [isDragging, setIsDragging] = React.useState(false);
+  const [viewerOpen, setViewerOpen] = React.useState(false);
+  const [viewerIdx, setViewerIdx] = React.useState(0);
+  const viewerRef = React.useRef<HTMLDivElement | null>(null);
   const dragRef = React.useRef<{
     active: boolean;
     pointerId: number | null;
@@ -72,6 +75,39 @@ export function Carousel({
     goTo(idx + 1);
   }, [goTo, idx]);
 
+  const viewerScrollToIndex = React.useCallback((target: number) => {
+    const el = viewerRef.current;
+    if (!el) return;
+    el.scrollTo({ left: target * el.clientWidth, behavior: "smooth" });
+  }, []);
+
+  const openViewer = React.useCallback(
+    (startIndex: number) => {
+      const nextIdx = clamp(0, startIndex, Math.max(0, len - 1));
+      setViewerIdx(nextIdx);
+      setViewerOpen(true);
+    },
+    [len]
+  );
+
+  const closeViewer = React.useCallback(() => {
+    setViewerOpen(false);
+  }, []);
+
+  const viewerPrev = React.useCallback(() => {
+    if (len <= 0) return;
+    const nextIdx = (viewerIdx - 1 + len) % len;
+    setViewerIdx(nextIdx);
+    viewerScrollToIndex(nextIdx);
+  }, [len, viewerIdx, viewerScrollToIndex]);
+
+  const viewerNext = React.useCallback(() => {
+    if (len <= 0) return;
+    const nextIdx = (viewerIdx + 1) % len;
+    setViewerIdx(nextIdx);
+    viewerScrollToIndex(nextIdx);
+  }, [len, viewerIdx, viewerScrollToIndex]);
+
   // Keep idx in sync with free scrolling.
   React.useEffect(() => {
     const el = viewportRef.current;
@@ -100,6 +136,60 @@ export function Carousel({
       el.removeEventListener("scroll", onScroll);
     };
   }, [gap, len, tile]);
+
+  // Lightbox: lock background scroll + handle keyboard controls.
+  React.useEffect(() => {
+    if (!viewerOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeViewer();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        viewerPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        viewerNext();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+
+    // Ensure initial position after the overlay mounts.
+    const raf = requestAnimationFrame(() => viewerScrollToIndex(viewerIdx));
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [closeViewer, viewerIdx, viewerNext, viewerOpen, viewerPrev, viewerScrollToIndex]);
+
+  // Lightbox: keep viewerIdx in sync with free scrolling.
+  React.useEffect(() => {
+    if (!viewerOpen) return;
+    const el = viewerRef.current;
+    if (!el) return;
+
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const w = el.clientWidth || 1;
+        const nextIdx = clamp(0, Math.round(el.scrollLeft / w), len - 1);
+        setViewerIdx(nextIdx);
+      });
+    };
+
+    el.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("scroll", onScroll);
+    };
+  }, [len, viewerOpen]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowLeft") {
@@ -180,14 +270,24 @@ export function Carousel({
         <div className={styles.track}>
           {images.map((src, i) => (
             <div key={`${src}-${i}`} className={styles.slide}>
-              <Image
-                src={src}
-                alt={alt}
-                fill
-                sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 220px"
-                className={styles.image}
-                priority={i === 0}
-              />
+              <button
+                type="button"
+                className={styles.slideBtn}
+                onClick={() => {
+                  if (isDragging) return;
+                  openViewer(i);
+                }}
+                aria-label="Open image viewer"
+              >
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 220px"
+                  className={styles.image}
+                  priority={i === 0}
+                />
+              </button>
             </div>
           ))}
         </div>
@@ -212,6 +312,62 @@ export function Carousel({
             <IconChevronRight className={styles.icon} />
           </button>
         </>
+      ) : null}
+
+      {viewerOpen ? (
+        <div
+          className={styles.viewerOverlay}
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
+          onMouseDown={(e) => {
+            if (e.target === e.currentTarget) closeViewer();
+          }}
+        >
+          <div className={styles.viewer}>
+            <div className={styles.viewerHeader}>
+              <div className={styles.viewerCount} aria-live="polite">
+                {viewerIdx + 1} / {len}
+              </div>
+              <button type="button" className={styles.viewerClose} onClick={closeViewer}>
+                Close
+              </button>
+            </div>
+
+            <div className={styles.viewerViewport} ref={viewerRef}>
+              <div className={styles.viewerTrack}>
+                {images.map((src, i) => (
+                  <div key={`viewer-${src}-${i}`} className={styles.viewerSlide}>
+                    {/* Use <img> so we show the original URL with no Next/Image optimization. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img className={styles.viewerImg} src={src} alt={alt} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {len > 1 ? (
+              <>
+                <button
+                  type="button"
+                  className={`${styles.viewerNav} ${styles.viewerLeft}`}
+                  onClick={viewerPrev}
+                  aria-label="Previous image"
+                >
+                  <IconChevronLeft className={styles.icon} />
+                </button>
+                <button
+                  type="button"
+                  className={`${styles.viewerNav} ${styles.viewerRight}`}
+                  onClick={viewerNext}
+                  aria-label="Next image"
+                >
+                  <IconChevronRight className={styles.icon} />
+                </button>
+              </>
+            ) : null}
+          </div>
+        </div>
       ) : null}
     </div>
   );

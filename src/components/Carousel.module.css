@@ -50,6 +50,17 @@
   scroll-snap-stop: always;
 }
 
+.slideBtn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: block;
+}
+
 .image {
   object-fit: cover;
 }
@@ -90,5 +101,134 @@
 .icon {
   width: 22px;
   height: 22px;
+}
+
+.viewerOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.86);
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+}
+
+.viewer {
+  position: relative;
+  width: min(1100px, 100%);
+  height: min(820px, 100%);
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.viewerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.viewerCount {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.viewerClose {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  padding: 8px 10px;
+  cursor: pointer;
+}
+
+.viewerClose:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.viewerViewport {
+  flex: 1 1 auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.viewerViewport::-webkit-scrollbar {
+  display: none;
+}
+
+.viewerTrack {
+  height: 100%;
+  display: flex;
+}
+
+.viewerSlide {
+  width: 100%;
+  flex: 0 0 100%;
+  scroll-snap-align: center;
+  display: grid;
+  place-items: center;
+  padding: 10px;
+}
+
+.viewerImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.viewerNav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: none;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.92);
+  background: rgba(0, 0, 0, 0.65);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+.viewerNav:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.viewerLeft {
+  left: 12px;
+}
+
+.viewerRight {
+  right: 12px;
+}
+
+@media (max-width: 640px) {
+  .viewerOverlay {
+    padding: 0;
+  }
+  .viewer {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+  .viewerSlide {
+    padding: 6px;
+  }
 }
 
