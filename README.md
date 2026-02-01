@@ -44,3 +44,23 @@ Admin access is protected.
 
 See `.env.example` for the keys.
 
+## Supabase (recommended for production / Vercel)
+
+Vercel serverless doesn’t persist file writes, so for production you should use:
+
+- **Supabase Postgres** for models (name/height/bio/order/images)
+- **Supabase Storage** for model images
+
+### Setup
+
+1. Create a Supabase project
+2. Run the SQL migration in `supabase/migrations/001_models.sql` in the Supabase SQL editor
+3. Create a **public** Storage bucket named `model-images` (or set `SUPABASE_STORAGE_BUCKET`)
+4. Add these env vars to Vercel (Project → Settings → Environment Variables):
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `SUPABASE_STORAGE_BUCKET` (optional)
+
+Once set, the app will automatically read/write models from Supabase and upload images to the bucket.
+

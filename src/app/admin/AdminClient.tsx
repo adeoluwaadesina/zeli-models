@@ -211,14 +211,34 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
   };
 
   const uploadFiles = async (modelId: string, files: File[]) => {
-    const fd = new FormData();
-    fd.set("modelId", modelId);
-    files.forEach((f) => fd.append("files", f));
-    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    if (!res.ok) throw new Error("Upload failed");
-    const data = (await res.json()) as { urls?: string[] };
-    if (!Array.isArray(data.urls)) throw new Error("Invalid upload response");
-    return data.urls;
+    const res = await fetch("/api/admin/upload", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        modelId,
+        files: files.map((f) => ({ name: f.name, type: f.type }))
+      })
+    });
+    if (!res.ok) throw new Error("Upload init failed");
+    const data = (await res.json()) as {
+      uploads?: { signedUrl: string; publicUrl: string; contentType: string }[];
+    };
+    if (!Array.isArray(data.uploads)) throw new Error("Invalid upload response");
+
+    // Upload directly to Supabase Storage signed URLs (bypasses Vercel body limits).
+    await Promise.all(
+      data.uploads.map(async (u, idx) => {
+        const file = files[idx];
+        const put = await fetch(u.signedUrl, {
+          method: "PUT",
+          headers: { "content-type": u.contentType || file.type || "application/octet-stream" },
+          body: file
+        });
+        if (!put.ok) throw new Error("Direct upload failed");
+      })
+    );
+
+    return data.uploads.map((u) => u.publicUrl);
   };
 
   const saveDraft = async () => {
