@@ -232,16 +232,12 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
         files: files.map((f) => ({ name: f.name, type: f.type }))
       })
     });
-    if (!res.ok) {
-      let extra = "";
-      try {
-        extra = await res.text();
-      } catch {
-        // ignore
-      }
-      throw new Error(`Upload init failed (${res.status})${extra ? `: ${extra}` : ""}`);
-    }
-    const data = (await res.json()) as {
+    const data = (await res.json().catch(async () => {
+      // If the server returned non-JSON, fall back to text.
+      const text = await res.text().catch(() => "");
+      return { error: text || `HTTP ${res.status}` };
+    })) as {
+      error?: string;
       uploads?: {
         signedUrl: string;
         token?: string;
@@ -250,6 +246,11 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
         contentType: string;
       }[];
     };
+    if (!res.ok) {
+      throw new Error(
+        `Upload init failed (${res.status})${data.error ? `: ${data.error}` : ""}`
+      );
+    }
     if (!Array.isArray(data.uploads)) throw new Error("Invalid upload response");
 
     // Upload directly to Supabase Storage signed URLs (bypasses Vercel body limits).
