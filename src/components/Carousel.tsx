@@ -39,14 +39,6 @@ export function Carousel({
     return () => ro.disconnect();
   }, []);
 
-  const prev = React.useCallback(() => {
-    setIdx((i) => (i - 1 + len) % len);
-  }, [len]);
-
-  const next = React.useCallback(() => {
-    setIdx((i) => (i + 1) % len);
-  }, [len]);
-
   // Mirrors CSS intent: tile is responsive, capped for the Canva look.
   const gap = 12;
   const tile = clamp(132, viewportW * 0.48, 170);
@@ -60,6 +52,25 @@ export function Carousel({
     },
     [gap, tile]
   );
+
+  const goTo = React.useCallback(
+    (targetIdx: number) => {
+      if (len <= 0) return;
+      const nextIdx = ((targetIdx % len) + len) % len;
+      // Do the scroll inside the user gesture handler (more reliable on mobile)
+      scrollToIndex(nextIdx);
+      setIdx(nextIdx);
+    },
+    [len, scrollToIndex]
+  );
+
+  const prev = React.useCallback(() => {
+    goTo(idx - 1);
+  }, [goTo, idx]);
+
+  const next = React.useCallback(() => {
+    goTo(idx + 1);
+  }, [goTo, idx]);
 
   // Keep idx in sync with free scrolling.
   React.useEffect(() => {
@@ -89,11 +100,6 @@ export function Carousel({
       el.removeEventListener("scroll", onScroll);
     };
   }, [gap, len, tile]);
-
-  // When arrow buttons change idx, scroll to it.
-  React.useEffect(() => {
-    scrollToIndex(idx);
-  }, [idx, scrollToIndex]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowLeft") {
