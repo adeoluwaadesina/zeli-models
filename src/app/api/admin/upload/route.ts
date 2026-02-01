@@ -10,6 +10,19 @@ function isAuthed(req: NextRequest) {
   return req.cookies.get(ADMIN_COOKIE)?.value === "1";
 }
 
+async function ensureBucketExists(supabase: ReturnType<typeof getSupabaseAdmin>, bucketId: string) {
+  if (!supabase) throw new Error("Supabase admin client not configured");
+
+  const { data: buckets, error: listErr } = await supabase.storage.listBuckets();
+  if (listErr) throw listErr;
+
+  const exists = (buckets ?? []).some((b) => b.id === bucketId || b.name === bucketId);
+  if (exists) return;
+
+  const { error: createErr } = await supabase.storage.createBucket(bucketId, { public: true });
+  if (createErr) throw createErr;
+}
+
 function safeSegment(input: string) {
   return input
     .toLowerCase()
@@ -43,6 +56,7 @@ export async function POST(req: NextRequest) {
     if (files.length > 5) return NextResponse.json({ error: "Max 5 files" }, { status: 400 });
 
     const bucket = getStorageBucket();
+    await ensureBucketExists(supabase, bucket);
 
     const uploads = await Promise.all(
       files.map(async (f) => {
