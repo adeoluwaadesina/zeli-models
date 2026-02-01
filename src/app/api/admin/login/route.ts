@@ -19,10 +19,12 @@ export async function POST(req: NextRequest) {
     url.pathname = "/admin/login";
     url.searchParams.set("error", "1");
     url.searchParams.set("next", nextPath);
-    return NextResponse.redirect(url);
+    // 303 forces the browser to follow with GET (prevents POST -> /admin/login => 405)
+    return NextResponse.redirect(url, 303);
   }
 
-  const res = NextResponse.redirect(new URL(nextPath, req.url));
+  // Same idea: after POST, redirect to the admin page with a GET.
+  const res = NextResponse.redirect(new URL(nextPath, req.url), 303);
   res.cookies.set({
     name: ADMIN_COOKIE,
     value: "1",
