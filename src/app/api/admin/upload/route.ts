@@ -59,6 +59,7 @@ export async function POST(req: NextRequest) {
 
       return {
         signedUrl: data.signedUrl,
+        token: data.token,
         path,
         publicUrl,
         contentType
@@ -66,6 +67,6 @@ export async function POST(req: NextRequest) {
     })
   );
 
-  return NextResponse.json({ uploads });
+  return NextResponse.json({ bucket, uploads });
 }
 

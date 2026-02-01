@@ -232,9 +232,23 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
         files: files.map((f) => ({ name: f.name, type: f.type }))
       })
     });
-    if (!res.ok) throw new Error("Upload init failed");
+    if (!res.ok) {
+      let extra = "";
+      try {
+        extra = await res.text();
+      } catch {
+        // ignore
+      }
+      throw new Error(`Upload init failed (${res.status})${extra ? `: ${extra}` : ""}`);
+    }
     const data = (await res.json()) as {
-      uploads?: { signedUrl: string; publicUrl: string; contentType: string }[];
+      uploads?: {
+        signedUrl: string;
+        token?: string;
+        path?: string;
+        publicUrl: string;
+        contentType: string;
+      }[];
     };
     if (!Array.isArray(data.uploads)) throw new Error("Invalid upload response");
 
@@ -244,10 +258,21 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
         const file = files[idx];
         const put = await fetch(u.signedUrl, {
           method: "PUT",
-          headers: { "content-type": u.contentType || file.type || "application/octet-stream" },
+          headers: {
+            "content-type": u.contentType || file.type || "application/octet-stream",
+            "x-upsert": "true"
+          },
           body: file
         });
-        if (!put.ok) throw new Error("Direct upload failed");
+        if (!put.ok) {
+          let extra = "";
+          try {
+            extra = await put.text();
+          } catch {
+            // ignore
+          }
+          throw new Error(`Direct upload failed (${put.status})${extra ? `: ${extra}` : ""}`);
+        }
       })
     );
 
@@ -310,9 +335,9 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
         }
         images = finalUrls.filter(Boolean).slice(0, 5);
       }
-    } catch {
+    } catch (e) {
       setSaving(false);
-      setStatus("Image upload failed.");
+      setStatus(e instanceof Error ? e.message : "Image upload failed.");
       return;
     } finally {
       setSaving(false);

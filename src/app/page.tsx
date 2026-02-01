@@ -4,6 +4,8 @@ import { ModelGrid } from "@/components/ModelGrid";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WhatsappButton } from "@/components/WhatsappButton";
 
+export const dynamic = "force-dynamic";
+
 export default function HomePage() {
   return (
     <>
