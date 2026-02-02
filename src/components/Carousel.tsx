@@ -3,7 +3,7 @@
 import Image from "next/image";
 import * as React from "react";
 import styles from "./Carousel.module.css";
-import { IconChevronLeft, IconChevronRight } from "./icons";
+import { IconChevronLeft, IconChevronRight, IconFullscreen, IconFullscreenExit } from "./icons";
 
 function clamp(min: number, value: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -23,13 +23,19 @@ export function Carousel({
   const [isDragging, setIsDragging] = React.useState(false);
   const [viewerOpen, setViewerOpen] = React.useState(false);
   const [viewerIdx, setViewerIdx] = React.useState(0);
-  const viewerRef = React.useRef<HTMLDivElement | null>(null);
+  const [isFullscreen, setIsFullscreen] = React.useState(false);
+  const viewerContainerRef = React.useRef<HTMLDivElement | null>(null);
+  const swipeStartX = React.useRef<number | null>(null);
   const dragRef = React.useRef<{
     active: boolean;
     pointerId: number | null;
     startX: number;
     startScrollLeft: number;
-  }>({ active: false, pointerId: null, startX: 0, startScrollLeft: 0 });
+    /** True only after pointer has moved past threshold (so click opens viewer on desktop). */
+    dragging: boolean;
+    /** True if this pointer session was a drag (so we don't open viewer on release). */
+    didDrag: boolean;
+  }>({ active: false, pointerId: null, startX: 0, startScrollLeft: 0, dragging: false, didDrag: false });
 
   React.useEffect(() => {
     if (!viewportRef.current) return;
@@ -42,9 +48,11 @@ export function Carousel({
     return () => ro.disconnect();
   }, []);
 
-  // Mirrors CSS intent: tile is responsive, capped for the Canva look.
+  // Larger tiles, portrait 4:5 for model cards; viewportW is from ResizeObserver so scales on mobile too.
   const gap = 12;
-  const tile = clamp(132, viewportW * 0.48, 170);
+  const tileW = clamp(160, viewportW * 0.52, 260);
+  const tileH = Math.round(tileW * (5 / 4)); // 4:5 portrait
+  const tile = tileW; // step uses width
 
   const scrollToIndex = React.useCallback(
     (targetIdx: number) => {
@@ -75,12 +83,6 @@ export function Carousel({
     goTo(idx + 1);
   }, [goTo, idx]);
 
-  const viewerScrollToIndex = React.useCallback((target: number) => {
-    const el = viewerRef.current;
-    if (!el) return;
-    el.scrollTo({ left: target * el.clientWidth, behavior: "smooth" });
-  }, []);
-
   const openViewer = React.useCallback(
     (startIndex: number) => {
       const nextIdx = clamp(0, startIndex, Math.max(0, len - 1));
@@ -91,22 +93,32 @@ export function Carousel({
   );
 
   const closeViewer = React.useCallback(() => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    }
     setViewerOpen(false);
+    setIsFullscreen(false);
+  }, []);
+
+  const toggleFullscreen = React.useCallback(() => {
+    const el = viewerContainerRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => {});
+    } else {
+      el.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => {});
+    }
   }, []);
 
   const viewerPrev = React.useCallback(() => {
     if (len <= 0) return;
-    const nextIdx = (viewerIdx - 1 + len) % len;
-    setViewerIdx(nextIdx);
-    viewerScrollToIndex(nextIdx);
-  }, [len, viewerIdx, viewerScrollToIndex]);
+    setViewerIdx((i) => (i - 1 + len) % len);
+  }, [len]);
 
   const viewerNext = React.useCallback(() => {
     if (len <= 0) return;
-    const nextIdx = (viewerIdx + 1) % len;
-    setViewerIdx(nextIdx);
-    viewerScrollToIndex(nextIdx);
-  }, [len, viewerIdx, viewerScrollToIndex]);
+    setViewerIdx((i) => (i + 1) % len);
+  }, [len]);
 
   // Keep idx in sync with free scrolling.
   React.useEffect(() => {
@@ -137,6 +149,15 @@ export function Carousel({
     };
   }, [gap, len, tile]);
 
+  // Sync fullscreen state when user exits via Escape or browser UI.
+  React.useEffect(() => {
+    const onFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+  }, []);
+
   // Lightbox: lock background scroll + handle keyboard controls.
   React.useEffect(() => {
     if (!viewerOpen) return;
@@ -146,7 +167,11 @@ export function Carousel({
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        closeViewer();
+        if (document.fullscreenElement) {
+          document.exitFullscreen().catch(() => {});
+        } else {
+          closeViewer();
+        }
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
         viewerPrev();
@@ -157,39 +182,11 @@ export function Carousel({
     };
     window.addEventListener("keydown", onKeyDown);
 
-    // Ensure initial position after the overlay mounts.
-    const raf = requestAnimationFrame(() => viewerScrollToIndex(viewerIdx));
-
     return () => {
-      cancelAnimationFrame(raf);
       window.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = prevOverflow;
     };
-  }, [closeViewer, viewerIdx, viewerNext, viewerOpen, viewerPrev, viewerScrollToIndex]);
-
-  // Lightbox: keep viewerIdx in sync with free scrolling.
-  React.useEffect(() => {
-    if (!viewerOpen) return;
-    const el = viewerRef.current;
-    if (!el) return;
-
-    let raf = 0;
-    const onScroll = () => {
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const w = el.clientWidth || 1;
-        const nextIdx = clamp(0, Math.round(el.scrollLeft / w), len - 1);
-        setViewerIdx(nextIdx);
-      });
-    };
-
-    el.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => {
-      cancelAnimationFrame(raf);
-      el.removeEventListener("scroll", onScroll);
-    };
-  }, [len, viewerOpen]);
+  }, [closeViewer, viewerNext, viewerOpen, viewerPrev]);
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.key === "ArrowLeft") {
@@ -202,6 +199,8 @@ export function Carousel({
     }
   };
 
+  const DRAG_THRESHOLD_PX = 6;
+
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.pointerType !== "mouse") return; // touch/trackpad: native scrolling
     const el = viewportRef.current;
@@ -210,10 +209,12 @@ export function Carousel({
       active: true,
       pointerId: e.pointerId,
       startX: e.clientX,
-      startScrollLeft: el.scrollLeft
+      startScrollLeft: el.scrollLeft,
+      dragging: false,
+      didDrag: false
     };
-    setIsDragging(true);
-    el.setPointerCapture(e.pointerId);
+    // Do NOT setPointerCapture here — it would steal pointerup from the button so click never fires.
+    // We only capture once we've passed the drag threshold (in onPointerMove).
   };
 
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -222,6 +223,14 @@ export function Carousel({
     if (!dragRef.current.active) return;
     if (dragRef.current.pointerId !== e.pointerId) return;
     const dx = e.clientX - dragRef.current.startX;
+    if (!dragRef.current.dragging) {
+      if (Math.abs(dx) >= DRAG_THRESHOLD_PX) {
+        dragRef.current.dragging = true;
+        dragRef.current.didDrag = true;
+        setIsDragging(true);
+        el.setPointerCapture(e.pointerId);
+      } else return;
+    }
     el.scrollLeft = dragRef.current.startScrollLeft - dx;
   };
 
@@ -230,20 +239,25 @@ export function Carousel({
     if (!el) return;
     if (!dragRef.current.active) return;
     if (dragRef.current.pointerId !== e.pointerId) return;
+    const wasDragging = dragRef.current.dragging;
     dragRef.current.active = false;
     dragRef.current.pointerId = null;
+    dragRef.current.dragging = false;
+    // Leave didDrag so button onClick can skip opening viewer; cleared on next pointer down
     setIsDragging(false);
 
-    // Nudge to the nearest snap position (helps mouse drag feel).
-    const step = tile + gap;
-    const padding = (el.clientWidth - tile) / 2;
-    const centerX = el.scrollLeft + el.clientWidth / 2;
-    const snapIdx = clamp(
-      0,
-      Math.round((centerX - padding - tile / 2) / step),
-      len - 1
-    );
-    el.scrollTo({ left: snapIdx * step, behavior: "smooth" });
+    if (wasDragging) {
+      // Nudge to the nearest snap position (helps mouse drag feel).
+      const step = tile + gap;
+      const padding = (el.clientWidth - tile) / 2;
+      const centerX = el.scrollLeft + el.clientWidth / 2;
+      const snapIdx = clamp(
+        0,
+        Math.round((centerX - padding - tile / 2) / step),
+        len - 1
+      );
+      el.scrollTo({ left: snapIdx * step, behavior: "smooth" });
+    }
   };
 
   return (
@@ -251,7 +265,8 @@ export function Carousel({
       className={styles.frame}
       style={
         {
-          ["--tile" as never]: `${tile}px`,
+          ["--tile" as never]: `${tileW}px`,
+          ["--tile-height" as never]: `${tileH}px`,
           ["--gap" as never]: `${gap}px`
         } as React.CSSProperties
       }
@@ -274,7 +289,7 @@ export function Carousel({
                 type="button"
                 className={styles.slideBtn}
                 onClick={() => {
-                  if (isDragging) return;
+                  if (dragRef.current.didDrag) return;
                   openViewer(i);
                 }}
                 aria-label="Open image viewer"
@@ -283,7 +298,7 @@ export function Carousel({
                   src={src}
                   alt={alt}
                   fill
-                  sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 220px"
+                  sizes="(max-width: 640px) 85vw, (max-width: 1024px) 45vw, 280px"
                   className={styles.image}
                   priority={i === 0}
                 />
@@ -324,48 +339,83 @@ export function Carousel({
             if (e.target === e.currentTarget) closeViewer();
           }}
         >
-          <div className={styles.viewer}>
+          <div className={styles.viewer} ref={viewerContainerRef}>
             <div className={styles.viewerHeader}>
-              <div className={styles.viewerCount} aria-live="polite">
-                {viewerIdx + 1} / {len}
+              <div className={styles.viewerToolbar}>
+                <span className={styles.viewerCount} aria-live="polite">
+                  {viewerIdx + 1} / {len}
+                </span>
+                {len > 1 ? (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.viewerToolBtn}
+                      onClick={viewerPrev}
+                      aria-label="Previous image"
+                    >
+                      <IconChevronLeft className={styles.viewerToolIcon} />
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.viewerToolBtn}
+                      onClick={viewerNext}
+                      aria-label="Next image"
+                    >
+                      <IconChevronRight className={styles.viewerToolIcon} />
+                    </button>
+                  </>
+                ) : null}
               </div>
-              <button type="button" className={styles.viewerClose} onClick={closeViewer}>
-                Close
-              </button>
-            </div>
-
-            <div className={styles.viewerViewport} ref={viewerRef}>
-              <div className={styles.viewerTrack}>
-                {images.map((src, i) => (
-                  <div key={`viewer-${src}-${i}`} className={styles.viewerSlide}>
-                    {/* Use <img> so we show the original URL with no Next/Image optimization. */}
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img className={styles.viewerImg} src={src} alt={alt} />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {len > 1 ? (
-              <>
+              <div className={styles.viewerToolbar}>
                 <button
                   type="button"
-                  className={`${styles.viewerNav} ${styles.viewerLeft}`}
-                  onClick={viewerPrev}
-                  aria-label="Previous image"
+                  className={styles.viewerToolBtn}
+                  onClick={toggleFullscreen}
+                  aria-label={isFullscreen ? "Exit fullscreen" : "Fullscreen"}
                 >
-                  <IconChevronLeft className={styles.icon} />
+                  {isFullscreen ? (
+                    <IconFullscreenExit className={styles.viewerToolIcon} />
+                  ) : (
+                    <IconFullscreen className={styles.viewerToolIcon} />
+                  )}
                 </button>
-                <button
-                  type="button"
-                  className={`${styles.viewerNav} ${styles.viewerRight}`}
-                  onClick={viewerNext}
-                  aria-label="Next image"
-                >
-                  <IconChevronRight className={styles.icon} />
+                <button type="button" className={styles.viewerClose} onClick={closeViewer}>
+                  Close
                 </button>
-              </>
-            ) : null}
+              </div>
+            </div>
+
+            <div
+              className={styles.viewerBody}
+              onTouchStart={(e) => {
+                if (len <= 1) return;
+                swipeStartX.current = e.touches[0].clientX;
+              }}
+              onTouchEnd={(e) => {
+                if (len <= 1 || swipeStartX.current === null) return;
+                const endX = e.changedTouches[0].clientX;
+                const dx = endX - swipeStartX.current;
+                swipeStartX.current = null;
+                if (Math.abs(dx) < 40) return;
+                if (dx > 0) viewerPrev();
+                else viewerNext();
+              }}
+            >
+              {images[viewerIdx] != null ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  className={styles.viewerImg}
+                  src={images[viewerIdx]}
+                  alt={alt}
+                  draggable={false}
+                />
+              ) : null}
+              {len > 1 ? (
+                <p className={styles.viewerHint} aria-hidden="true">
+                  Swipe or use arrows to change image
+                </p>
+              ) : null}
+            </div>
           </div>
         </div>
       ) : null}

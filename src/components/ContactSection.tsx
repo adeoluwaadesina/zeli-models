@@ -1,12 +1,10 @@
 import * as React from "react";
 import styles from "./ContactSection.module.css";
-import { IconInstagram } from "./icons";
 
 export function ContactSection() {
   // TODO (you): replace with real business details
   const email = "bookings@zelimodels.com";
   const phone = "+1 (212) 555-0199";
-  const instagramUsername = "zelimodels";
 
   return (
     <section className={styles.section} id="contact" aria-label="Contact">
@@ -32,17 +30,6 @@ export function ContactSection() {
         </div>
 
         <div className={styles.footerLine} />
-        <div className={styles.socialRow}>
-          <a
-            className={styles.socialBtn}
-            href={`https://instagram.com/${instagramUsername}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <IconInstagram className={styles.socialIcon} />
-            @{instagramUsername}
-          </a>
-        </div>
         <div className={styles.adminRow}>
           <a className={styles.adminLink} href="/admin">
             Admin

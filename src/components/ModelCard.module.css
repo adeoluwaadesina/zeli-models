@@ -58,5 +58,12 @@
     width: 100%;
     max-width: 520px;
   }
+  /* More room for carousel so larger image boxes apply well on mobile */
+  .mediaWrap {
+    padding: 16px 16px 0 16px;
+  }
+  .body {
+    padding: 16px 16px 20px 16px;
+  }
 }
 
