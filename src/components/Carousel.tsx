@@ -9,6 +9,27 @@ function clamp(min: number, value: number, max: number) {
   return Math.min(max, Math.max(min, value));
 }
 
+// Fullscreen helpers with WebKit prefix for mobile Safari / older browsers
+function getFullscreenElement(): Element | null {
+  return (
+    document.fullscreenElement ??
+    (document as Document & { webkitFullscreenElement?: Element }).webkitFullscreenElement ??
+    null
+  );
+}
+function requestFullscreen(el: HTMLElement): Promise<void> {
+  if (el.requestFullscreen) return el.requestFullscreen();
+  const webkit = (el as HTMLElement & { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen;
+  if (webkit) return webkit.call(el);
+  return Promise.reject(new Error("Fullscreen not supported"));
+}
+function exitFullscreen(): Promise<void> {
+  if (document.exitFullscreen) return document.exitFullscreen();
+  const webkit = (document as Document & { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen;
+  if (webkit) return webkit.call(document);
+  return Promise.reject(new Error("Exit fullscreen not supported"));
+}
+
 export function Carousel({
   images,
   alt
@@ -93,8 +114,8 @@ export function Carousel({
   );
 
   const closeViewer = React.useCallback(() => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
+    if (getFullscreenElement()) {
+      exitFullscreen().catch(() => {});
     }
     setViewerOpen(false);
     setIsFullscreen(false);
@@ -103,10 +124,10 @@ export function Carousel({
   const toggleFullscreen = React.useCallback(() => {
     const el = viewerContainerRef.current;
     if (!el) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen().then(() => setIsFullscreen(false)).catch(() => {});
+    if (getFullscreenElement()) {
+      exitFullscreen().then(() => setIsFullscreen(false)).catch(() => {});
     } else {
-      el.requestFullscreen().then(() => setIsFullscreen(true)).catch(() => {});
+      requestFullscreen(el).then(() => setIsFullscreen(true)).catch(() => {});
     }
   }, []);
 
@@ -149,13 +170,15 @@ export function Carousel({
     };
   }, [gap, len, tile]);
 
-  // Sync fullscreen state when user exits via Escape or browser UI.
+  // Sync fullscreen state when user exits via Escape or browser UI (including WebKit).
   React.useEffect(() => {
-    const onFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement);
-    };
+    const onFullscreenChange = () => setIsFullscreen(!!getFullscreenElement());
     document.addEventListener("fullscreenchange", onFullscreenChange);
-    return () => document.removeEventListener("fullscreenchange", onFullscreenChange);
+    document.addEventListener("webkitfullscreenchange", onFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+      document.removeEventListener("webkitfullscreenchange", onFullscreenChange);
+    };
   }, []);
 
   // Lightbox: lock background scroll + handle keyboard controls.
@@ -167,8 +190,8 @@ export function Carousel({
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        if (document.fullscreenElement) {
-          document.exitFullscreen().catch(() => {});
+        if (getFullscreenElement()) {
+          exitFullscreen().catch(() => {});
         } else {
           closeViewer();
         }
