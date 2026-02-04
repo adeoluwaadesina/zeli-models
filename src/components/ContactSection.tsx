@@ -1,10 +1,11 @@
 import * as React from "react";
+import { phoneDisplay, whatsappNumberE164 } from "@/lib/contact";
 import styles from "./ContactSection.module.css";
 
 export function ContactSection() {
-  // TODO (you): replace with real business details
-  const email = "bookings@zelimodels.com";
-  const phone = "+1 (212) 555-0199";
+  const email = "Zelimodels@gmail.com";
+  const phone = phoneDisplay();
+  const telHref = `tel:+${whatsappNumberE164}`;
 
   return (
     <section className={styles.section} id="contact" aria-label="Contact">
@@ -24,7 +25,7 @@ export function ContactSection() {
           <div className={styles.item}>
             <p className={styles.label}>Phone</p>
             <p className={styles.value}>
-              <a href={`tel:${phone.replace(/[^\d+]/g, "")}`}>{phone}</a>
+              <a href={telHref}>{phone}</a>
             </p>
           </div>
         </div>
@@ -36,8 +37,7 @@ export function ContactSection() {
           </a>
         </div>
         <p className={styles.copyright}>
-          © {new Date().getFullYear()} Zeli Models. All Rights Reserved. | Premium
-          Talent Management
+          © {new Date().getFullYear()} Zeli Models. All Rights Reserved.
         </p>
       </div>
     </section>

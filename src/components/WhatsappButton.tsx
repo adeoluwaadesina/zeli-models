@@ -1,13 +1,12 @@
 import * as React from "react";
+import { whatsappNumberE164 } from "@/lib/contact";
 import styles from "./WhatsappButton.module.css";
 import { IconWhatsapp } from "./icons";
 
 export function WhatsappButton() {
-  // TODO (you): replace with the real WhatsApp number, e.g. "2348012345678"
-  const whatsappNumberE164NoPlus = "12125550199";
   const message = encodeURIComponent("Hi Zeli Models — I’d like to make an inquiry.");
 
-  const href = `https://wa.me/${whatsappNumberE164NoPlus}?text=${message}`;
+  const href = `https://wa.me/${whatsappNumberE164}?text=${message}`;
 
   return (
     <div className={styles.wrap}>

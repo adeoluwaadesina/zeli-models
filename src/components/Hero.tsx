@@ -7,14 +7,17 @@ export function Hero() {
       <div className="container">
         <div className={styles.inner}>
           <div>
-            <h1 className={styles.title}>ZELI</h1>
-            <p className={styles.subtitle}>Discover Exceptional Talent</p>
-            <div className={styles.hairlineWrap}>
-              <div className="hairline" />
-            </div>
+            <h1 className={styles.title}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/hero-logo.jpg"
+                alt="Zeli"
+                className={styles.heroLogo}
+              />
+            </h1>
             <p className={styles.copy}>
-              Representing the most talented and versatile models. Premium
-              management for runway, editorial, and commercial projects.
+              A selection of passionate and reliable models offering quality
+              talent you can trust for every project.
             </p>
           </div>
         </div>

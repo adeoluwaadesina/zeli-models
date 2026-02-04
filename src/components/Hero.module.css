@@ -44,28 +44,22 @@
 }
 
 .title {
-  font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
-  font-size: clamp(64px, 7vw, 96px);
-  margin: 0;
-  letter-spacing: 1px;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-.subtitle {
-  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto,
-    Helvetica, Arial, sans-serif;
-  font-weight: 400;
-  letter-spacing: 2px;
-  text-transform: none;
-  font-size: 16px;
-  margin: 12px 0 0 0;
-  opacity: 0.78;
-}
-
-.hairlineWrap {
+  margin: 0 0 32px 0;
+  line-height: 0;
   display: flex;
   justify-content: center;
-  margin: 20px 0;
+  width: 100%;
+}
+
+.heroLogo {
+  display: block;
+  width: auto;
+  max-width: min(320px, 80vw);
+  height: auto;
+  max-height: clamp(64px, 12vw, 96px);
+  object-fit: contain;
+  /* Removes dark/black background so only the white logo shows on the hero */
+  mix-blend-mode: lighten;
 }
 
 .copy {
