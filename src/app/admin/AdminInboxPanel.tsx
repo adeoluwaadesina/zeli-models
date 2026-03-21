@@ -115,7 +115,9 @@ export function AdminInboxPanel() {
           {contacts.length === 0 ? (
             <p className={styles.meta}>No messages yet.</p>
           ) : (
-            contacts.map((c) => (
+            contacts.map((c) => {
+              const contactCopyKey = `contact-${c.id}`;
+              return (
               <div
                 key={c.id}
                 className={`${styles.inboxItem} ${c.read_flag ? styles.inboxItemRead : styles.inboxItemUnread}`}
@@ -128,6 +130,13 @@ export function AdminInboxPanel() {
                     {c.read_flag ? "Read" : "Unread"}
                   </span>
                   <span className={styles.meta}> — {c.email}</span>
+                  <button
+                    type="button"
+                    className={styles.copyEmailBtn}
+                    onClick={() => void copyEmail(c.email, contactCopyKey)}
+                  >
+                    {copiedKey === contactCopyKey ? "Copied" : "Copy email"}
+                  </button>
                 </div>
                 <div className={styles.meta}>{new Date(c.created_at).toLocaleString()}</div>
                 <button
@@ -152,7 +161,8 @@ export function AdminInboxPanel() {
                   {c.read_flag ? "Mark unread" : "Mark read"}
                 </button>
               </div>
-            ))
+              );
+            })
           )}
         </div>
 

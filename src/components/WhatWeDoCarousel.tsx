@@ -4,9 +4,12 @@ import type { WhatWeDoItem } from "@/data/siteSettings";
 import * as React from "react";
 import styles from "./WhatWeDoCarousel.module.css";
 
+const SWIPE_MIN_PX = 48;
+
 export function WhatWeDoCarousel({ items }: { items: WhatWeDoItem[] }) {
   const sorted = [...items].sort((a, b) => a.sortOrder - b.sortOrder);
   const [i, setI] = React.useState(0);
+  const touchStart = React.useRef<{ x: number; y: number } | null>(null);
   if (!sorted.length) return null;
 
   const n = sorted.length;
@@ -14,6 +17,26 @@ export function WhatWeDoCarousel({ items }: { items: WhatWeDoItem[] }) {
 
   const prev = () => setI((x) => x - 1);
   const next = () => setI((x) => x + 1);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    const t = e.touches[0];
+    if (!t) return;
+    touchStart.current = { x: t.clientX, y: t.clientY };
+  };
+
+  const onTouchEnd = (e: React.TouchEvent) => {
+    const start = touchStart.current;
+    touchStart.current = null;
+    if (!start) return;
+    const t = e.changedTouches[0];
+    if (!t) return;
+    const dx = t.clientX - start.x;
+    const dy = t.clientY - start.y;
+    if (Math.abs(dx) < SWIPE_MIN_PX) return;
+    if (Math.abs(dx) < Math.abs(dy) * 1.2) return;
+    if (dx > 0) prev();
+    else next();
+  };
 
   return (
     <section className={styles.section} id="what-we-do" aria-labelledby="wwd-heading">
@@ -23,12 +46,23 @@ export function WhatWeDoCarousel({ items }: { items: WhatWeDoItem[] }) {
           Our services
         </h2>
 
+        {n > 1 ? (
+          <p className={styles.swipeHint}>Swipe the card to browse services</p>
+        ) : null}
+
         <div className={styles.carousel}>
           <button type="button" className={styles.arrow} onClick={prev} aria-label="Previous">
             ‹
           </button>
 
-          <div className={styles.card}>
+          <div
+            className={styles.card}
+            onTouchStart={onTouchStart}
+            onTouchEnd={onTouchEnd}
+            onTouchCancel={() => {
+              touchStart.current = null;
+            }}
+          >
             <div
               className={styles.bg}
               style={
