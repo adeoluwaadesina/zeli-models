@@ -17,6 +17,17 @@ const NAV: NavItem[] = [
   { href: "/#contact", label: "Contact" }
 ];
 
+/** Hash links (`/#section`) are active on home when `location.hash` matches. */
+function isNavActive(href: string, pathname: string, routeHash: string): boolean {
+  if (href === "/women") return pathname === "/women";
+  if (href === "/men") return pathname === "/men";
+  if (href === "/become-a-model") return pathname === "/become-a-model";
+  if (href.startsWith("/#")) {
+    return pathname === "/" && routeHash === href.slice(1);
+  }
+  return false;
+}
+
 function InstagramIcon({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" width={22} height={22} aria-hidden="true">
@@ -31,7 +42,21 @@ function InstagramIcon({ className }: { className?: string }) {
 export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
+  const [routeHash, setRouteHash] = React.useState("");
   const showIg = Boolean(instagramUrl.trim());
+
+  React.useEffect(() => {
+    const syncHash = () => setRouteHash(typeof window !== "undefined" ? window.location.hash : "");
+    syncHash();
+    window.addEventListener("hashchange", syncHash);
+    return () => window.removeEventListener("hashchange", syncHash);
+  }, [pathname]);
+
+  React.useEffect(() => {
+    if (open && typeof window !== "undefined") {
+      setRouteHash(window.location.hash);
+    }
+  }, [open]);
 
   React.useEffect(() => {
     setOpen(false);
@@ -63,14 +88,7 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
 
           <nav className={styles.desktopNav} aria-label="Primary">
             {NAV.map((item) => {
-              const active =
-                item.href === "/women"
-                  ? pathname === "/women"
-                  : item.href === "/men"
-                    ? pathname === "/men"
-                    : item.href === "/become-a-model"
-                      ? pathname === "/become-a-model"
-                      : false;
+              const active = isNavActive(item.href, pathname, routeHash);
               return (
                 <Link
                   key={item.href}
@@ -142,14 +160,7 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
           </div>
           <nav className={styles.overlayNav} aria-label="Mobile primary">
             {NAV.map((item) => {
-              const active =
-                item.href === "/women"
-                  ? pathname === "/women"
-                  : item.href === "/men"
-                    ? pathname === "/men"
-                    : item.href === "/become-a-model"
-                      ? pathname === "/become-a-model"
-                      : false;
+              const active = isNavActive(item.href, pathname, routeHash);
               return (
                 <Link
                   key={item.href}

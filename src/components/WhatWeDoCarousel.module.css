@@ -21,25 +21,29 @@
   font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
   font-size: clamp(1.75rem, 3.5vw, 2.35rem);
   font-weight: 500;
+  line-height: 1.2;
   color: var(--zeli-ink);
 }
 
 .swipeHint {
   display: none;
-  margin: -28px 0 20px 0;
+  margin: 0;
+  padding: 0 16px;
   text-align: center;
   font-size: 0.72rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--zeli-muted);
+  line-height: 1.45;
 }
 
 @media (max-width: 600px) {
   .title {
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
   .swipeHint {
     display: block;
+    margin-bottom: 22px;
   }
 }
 

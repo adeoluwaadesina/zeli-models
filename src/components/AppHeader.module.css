@@ -136,21 +136,24 @@
   margin-bottom: 48px;
 }
 
-/* Match site cream so JPEG “white” mat and pill read as one shape (pure #fff looked like a second box) */
+/* Outer pill uses the same white as typical logo JPEG mats so it doesn’t read as a second color */
 .overlayLogo {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   line-height: 0;
-  padding: 6px 10px;
-  background: var(--zeli-bg);
+  padding: 0;
+  background: #fff;
   border-radius: 10px;
+  overflow: hidden;
 }
 
 .overlayLogoImg {
   display: block;
-  max-height: 36px;
+  max-height: 40px;
   width: auto;
-  max-width: 150px;
+  max-width: 168px;
+  height: auto;
   object-fit: contain;
 }
 
@@ -182,12 +185,13 @@
   font-weight: 500;
   color: inherit;
   opacity: 0.95;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
 }
 
 .overlayActive {
   opacity: 1;
-  text-decoration: underline;
-  text-underline-offset: 8px;
+  border-bottom-color: currentColor;
 }
 
 .overlayFooter {
