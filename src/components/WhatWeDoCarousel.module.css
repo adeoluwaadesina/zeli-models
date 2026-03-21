@@ -1,0 +1,131 @@
+.section {
+  padding: 72px 0 64px;
+  background: var(--zeli-surface);
+  border-top: 1px solid var(--zeli-line);
+  border-bottom: 1px solid var(--zeli-line);
+}
+
+.kicker {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--zeli-muted);
+}
+
+.title {
+  margin: 0 0 40px 0;
+  text-align: center;
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  font-weight: 500;
+  color: var(--zeli-ink);
+}
+
+.carousel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid var(--zeli-line);
+  background: var(--zeli-bg);
+  color: var(--zeli-ink);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.arrow:hover {
+  background: rgba(42, 26, 20, 0.05);
+}
+
+.card {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--zeli-line);
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(18, 8, 6, 0.45);
+}
+
+.content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.cardTitle {
+  margin: 0 0 12px 0;
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+}
+
+.cardDesc {
+  margin: 0;
+  max-width: 400px;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  opacity: 0.92;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.dot,
+.dotActive {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: var(--zeli-line);
+}
+
+.dotActive {
+  background: var(--zeli-ink);
+}
+
+@media (max-width: 600px) {
+  .carousel {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .arrow {
+    display: none;
+  }
+}

@@ -1,9 +1,18 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import * as React from "react";
 import { whatsappNumberE164 } from "@/lib/contact";
 import styles from "./WhatsappButton.module.css";
 import { IconWhatsapp } from "./icons";
 
 export function WhatsappButton() {
+  const pathname = usePathname();
+  const showOnPath = pathname === "/" || pathname === "/become-a-model";
+  if (!showOnPath) {
+    return null;
+  }
+
   const message = encodeURIComponent("Hi Zeli Models — I’d like to make an inquiry.");
 
   const href = `https://wa.me/${whatsappNumberE164}?text=${message}`;

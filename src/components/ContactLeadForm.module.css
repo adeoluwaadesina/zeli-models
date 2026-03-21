@@ -1,0 +1,154 @@
+.section {
+  position: relative;
+  padding: 88px 0 96px;
+  background: var(--zeli-hero-2);
+  color: rgba(255, 250, 245, 0.92);
+  overflow: hidden;
+}
+
+.deco {
+  position: absolute;
+  width: min(70vw, 480px);
+  height: min(70vw, 480px);
+  border-radius: 50%;
+  right: -15%;
+  top: -25%;
+  background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.06), transparent 65%);
+  pointer-events: none;
+}
+
+.kicker {
+  margin: 0 0 14px 0;
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.title {
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: clamp(1.85rem, 4vw, 2.65rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.sub {
+  margin: 0 auto 40px;
+  max-width: 520px;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  opacity: 0.78;
+}
+
+.form {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.field {
+  margin-bottom: 22px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(255, 250, 245, 0.35);
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  padding: 10px 0;
+  outline: none;
+  border-radius: 0;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 250, 245, 0.35);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.submit {
+  margin-top: 12px;
+  min-height: 48px;
+  padding: 0 32px;
+  border: 1px solid rgba(255, 250, 245, 0.45);
+  background: rgba(255, 250, 245, 0.1);
+  color: inherit;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: rgba(255, 250, 245, 0.16);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.success {
+  margin: 0 0 12px 0;
+  font-size: 0.9rem;
+  color: rgba(180, 255, 200, 0.95);
+}
+
+.error {
+  margin: 0 0 12px 0;
+  font-size: 0.9rem;
+  color: #ffb4b4;
+}
+
+.hint {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  opacity: 0.75;
+  font-size: 0.72rem;
+}
+
+.wordCount {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.wordCountBad {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.72rem;
+  color: #ffc9c9;
+}

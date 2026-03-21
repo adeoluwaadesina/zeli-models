@@ -1,0 +1,59 @@
+.footer {
+  padding: 40px 0 48px;
+  background: var(--zeli-bg);
+  border-top: 1px solid var(--zeli-line);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 28px;
+}
+
+.label {
+  margin: 0 0 8px 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--zeli-muted);
+}
+
+.link {
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: 1.1rem;
+  color: var(--zeli-ink);
+}
+
+.link:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.adminRow {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+.adminLink {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--zeli-muted);
+  opacity: 0.55;
+}
+
+.adminLink:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.copy {
+  margin: 18px 0 0 0;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--zeli-muted);
+  opacity: 0.75;
+}

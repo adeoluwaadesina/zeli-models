@@ -1,10 +1,12 @@
-import * as React from "react";
 import { cookies } from "next/headers";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ADMIN_COOKIE } from "@/lib/adminAuth";
 import { readModels } from "@/lib/modelsStore";
-import styles from "./page.module.css";
+import { AdminInboxPanel } from "./AdminInboxPanel";
 import { AdminClientIsland } from "./AdminClientIsland";
+import { AdminSitePanel } from "./AdminSitePanel";
+import styles from "./page.module.css";
 
 export default async function AdminPage() {
   const cookieStore = await cookies();
@@ -21,10 +23,13 @@ export default async function AdminPage() {
         <div className="container">
           <div className={styles.topRow}>
             <div>
+              <Link className={styles.homeLink} href="/">
+                ← Zeli Models home
+              </Link>
               <h1 className={styles.title}>Zeli Models Admin</h1>
               <p className={styles.subtitle}>
-                Manage the portfolio ordering now. Next step is persistence so
-                the owner can add/edit models and upload 5 images per model.
+                Manage models, site copy, featured roster, and review contact / application
+                submissions.
               </p>
             </div>
             <div className={styles.topActions}>
@@ -38,6 +43,8 @@ export default async function AdminPage() {
 
       <div className="container">
         <AdminClientIsland initial={models} />
+        <AdminSitePanel />
+        <AdminInboxPanel />
       </div>
     </main>
   );

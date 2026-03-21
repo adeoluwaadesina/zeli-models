@@ -1,0 +1,57 @@
+.section {
+  padding: 72px 0 64px;
+  background: var(--zeli-bg);
+}
+
+.kicker {
+  margin: 0 0 10px 0;
+  text-align: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--zeli-muted);
+}
+
+.title {
+  margin: 0 0 36px 0;
+  text-align: center;
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  font-weight: 500;
+  color: var(--zeli-ink);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.card {
+  background: var(--zeli-surface);
+  border: 1px solid var(--zeli-line);
+  border-radius: 4px;
+  padding: 28px 24px;
+}
+
+.cardTitle {
+  margin: 0 0 12px 0;
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: var(--zeli-ink);
+}
+
+.cardText {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--zeli-muted);
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

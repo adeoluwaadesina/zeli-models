@@ -1,0 +1,94 @@
+.main {
+  background: var(--zeli-bg);
+  min-height: 100vh;
+}
+
+.toolbar {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--zeli-line);
+  background: var(--zeli-bg);
+}
+
+.back {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--zeli-muted);
+}
+
+.back:hover {
+  color: var(--zeli-ink);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  align-items: stretch;
+  min-height: calc(100vh - 120px);
+}
+
+.left {
+  padding: 48px 32px 64px 24px;
+  max-width: 420px;
+}
+
+.name {
+  margin: 0 0 16px 0;
+  font-family: var(--font-zeli-sans), system-ui, sans-serif;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--zeli-ink);
+}
+
+.bio {
+  margin: 0 0 28px 0;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--zeli-muted);
+}
+
+.stats {
+  margin: 0;
+}
+
+.statRow {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 12px 20px;
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+}
+
+.statRow dt {
+  margin: 0;
+  font-weight: 700;
+  color: var(--zeli-ink);
+  text-align: right;
+}
+
+.statRow dd {
+  margin: 0;
+  color: var(--zeli-muted);
+}
+
+.right {
+  border-left: 1px solid var(--zeli-line);
+  background: var(--zeli-surface);
+}
+
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .right {
+    border-left: none;
+    border-top: 1px solid var(--zeli-line);
+  }
+  .left {
+    max-width: none;
+    padding: 32px 24px 24px;
+  }
+}

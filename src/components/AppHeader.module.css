@@ -1,0 +1,213 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--zeli-bg);
+  border-bottom: 1px solid var(--zeli-line);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: 24px;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.logoImg {
+  display: block;
+  height: auto;
+  width: auto;
+  max-height: 44px;
+  max-width: min(180px, 42vw);
+  object-fit: contain;
+  /* White JPEG backgrounds pick up the header cream (--zeli-bg) instead of a harsh white box */
+  mix-blend-mode: multiply;
+}
+
+.desktopNav {
+  display: none;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+}
+
+.navLink {
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--zeli-ink);
+  opacity: 0.88;
+  transition: opacity 0.15s ease;
+}
+
+.navLink:hover {
+  opacity: 1;
+}
+
+.navActive {
+  opacity: 1;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}
+
+.mobileBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (min-width: 960px) {
+  .desktopNav {
+    display: flex;
+  }
+  .mobileBar {
+    display: none;
+  }
+}
+
+.igBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--zeli-ink);
+  padding: 8px;
+  opacity: 0.9;
+}
+
+.menuBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--zeli-ink);
+}
+
+.menuIcon {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 22px;
+}
+
+.menuIcon span {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  border-radius: 1px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--zeli-hero-1);
+  color: var(--zeli-bg);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 24px 32px;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.overlayTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 48px;
+}
+
+.overlayLogo {
+  display: inline-flex;
+  align-items: center;
+  line-height: 0;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.96);
+  border-radius: 10px;
+}
+
+.overlayLogoImg {
+  display: block;
+  max-height: 36px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+}
+
+.closeBtn {
+  font-size: 2rem;
+  line-height: 1;
+  width: 48px;
+  height: 48px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.overlayNav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+
+.overlayLink {
+  font-size: 0.85rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: inherit;
+  opacity: 0.95;
+}
+
+.overlayActive {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+}
+
+.overlayFooter {
+  display: flex;
+  justify-content: center;
+  padding-top: 24px;
+}
+
+.overlayIg {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: inherit;
+  opacity: 0.9;
+}
+
+@media (min-width: 960px) {
+  .overlay {
+    display: none;
+  }
+}

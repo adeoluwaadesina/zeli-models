@@ -1,0 +1,75 @@
+export type WhatWeDoItem = {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+  sortOrder: number;
+};
+
+export type OurValueItem = {
+  id: string;
+  title: string;
+  text: string;
+};
+
+export type SiteSettings = {
+  marqueeCategories: string[];
+  whatWeDo: WhatWeDoItem[];
+  ourValues: OurValueItem[];
+  instagramUrl: string;
+};
+
+export const DEFAULT_SITE_SETTINGS: SiteSettings = {
+  marqueeCategories: [
+    "HIGH FASHION",
+    "CAMPAIGN",
+    "EDITORIAL",
+    "RUNWAY",
+    "COMMERCIAL",
+    "LUXURY"
+  ],
+  whatWeDo: [
+    {
+      id: "wd-1",
+      title: "Editorial",
+      description:
+        "Magazine covers, fashion spreads, and editorial campaigns with the world's top photographers.",
+      imageUrl: "",
+      sortOrder: 0
+    },
+    {
+      id: "wd-2",
+      title: "Runway",
+      description:
+        "Fashion week representation in Paris, Milan, New York, and London for top designer shows.",
+      imageUrl: "",
+      sortOrder: 1
+    },
+    {
+      id: "wd-3",
+      title: "Commercial",
+      description:
+        "Brand campaigns, digital content, and advertising partnerships with luxury and lifestyle brands.",
+      imageUrl: "",
+      sortOrder: 2
+    }
+  ],
+  ourValues: [
+    {
+      id: "v-1",
+      title: "Excellence",
+      text: "We represent talent with professionalism and care at every touchpoint."
+    },
+    {
+      id: "v-2",
+      title: "Integrity",
+      text: "Transparent partnerships with clients and models alike."
+    },
+    {
+      id: "v-3",
+      title: "Vision",
+      text: "Curating faces and stories that elevate every campaign."
+    }
+  ],
+  instagramUrl: ""
+};

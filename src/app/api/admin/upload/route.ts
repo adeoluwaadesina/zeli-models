@@ -45,11 +45,17 @@ export async function POST(req: NextRequest) {
     }
 
     const body = (await req.json()) as unknown;
+    const scope = String((body as { scope?: unknown })?.scope ?? "model");
     const modelIdRaw = String((body as { modelId?: unknown })?.modelId ?? "");
     const modelId = safeSegment(modelIdRaw);
+    const siteFolder = safeSegment(String((body as { folder?: unknown })?.folder ?? "what-we-do"));
     const files = (body as { files?: unknown })?.files;
 
-    if (!modelId) return NextResponse.json({ error: "Missing modelId" }, { status: 400 });
+    if (scope === "site") {
+      if (!siteFolder) return NextResponse.json({ error: "Invalid folder" }, { status: 400 });
+    } else if (!modelId) {
+      return NextResponse.json({ error: "Missing modelId" }, { status: 400 });
+    }
     if (!Array.isArray(files) || files.length === 0) {
       return NextResponse.json({ error: "No files" }, { status: 400 });
     }
@@ -63,7 +69,10 @@ export async function POST(req: NextRequest) {
         const name = String((f as { name?: unknown })?.name ?? "image.jpg");
         const contentType = String((f as { type?: unknown })?.type ?? "image/jpeg");
         const ext = (name.split(".").pop() || "jpg").slice(0, 6).toLowerCase();
-        const path = `${modelId}/${crypto.randomUUID()}.${ext}`;
+        const path =
+          scope === "site"
+            ? `site/${siteFolder}/${crypto.randomUUID()}.${ext}`
+            : `${modelId}/${crypto.randomUUID()}.${ext}`;
 
         const { data, error } = await supabase.storage.from(bucket).createSignedUploadUrl(path);
         if (error) throw error;

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import type { ZeliModel } from "@/data/models";
+import { normalizeModel, type ZeliModel } from "@/data/models";
 import styles from "./page.module.css";
 import {
   DndContext,
@@ -93,7 +93,8 @@ function SortableRow({
         <div>
           <div className={styles.name}>{model.name}</div>
           <div className={styles.meta}>
-            {model.height} • {model.images.length} images
+            {model.gender === "male" ? "Men" : "Women"} • {model.featured ? "Featured" : "—"} •{" "}
+            {model.height} • {model.images.length} img
           </div>
         </div>
       </div>
@@ -117,24 +118,43 @@ function parseHeight(height: string): { feet: string; inches: string } {
   return { feet: m[1] ?? "", inches: m[2] ?? "" };
 }
 
+function emptyModel(): ZeliModel {
+  return normalizeModel({
+    id: "",
+    name: "",
+    height: `5'9"`,
+    bio: "",
+    images: []
+  });
+}
+
+function validateFeaturedList(list: ZeliModel[]): string | null {
+  const f = list.filter((m) => m.featured);
+  if (f.length > 4) return "At most 4 models can be featured on the home page.";
+  for (const m of f) {
+    if (m.featuredOrder == null || m.featuredOrder < 0 || m.featuredOrder > 3) {
+      return "Each featured model needs a slot 0–3.";
+    }
+  }
+  const ord = f.map((m) => m.featuredOrder as number);
+  if (new Set(ord).size !== ord.length) return "Featured slots must be unique (0–3).";
+  return null;
+}
+
 export function AdminClient({ initial }: { initial: ZeliModel[] }) {
   const [models, setModels] = React.useState<ZeliModel[]>(initial);
   const [status, setStatus] = React.useState<string>("");
   const [saving, setSaving] = React.useState(false);
   const [editorOpen, setEditorOpen] = React.useState(false);
   const [editingId, setEditingId] = React.useState<string | null>(null);
-  const [draft, setDraft] = React.useState<ZeliModel>({
-    id: "",
-    name: "",
-    height: "",
-    bio: "",
-    images: []
-  });
+  const [draft, setDraft] = React.useState<ZeliModel>(emptyModel);
+  const [tagsInput, setTagsInput] = React.useState("");
   const [, setNewFiles] = React.useState<File[]>([]);
   const [heightError, setHeightError] = React.useState<string>("");
   const [heightFeet, setHeightFeet] = React.useState("");
   const [heightInches, setHeightInches] = React.useState("");
   const [imageItems, setImageItems] = React.useState<ImageItem[]>([]);
+  const [featuredImageFile, setFeaturedImageFile] = React.useState<File | null>(null);
 
   const cleanupNewPreviews = React.useCallback(() => {
     imageItems.forEach((it) => {
@@ -159,6 +179,11 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
   }, [refreshFromServer]);
 
   const saveAll = async (nextModels: ZeliModel[]) => {
+    const v = validateFeaturedList(nextModels);
+    if (v) {
+      setStatus(v);
+      return;
+    }
     setSaving(true);
     setStatus("Saving...");
     try {
@@ -179,22 +204,26 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
 
   const openAdd = () => {
     setEditingId(null);
-    setDraft({ id: "", name: "", height: "", bio: "", images: [] });
+    setDraft(emptyModel());
+    setTagsInput("");
     setNewFiles([]);
     setImageItems([]);
     setHeightFeet("");
     setHeightInches("");
+    setFeaturedImageFile(null);
     setEditorOpen(true);
   };
 
   const openEdit = (m: ZeliModel) => {
     setEditingId(m.id);
     setDraft({ ...m, images: [...m.images] });
+    setTagsInput(m.tags.join(", "));
     setNewFiles([]);
     setImageItems(m.images.slice(0, 5).map((url, i) => ({ id: `ex-${i}-${url}`, kind: "existing", url })));
     const parsed = parseHeight(m.height);
     setHeightFeet(parsed.feet);
     setHeightInches(parsed.inches);
+    setFeaturedImageFile(null);
     setEditorOpen(true);
   };
 
@@ -206,6 +235,8 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
     setHeightError("");
     setHeightFeet("");
     setHeightInches("");
+    setTagsInput("");
+    setFeaturedImageFile(null);
   };
 
   const onPickFiles = (files: FileList | null) => {
@@ -344,11 +375,66 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
       setSaving(false);
     }
 
-    const next: ZeliModel = { id, name, height, bio, images };
+    let featuredImageUrlOut = draft.featured ? draft.featuredImageUrl : "";
+    if (draft.featured && featuredImageFile) {
+      try {
+        setSaving(true);
+        setStatus("Uploading featured image...");
+        const urls = await uploadFiles(id, [featuredImageFile]);
+        featuredImageUrlOut = urls[0] ?? draft.featuredImageUrl;
+      } catch (e) {
+        setSaving(false);
+        setStatus(e instanceof Error ? e.message : "Featured image upload failed.");
+        return;
+      } finally {
+        setSaving(false);
+      }
+    }
+    if (!draft.featured) {
+      featuredImageUrlOut = "";
+    }
+
+    const tags = tagsInput
+      .split(/[,|·]/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+
+    const featured = draft.featured;
+    const featuredOrder = featured ? draft.featuredOrder : null;
+    if (featured && (featuredOrder == null || featuredOrder < 0 || featuredOrder > 3)) {
+      setStatus("Featured models need a unique slot from 0 to 3.");
+      return;
+    }
+
+    const next: ZeliModel = normalizeModel({
+      id,
+      name,
+      height,
+      bio,
+      images,
+      gender: draft.gender,
+      featured,
+      featuredOrder: featured ? featuredOrder : null,
+      tags,
+      chest: draft.chest.trim(),
+      waist: draft.waist.trim(),
+      shoe: draft.shoe.trim(),
+      eyes: draft.eyes.trim(),
+      hair: draft.hair.trim(),
+      heightCm: draft.heightCm.trim(),
+      featuredImageUrl: featuredImageUrlOut
+    });
+
     const nextModels =
       editingId === null
         ? [...models, next]
         : models.map((m) => (m.id === editingId ? next : m));
+
+    const v = validateFeaturedList(nextModels);
+    if (v) {
+      setStatus(v);
+      return;
+    }
 
     setModels(nextModels);
     closeEditor();
@@ -415,7 +501,7 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
   return (
     <>
       <div className={`${styles.toolbar} ${styles.toolbarLeft}`}>
-        <button className={styles.btn} type="button" onClick={openAdd}>
+        <button className={`${styles.btn} ${styles.btnSecondary}`} type="button" onClick={openAdd}>
           Add model
         </button>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
@@ -543,6 +629,25 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
                     </div>
                   ) : null}
                 </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-gender">
+                    Board
+                  </label>
+                  <select
+                    id="m-gender"
+                    className={styles.input}
+                    value={draft.gender}
+                    onChange={(e) =>
+                      setDraft((d) => ({
+                        ...d,
+                        gender: e.target.value === "male" ? "male" : "female"
+                      }))
+                    }
+                  >
+                    <option value="female">Women</option>
+                    <option value="male">Men</option>
+                  </select>
+                </div>
               </div>
 
               <div className={styles.field}>
@@ -556,6 +661,173 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
                   onChange={(e) => setDraft((d) => ({ ...d, bio: e.target.value }))}
                   placeholder="Short modelling bio"
                 />
+              </div>
+
+              <div className={styles.field}>
+                <label className={styles.label} htmlFor="m-tags">
+                  Tags (comma-separated)
+                </label>
+                <input
+                  id="m-tags"
+                  className={styles.input}
+                  value={tagsInput}
+                  onChange={(e) => setTagsInput(e.target.value)}
+                  placeholder="Editorial, Runway, Commercial"
+                />
+              </div>
+
+              <div className={styles.fieldGrid}>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-featured">
+                    <input
+                      id="m-featured"
+                      type="checkbox"
+                      checked={draft.featured}
+                      onChange={(e) => {
+                        const on = e.target.checked;
+                        setDraft((d) => ({
+                          ...d,
+                          featured: on,
+                          featuredOrder: on ? d.featuredOrder ?? 0 : null,
+                          featuredImageUrl: on ? d.featuredImageUrl : ""
+                        }));
+                        if (!on) setFeaturedImageFile(null);
+                      }}
+                    />{" "}
+                    Featured on home (max 4)
+                  </label>
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-forder">
+                    Featured slot (0–3)
+                  </label>
+                  <input
+                    id="m-forder"
+                    className={styles.input}
+                    type="number"
+                    min={0}
+                    max={3}
+                    disabled={!draft.featured}
+                    value={draft.featuredOrder ?? ""}
+                    onChange={(e) => {
+                      const v = e.target.value;
+                      setDraft((d) => ({
+                        ...d,
+                        featuredOrder: v === "" ? null : Number(v)
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
+
+              {draft.featured ? (
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-ft-img">
+                    Featured home card image
+                  </label>
+                  <p className={styles.meta}>
+                    Optional. If unset, the first portfolio image is used on the home page.
+                  </p>
+                  {draft.featuredImageUrl ? (
+                    <div className={styles.meta}>
+                      <a href={draft.featuredImageUrl} target="_blank" rel="noreferrer">
+                        Current featured image
+                      </a>{" "}
+                      <button
+                        type="button"
+                        className={styles.btn}
+                        onClick={() => {
+                          setDraft((d) => ({ ...d, featuredImageUrl: "" }));
+                          setFeaturedImageFile(null);
+                        }}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  ) : null}
+                  <input
+                    id="m-ft-img"
+                    className={styles.input}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => setFeaturedImageFile(e.target.files?.[0] ?? null)}
+                  />
+                </div>
+              ) : null}
+
+              <div className={styles.fieldGrid}>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-chest">
+                    Chest
+                  </label>
+                  <input
+                    id="m-chest"
+                    className={styles.input}
+                    value={draft.chest}
+                    onChange={(e) => setDraft((d) => ({ ...d, chest: e.target.value }))}
+                    placeholder='e.g. 32"'
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-waist">
+                    Waist
+                  </label>
+                  <input
+                    id="m-waist"
+                    className={styles.input}
+                    value={draft.waist}
+                    onChange={(e) => setDraft((d) => ({ ...d, waist: e.target.value }))}
+                    placeholder='e.g. 24"'
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-shoe">
+                    Shoe
+                  </label>
+                  <input
+                    id="m-shoe"
+                    className={styles.input}
+                    value={draft.shoe}
+                    onChange={(e) => setDraft((d) => ({ ...d, shoe: e.target.value }))}
+                    placeholder="US / EU"
+                  />
+                </div>
+              </div>
+              <div className={styles.fieldGrid}>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-eyes">
+                    Eyes
+                  </label>
+                  <input
+                    id="m-eyes"
+                    className={styles.input}
+                    value={draft.eyes}
+                    onChange={(e) => setDraft((d) => ({ ...d, eyes: e.target.value }))}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-hair">
+                    Hair
+                  </label>
+                  <input
+                    id="m-hair"
+                    className={styles.input}
+                    value={draft.hair}
+                    onChange={(e) => setDraft((d) => ({ ...d, hair: e.target.value }))}
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-hcm">
+                    Height (cm) optional
+                  </label>
+                  <input
+                    id="m-hcm"
+                    className={styles.input}
+                    value={draft.heightCm}
+                    onChange={(e) => setDraft((d) => ({ ...d, heightCm: e.target.value }))}
+                    placeholder="190 cm"
+                  />
+                </div>
               </div>
 
               <div className={styles.field}>

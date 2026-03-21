@@ -139,13 +139,39 @@
 }
 
 .btnPrimary {
-  background: rgba(26, 14, 10, 0.92);
-  color: rgba(255, 255, 255, 0.92);
-  border-color: rgba(26, 14, 10, 0.92);
+  background: var(--zeli-ink);
+  color: var(--zeli-bg);
+  border-color: var(--zeli-ink);
 }
 
 .btnPrimary:hover {
-  background: rgba(26, 14, 10, 0.98);
+  filter: brightness(1.06);
+}
+
+.btnSecondary {
+  background: var(--zeli-bg);
+  color: var(--zeli-ink);
+  border: 1px solid var(--zeli-ink);
+}
+
+.btnSecondary:hover {
+  background: rgba(42, 26, 20, 0.06);
+}
+
+.homeLink {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--zeli-ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(42, 26, 20, 0.25);
+}
+
+.homeLink:hover {
+  border-bottom-color: var(--zeli-ink);
 }
 
 .toolbar {
@@ -363,5 +389,176 @@
   .thumbs {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+}
+
+.siteSection {
+  margin-top: 32px;
+  padding: 22px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
+}
+
+.siteHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.siteSub {
+  margin: 28px 0 12px 0;
+  font-size: 1.05rem;
+}
+
+.wdList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.wdCard {
+  border: 1px solid rgba(42, 26, 20, 0.1);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.inboxGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 12px;
+}
+
+.inboxCol h3 {
+  margin: 0 0 10px 0;
+  font-size: 1rem;
+}
+
+.inboxItem {
+  border: 1px solid rgba(42, 26, 20, 0.1);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+}
+
+.inboxItem button {
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  .inboxGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.inboxItemUnread {
+  border-left: 4px solid var(--zeli-accent);
+}
+
+.inboxItemRead {
+  border-left: 4px solid rgba(21, 128, 61, 0.55);
+}
+
+.readBadge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badgeUnreadLabel {
+  background: rgba(139, 111, 85, 0.2);
+  color: var(--zeli-ink);
+}
+
+.badgeReadLabel {
+  background: rgba(21, 128, 61, 0.12);
+  color: rgb(21, 128, 61);
+}
+
+.inboxMessageBody {
+  margin-top: 10px;
+  padding: 10px 12px;
+  max-height: 240px;
+  overflow-y: auto;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.5;
+  border-radius: 8px;
+  background: rgba(42, 26, 20, 0.04);
+  border: 1px solid rgba(42, 26, 20, 0.08);
+}
+
+.statusBadgeNew {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgba(180, 83, 9, 0.15);
+  color: rgb(146, 64, 14);
+}
+
+.statusBadgeReviewed {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: rgba(21, 128, 61, 0.12);
+  color: rgb(21, 128, 61);
+}
+
+.inboxPhotoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--zeli-ink);
+  background: rgba(139, 111, 85, 0.12);
+  border: 1px solid rgba(42, 26, 20, 0.12);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.inboxPhotoLink:hover {
+  background: rgba(139, 111, 85, 0.2);
+}
+
+.copyEmailBtn {
+  margin-left: 8px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid rgba(42, 26, 20, 0.2);
+  background: #fff;
+}
+
+.copyEmailBtn:hover {
+  background: rgba(42, 26, 20, 0.06);
 }
 

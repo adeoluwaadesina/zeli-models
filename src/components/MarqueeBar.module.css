@@ -1,0 +1,50 @@
+.wrap {
+  background: var(--zeli-ink);
+  color: var(--zeli-bg);
+  overflow: hidden;
+}
+
+.bar {
+  padding: 14px 0;
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: marquee 32s linear infinite;
+}
+
+.text {
+  flex-shrink: 0;
+  padding-right: 4rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.92;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    justify-content: center;
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+  }
+  .text {
+    padding-right: 0;
+    white-space: normal;
+    text-align: center;
+  }
+}

@@ -1,12 +1,12 @@
-# Zeli Models (Portfolio)
+# Zeli Models
 
-Recreation of the Zeli Models public portfolio site (layout/colors/feel), with:
+Public agency site with portfolio, forms, and admin:
 
-- Responsive hero + portfolio grid
-- Model cards with 5-image carousel
-- Contact section for inquiries
-- Floating “Chat on WhatsApp” button
-- Admin scaffold (reorder UI + JSON export) at `/admin`
+- **Home** (`/`) — hero, category marquee, featured models, services carousel, values, contact form
+- **Women** (`/women`) and **Men** (`/men`) — grids → **Model profile** (`/models/[id]`)
+- **Become a model** (`/become-a-model`) — application form (stored in Supabase when configured)
+- **WhatsApp** floating CTA — shown only on **home** and **become a model** (not on portfolio grids)
+- **Admin** (`/admin`) — models, site copy, inbox
 
 ## Run locally
 
@@ -18,21 +18,20 @@ npm run dev
 
 Open `http://localhost:3000`.
 
+## Public assets (`public/`)
+
+| Asset | Purpose |
+|--------|--------|
+| **`logo.jpg`** | Header logo (`AppHeader`). Use PNG/SVG with transparency if you prefer; update `src` in `src/components/AppHeader.tsx`. |
+| **`work/work-1.svg` … `work-5.svg`** | Placeholder images for local/demo model data (`data/models.json` defaults). Replace with real URLs via Admin when using Supabase. |
+
+The hero section is styled with CSS (see `src/components/Hero.module.css` and color tokens in `src/app/globals.css`), not a full-bleed background image file.
+
 ## Update content
 
-- **Models (names / height / bio / images)**: `src/data/models.ts`
-  - Add images to `public/` and reference them like `"/models/alexandra/1.jpg"`
-- **Contact email/phone**: `src/components/ContactSection.tsx`
-- **WhatsApp number + default message**: `src/components/WhatsappButton.tsx`
-
-## Admin (for later)
-
-The route `http://localhost:3000/admin` is a simple scaffold to help with model ordering.
-Next step is wiring this to authentication + persistence (database) so the business owner can:
-
-- Add/edit/delete models
-- Upload 5 images per model
-- Reorder the grid (what shows at the top)
+- **Models & site copy**: use **Admin** when Supabase (or local `data/models.json` + `data/site-settings.json`) is in use.
+- **WhatsApp / phone display**: `NEXT_PUBLIC_WHATSAPP_NUMBER` in `.env.local` (see `src/lib/contact.ts`).
+- **Instagram (optional)**: `NEXT_PUBLIC_INSTAGRAM_URL` or Admin → Site content.
 
 ### Admin login
 
@@ -48,13 +47,16 @@ See `.env.example` for the keys.
 
 Vercel serverless doesn’t persist file writes, so for production you should use:
 
-- **Supabase Postgres** for models (name/height/bio/order/images)
+- **Supabase Postgres** for models
 - **Supabase Storage** for model images
 
 ### Setup
 
 1. Create a Supabase project
-2. Run the SQL migration in `supabase/migrations/001_models.sql` in the Supabase SQL editor
+2. Run SQL migrations **in order** in the Supabase SQL editor:
+   - `supabase/migrations/001_models.sql`
+   - `supabase/migrations/002_site_and_submissions.sql`
+   - `supabase/migrations/003_featured_image.sql` (`featured_image_url` for featured-card images)
 3. Create a **public** Storage bucket named `model-images` (or set `SUPABASE_STORAGE_BUCKET`)
 4. Add these env vars to Vercel (Project → Settings → Environment Variables):
    - `SUPABASE_URL`
@@ -62,5 +64,12 @@ Vercel serverless doesn’t persist file writes, so for production you should us
    - `SUPABASE_SERVICE_ROLE_KEY`
    - `SUPABASE_STORAGE_BUCKET` (optional)
 
-Once set, the app will automatically read/write models from Supabase and upload images to the bucket.
+Once set, the app will read/write models from Supabase and upload images to the bucket.
 
+### About the migration files
+
+Keep the **`supabase/migrations/`** SQL files in the repo. They are **not** redundant after you run them once: they document the schema, let new environments apply the same changes in order, and are the source of truth for what the app expects. **Do not delete them** after running on production; new clones and databases still need `001` → `002` → `003`.
+
+**Contact and “Become a model” submissions** require Supabase with migration `002` applied (tables `contact_submissions` and `model_applications`). Without the service role key, those APIs return 503.
+
+**Local preview without Supabase:** models and site settings fall back to `data/models.json` and `data/site-settings.json`; submission forms need Supabase.

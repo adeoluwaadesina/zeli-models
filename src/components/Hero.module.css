@@ -1,82 +1,130 @@
 .hero {
   position: relative;
-  background: radial-gradient(
-      1200px 800px at 78% 35%,
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0) 55%
-    ),
-    linear-gradient(135deg, var(--zeli-hero-1), var(--zeli-hero-2) 55%, var(--zeli-hero-3));
-  color: rgba(255, 255, 255, 0.88);
+  background: var(--zeli-bg);
+  color: var(--zeli-ink);
   overflow: hidden;
+  border-bottom: 1px solid var(--zeli-line);
 }
 
-.hero::before,
-.hero::after {
-  content: "";
+.deco,
+.deco2 {
   position: absolute;
-  border-radius: 9999px;
-  filter: blur(0px);
-  opacity: 0.25;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(139, 111, 85, 0.14),
+    rgba(139, 111, 85, 0.04) 45%,
+    transparent 70%
+  );
 }
 
-.hero::before {
-  width: 520px;
-  height: 520px;
-  right: -220px;
-  top: 40px;
+.deco {
+  width: min(72vw, 520px);
+  height: min(72vw, 520px);
+  right: -18%;
+  top: -8%;
+  opacity: 0.9;
 }
 
-.hero::after {
-  width: 420px;
-  height: 420px;
-  right: -140px;
-  top: 150px;
-  opacity: 0.18;
+.deco2 {
+  width: min(55vw, 400px);
+  height: min(55vw, 400px);
+  left: -12%;
+  bottom: -20%;
+  opacity: 0.75;
 }
 
 .inner {
-  min-height: 420px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 86px 0 92px;
+  position: relative;
+  max-width: 720px;
+  padding: 72px 0 80px;
+  text-align: left;
 }
 
-.title {
-  margin: 0 0 32px 0;
-  line-height: 0;
+.established {
   display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 22px 0;
+  font-size: 0.65rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--zeli-muted);
+}
+
+.estLine {
+  flex: 1;
+  max-width: 56px;
+  height: 1px;
+  background: var(--zeli-accent);
+  opacity: 0.55;
+}
+
+.headline {
+  margin: 0 0 18px 0;
+  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-size: clamp(2.1rem, 5vw, 3.35rem);
+  font-weight: 500;
+  line-height: 1.12;
+  color: var(--zeli-ink);
+}
+
+.sub {
+  margin: 0 0 32px 0;
+  max-width: 540px;
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--zeli-muted);
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.btnPrimary,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  width: 100%;
+  min-height: 48px;
+  padding: 0 26px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: opacity 0.15s ease, background 0.15s ease;
 }
 
-.heroLogo {
-  display: block;
-  width: auto;
-  max-width: min(320px, 80vw);
-  height: auto;
-  max-height: clamp(64px, 12vw, 96px);
-  object-fit: contain;
-  /* Removes dark/black background so only the white logo shows on the hero */
-  mix-blend-mode: lighten;
+.btnPrimary {
+  background: var(--zeli-ink);
+  color: var(--zeli-bg);
+  border: 1px solid var(--zeli-ink);
 }
 
-.copy {
-  max-width: 640px;
-  margin: 0;
-  font-size: 14.5px;
-  line-height: 1.8;
-  opacity: 0.7;
+.btnPrimary:hover {
+  opacity: 0.92;
+}
+
+.btnGhost {
+  background: var(--zeli-surface);
+  color: var(--zeli-ink);
+  border: 1px solid var(--zeli-ink);
+}
+
+.btnGhost:hover {
+  background: rgba(42, 26, 20, 0.04);
 }
 
 @media (max-width: 640px) {
   .inner {
-    min-height: 360px;
-    padding: 64px 0 72px;
+    padding: 52px 0 64px;
   }
-  .copy {
-    padding: 0 8px;
+  .established {
+    font-size: 0.6rem;
   }
 }
-
