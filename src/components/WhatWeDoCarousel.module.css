@@ -8,8 +8,9 @@
 .kicker {
   margin: 0 0 10px 0;
   text-align: center;
-  font-size: 0.65rem;
-  letter-spacing: 0.28em;
+  font-family: var(--font-zeli-sans), system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--zeli-muted);
@@ -19,9 +20,10 @@
   margin: 0 0 40px 0;
   text-align: center;
   font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
-  font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+  font-size: clamp(2rem, 3.6vw, 2.6rem);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--zeli-ink);
 }
 
@@ -70,7 +72,7 @@
 }
 
 .arrow:hover {
-  background: rgba(42, 26, 20, 0.05);
+  background: rgba(74, 44, 29, 0.05);
 }
 
 .card {
@@ -93,7 +95,7 @@
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(18, 8, 6, 0.45);
+  background: rgba(58, 31, 20, 0.48);
 }
 
 .content {
@@ -118,8 +120,10 @@
 .cardDesc {
   margin: 0;
   max-width: 400px;
-  font-size: 0.88rem;
-  line-height: 1.65;
+  font-family: var(--font-zeli-sans), system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.68;
+  letter-spacing: 0.01em;
   opacity: 0.92;
 }
 

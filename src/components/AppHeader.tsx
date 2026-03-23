@@ -9,19 +9,20 @@ import styles from "./AppHeader.module.css";
 type NavItem = { href: string; label: string; external?: boolean };
 
 const NAV: NavItem[] = [
-  { href: "/#about", label: "About" },
-  { href: "/#what-we-do", label: "Services" },
-  { href: "/women", label: "Women" },
-  { href: "/men", label: "Men" },
-  { href: "/become-a-model", label: "Become a model" },
-  { href: "/#contact", label: "Contact" }
+  { href: "/", label: "Home" },
+  { href: "/women", label: "Female" },
+  { href: "/men", label: "Male" },
+  { href: "/book-a-model", label: "Book a model" },
+  { href: "/#footer", label: "Contact" }
 ];
 
-/** Hash links (`/#section`) are active on home when `location.hash` matches. */
 function isNavActive(href: string, pathname: string, routeHash: string): boolean {
+  if (href === "/") {
+    return pathname === "/" && routeHash !== "#footer";
+  }
   if (href === "/women") return pathname === "/women";
   if (href === "/men") return pathname === "/men";
-  if (href === "/become-a-model") return pathname === "/become-a-model";
+  if (href === "/book-a-model") return pathname === "/book-a-model";
   if (href.startsWith("/#")) {
     return pathname === "/" && routeHash === href.slice(1);
   }

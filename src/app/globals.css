@@ -1,18 +1,66 @@
+/* Hero: Canva stack (Belfast TS XLight, Adobe Jenson Light Italic Display, WT Solaire Display Light).
+   Drop licensed WOFF2 into public/fonts/ using the filenames below, or rely on local() + Google fallbacks. */
+@font-face {
+  font-family: "Zeli Belfast TS";
+  src:
+    local("Belfast TS XLight"),
+    local("Belfast TS Extralight"),
+    local("TS Belfast XLight"),
+    url("/fonts/BelfastTS-XLight.woff2") format("woff2");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Zeli Adobe Jenson";
+  src:
+    local("Adobe Jenson Pro Light Italic"),
+    local("Adobe Jenson Pro Lt It"),
+    local("Adobe Jenson Pro Display Light Italic"),
+    url("/fonts/AdobeJensonPro-LightItalic.woff2") format("woff2");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Zeli WT Solaire Display";
+  src:
+    local("WT Solaire Display Light"),
+    local("WT Solaire Display"),
+    url("/fonts/WTSolaireDisplay-Light.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
-  --zeli-bg: #f6f0ea;
-  --zeli-surface: #ffffff;
-  --zeli-ink: #2a1a14;
-  --zeli-muted: rgba(42, 26, 20, 0.7);
-  --zeli-line: rgba(42, 26, 20, 0.18);
+  /* Warm neutral luxury palette */
+  --zeli-bg: #f2ece6;
+  --zeli-bg-soft: #ede5dc;
+  --zeli-surface: #fffcf8;
 
-  --zeli-hero-1: #120806;
-  --zeli-hero-2: #2b1510;
-  --zeli-hero-3: #0f0706;
+  --zeli-ink: #4a2c1d;
+  --zeli-ink-mid: #5a3826;
+  --zeli-ink-deep: #3a1f14;
+  --zeli-muted: rgba(74, 44, 29, 0.68);
+  --zeli-line: rgba(74, 44, 29, 0.14);
 
-  --zeli-accent: #8b6f55;
-  --zeli-card-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+  /* Dark sections & cinematic hero overlays */
+  --zeli-hero-1: #3a1f14;
+  --zeli-hero-2: #4a2c1d;
+  --zeli-hero-3: #2a1810;
+
+  --zeli-accent: #a67c5b;
+  --zeli-brown-mid: #6b3e26;
+  --zeli-btn-gradient: linear-gradient(180deg, #6b3e26 0%, #3a1f14 100%);
+
+  --zeli-card-shadow: 0 14px 40px rgba(58, 31, 20, 0.12);
 
   --container: 1120px;
+  /* Wider column for men/women boards (Beth-style wide grid band) */
+  --container-portfolio: 1400px;
 }
 
 * {
@@ -30,6 +78,8 @@ body {
 
 body {
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -41,7 +91,11 @@ a {
   width: 100%;
   max-width: var(--container);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 clamp(20px, 4vw, 36px);
+}
+
+.container.container--portfolio {
+  max-width: min(var(--container-portfolio), 95vw);
 }
 
 .hairline {
@@ -63,4 +117,3 @@ a {
   white-space: nowrap;
   border: 0;
 }
-

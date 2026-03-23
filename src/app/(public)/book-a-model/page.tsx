@@ -1,0 +1,28 @@
+import { ContactLeadForm } from "@/components/ContactLeadForm";
+import { SiteFooter } from "@/components/SiteFooter";
+import type { Metadata } from "next";
+import styles from "./page.module.css";
+
+export const metadata: Metadata = {
+  title: "Book a model"
+};
+
+export const dynamic = "force-dynamic";
+
+export default function BookAModelPage() {
+  return (
+    <main className={styles.main}>
+      <div className={`container ${styles.intro}`}>
+        <header className={styles.header}>
+          <h1 className={styles.title}>Book a model</h1>
+          <p className={styles.sub}>
+            Tell us about your project — casting, campaigns, and partnerships. Our team will follow
+            up with you.
+          </p>
+        </header>
+      </div>
+      <ContactLeadForm />
+      <SiteFooter />
+    </main>
+  );
+}

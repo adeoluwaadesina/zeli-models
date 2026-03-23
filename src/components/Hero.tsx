@@ -8,12 +8,13 @@ export function Hero() {
       <div className={styles.deco2} aria-hidden="true" />
       <div className="container">
         <div className={styles.inner}>
-          <p className={styles.established}>
-            <span className={styles.estLine} aria-hidden="true" />
-            <span>Established 2025</span>
-            <span className={styles.estLine} aria-hidden="true" />
-          </p>
-          <h1 className={styles.headline}>Defining Modern Beauty</h1>
+          <h1 className={styles.headline}>
+            <span className={`${styles.headlineRow} ${styles.headlineDefining}`}>Defining</span>
+            <span className={styles.headlineRow}>
+              <span className={styles.headlineModern}>Modern</span>{" "}
+              <span className={styles.headlineBeauty}>Beauty</span>
+            </span>
+          </h1>
           <p className={styles.sub}>
             An elite modeling agency curating the world&apos;s most captivating faces for luxury
             fashion, editorial, and commercial campaigns.
@@ -22,8 +23,8 @@ export function Hero() {
             <Link className={styles.btnPrimary} href="/women">
               Discover talent
             </Link>
-            <Link className={styles.btnGhost} href="/#contact">
-              Book a consultation
+            <Link className={styles.btnGhost} href="/become-a-model">
+              Become a model
             </Link>
           </div>
         </div>

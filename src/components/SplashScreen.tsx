@@ -55,4 +55,3 @@ export function SplashScreen({ oncePerSession = true, minDurationMs = 900 }: Pro
     </div>
   );
 }
-

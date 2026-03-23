@@ -1,5 +1,3 @@
-import { AboutSection } from "@/components/AboutSection";
-import { ContactLeadForm } from "@/components/ContactLeadForm";
 import { FeaturedModelsSection } from "@/components/FeaturedModelsSection";
 import { Hero } from "@/components/Hero";
 import { MarqueeBar } from "@/components/MarqueeBar";
@@ -21,11 +19,9 @@ export default async function HomePage() {
       <main>
         <Hero />
         <MarqueeBar categories={settings.marqueeCategories} />
-        <AboutSection />
         <FeaturedModelsSection models={models} />
         <WhatWeDoCarousel items={settings.whatWeDo} />
         <OurValuesSection values={settings.ourValues} />
-        <ContactLeadForm />
         <SiteFooter showAdminLink />
       </main>
     </>

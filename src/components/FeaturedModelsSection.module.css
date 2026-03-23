@@ -12,9 +12,10 @@
 }
 
 .kicker {
-  margin: 0 0 8px 0;
-  font-size: 0.65rem;
-  letter-spacing: 0.28em;
+  margin: 0 0 10px 0;
+  font-family: var(--font-zeli-sans), system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--zeli-muted);
@@ -23,15 +24,19 @@
 .title {
   margin: 0;
   font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
-  font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
   font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   color: var(--zeli-ink);
 }
 
 .blurb {
   margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.65;
+  font-family: var(--font-zeli-sans), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
   color: var(--zeli-muted);
 }
 
@@ -57,7 +62,7 @@
   aspect-ratio: 3 / 4;
   border-radius: 2px;
   overflow: hidden;
-  background: rgba(42, 26, 20, 0.06);
+  background: rgba(74, 44, 29, 0.06);
 }
 
 .img {
@@ -70,7 +75,7 @@
 .placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(145deg, rgba(139, 111, 85, 0.25), rgba(42, 26, 20, 0.08));
+  background: linear-gradient(145deg, rgba(166, 124, 91, 0.25), rgba(74, 44, 29, 0.08));
 }
 
 @media (max-width: 1024px) {

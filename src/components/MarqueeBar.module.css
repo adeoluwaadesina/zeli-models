@@ -1,5 +1,5 @@
 .wrap {
-  background: var(--zeli-ink);
+  background: var(--zeli-ink-deep);
   color: var(--zeli-bg);
   overflow: hidden;
 }

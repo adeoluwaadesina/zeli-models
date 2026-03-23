@@ -93,7 +93,7 @@ function SortableRow({
         <div>
           <div className={styles.name}>{model.name}</div>
           <div className={styles.meta}>
-            {model.gender === "male" ? "Men" : "Women"} • {model.featured ? "Featured" : "—"} •{" "}
+            {model.gender === "male" ? "Male" : "Female"} • {model.featured ? "Featured" : "—"} •{" "}
             {model.height} • {model.images.length} img
           </div>
         </div>
@@ -644,8 +644,8 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
                       }))
                     }
                   >
-                    <option value="female">Women</option>
-                    <option value="male">Men</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
                   </select>
                 </div>
               </div>

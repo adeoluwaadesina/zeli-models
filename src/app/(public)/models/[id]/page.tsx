@@ -23,7 +23,7 @@ export default async function ModelDetailPage({ params }: Props) {
   if (!model) notFound();
 
   const boardHref = model.gender === "male" ? "/men" : "/women";
-  const boardLabel = model.gender === "male" ? "Men" : "Women";
+  const boardLabel = model.gender === "male" ? "Male" : "Female";
 
   const rows: { label: string; value: string }[] = [
     { label: "Height", value: model.heightCm ? `${model.height} / ${model.heightCm}` : model.height },

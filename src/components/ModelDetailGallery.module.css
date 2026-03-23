@@ -8,7 +8,7 @@
   max-height: min(85vh, 920px);
   padding: 12px;
   box-sizing: border-box;
-  background: rgba(42, 26, 20, 0.04);
+  background: rgba(74, 44, 29, 0.04);
   overflow: auto;
 }
 
@@ -24,7 +24,7 @@
 
 .empty {
   min-height: min(85vh, 920px);
-  background: linear-gradient(145deg, rgba(139, 111, 85, 0.12), rgba(42, 26, 20, 0.04));
+  background: linear-gradient(145deg, rgba(166, 124, 91, 0.12), rgba(74, 44, 29, 0.04));
 }
 
 .navBtn {

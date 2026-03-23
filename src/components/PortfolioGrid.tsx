@@ -15,7 +15,7 @@ export function PortfolioGrid({
 }) {
   return (
     <section className={styles.section} aria-label={title}>
-      <div className="container">
+      <div className="container container--portfolio">
         <header className={styles.header}>
           <h1 className={styles.title}>{title}</h1>
           {subtitle ? <p className={styles.sub}>{subtitle}</p> : null}

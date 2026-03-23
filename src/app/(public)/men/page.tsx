@@ -10,8 +10,8 @@ export default async function MenPage() {
   return (
     <main>
       <PortfolioGrid
-        title="Men"
-        subtitle="Our men's board — select a model to view Portfolio."
+        title="Male"
+        subtitle="Our male board — select a model to view Portfolio."
         models={models}
       />
       <SiteFooter />
