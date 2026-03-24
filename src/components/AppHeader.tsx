@@ -81,8 +81,8 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
             <Image
               src="/logo.jpg"
               alt=""
-              width={180}
-              height={48}
+              width={296}
+              height={74}
               className={styles.logoImg}
               priority
             />

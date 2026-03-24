@@ -44,8 +44,8 @@
 
 .headline {
   margin: 0 0 clamp(16px, 2.5vw, 22px) 0;
-  /* Editorial scale — closer to large Canva hero type */
-  font-size: clamp(3rem, 8.5vw, 6.25rem);
+  /* Fluid type: lifts phones/tablets (rem + vw) without a low cap on small screens */
+  font-size: clamp(3.2rem, 2.15rem + 5.75vw, 6.25rem);
   letter-spacing: 0.06em;
   word-spacing: 0.05em;
   color: var(--zeli-ink);
@@ -136,14 +136,6 @@
 
 .btnGhost:hover {
   background: rgba(74, 44, 29, 0.05);
-}
-
-@media (max-width: 480px) {
-  .headline {
-    font-size: clamp(2.65rem, 10vw, 3.4rem);
-    letter-spacing: 0.045em;
-    word-spacing: 0.04em;
-  }
 }
 
 @media (max-width: 640px) {

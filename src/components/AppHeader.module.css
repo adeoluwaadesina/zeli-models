@@ -72,6 +72,15 @@
   .mobileBar {
     display: none;
   }
+
+  .inner {
+    min-height: 86px;
+  }
+
+  .logoImg {
+    max-height: 74px;
+    max-width: min(296px, 32vw);
+  }
 }
 
 .igBtn {
