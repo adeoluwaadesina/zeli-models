@@ -37,27 +37,28 @@
 
 .inner {
   position: relative;
-  max-width: 720px;
+  max-width: min(980px, 100%);
   padding: clamp(56px, 10vw, 88px) 0 clamp(64px, 11vw, 96px);
   text-align: left;
 }
 
 .headline {
   margin: 0 0 clamp(16px, 2.5vw, 22px) 0;
-  font-size: clamp(2.35rem, 5.5vw, 3.65rem);
-  letter-spacing: 0.08em;
-  word-spacing: 0.07em;
+  /* Editorial scale — closer to large Canva hero type */
+  font-size: clamp(3rem, 8.5vw, 6.25rem);
+  letter-spacing: 0.06em;
+  word-spacing: 0.05em;
   color: var(--zeli-ink);
   line-height: 1;
 }
 
 .headlineRow {
   display: block;
-  line-height: 0.9;
+  line-height: 0.92;
 }
 
 .headlineRow:first-child {
-  margin-bottom: -0.04em;
+  margin-bottom: -0.02em;
 }
 
 /* Belfast TS Extralight / XLight */
@@ -139,8 +140,9 @@
 
 @media (max-width: 480px) {
   .headline {
-    letter-spacing: 0.055em;
-    word-spacing: 0.05em;
+    font-size: clamp(2.65rem, 10vw, 3.4rem);
+    letter-spacing: 0.045em;
+    word-spacing: 0.04em;
   }
 }
 
