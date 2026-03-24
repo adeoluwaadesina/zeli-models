@@ -12,7 +12,7 @@ const NAV: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/women", label: "Female" },
   { href: "/men", label: "Male" },
-  { href: "/book-a-model", label: "Book a model" },
+  { href: "/become-a-model", label: "Book a model" },
   { href: "/#footer", label: "Contact" }
 ];
 
@@ -23,6 +23,7 @@ function isNavActive(href: string, pathname: string, routeHash: string): boolean
   if (href === "/women") return pathname === "/women";
   if (href === "/men") return pathname === "/men";
   if (href === "/book-a-model") return pathname === "/book-a-model";
+  if (href === "/become-a-model") return pathname === "/become-a-model";
   if (href.startsWith("/#")) {
     return pathname === "/" && routeHash === href.slice(1);
   }
