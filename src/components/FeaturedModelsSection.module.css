@@ -4,31 +4,34 @@
 }
 
 .headerRow {
-  display: grid;
-  grid-template-columns: 1fr minmax(0, 320px);
-  gap: 28px 48px;
-  align-items: end;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
   margin-bottom: 40px;
 }
 
 .kicker {
   margin: 0 0 10px 0;
-  font-family: var(--font-zeli-sans), system-ui, sans-serif;
+  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
   font-size: 0.66rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--zeli-muted);
+  text-align: center;
 }
 
 .title {
   margin: 0;
-  font-family: var(--font-zeli-serif), ui-serif, Georgia, serif;
+  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
   font-size: clamp(2rem, 3.8vw, 2.75rem);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--zeli-ink);
+  text-align: center;
 }
 
 .blurb {
@@ -38,6 +41,7 @@
   line-height: 1.7;
   letter-spacing: 0.01em;
   color: var(--zeli-muted);
+  text-align: center;
 }
 
 .empty {
@@ -50,6 +54,35 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 18px;
+}
+
+.ctaRow {
+  margin-top: 22px;
+  display: flex;
+  justify-content: center;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  padding: 0 clamp(24px, 3.5vw, 32px);
+  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  border-radius: 0;
+  background: var(--zeli-btn-gradient);
+  color: var(--zeli-bg);
+  border: 1px solid var(--zeli-ink-deep);
+  transition: filter 0.15s ease, opacity 0.15s ease;
+  text-decoration: none;
+}
+
+.ctaButton:hover {
+  filter: brightness(1.05);
 }
 
 .card {

@@ -1,6 +1,6 @@
 .wrap {
   background: var(--zeli-ink-deep);
-  color: var(--zeli-bg);
+  color: rgba(166, 124, 91, 0.86);
   overflow: hidden;
 }
 
@@ -17,12 +17,14 @@
 .text {
   flex-shrink: 0;
   padding-right: 4rem;
-  font-size: 0.68rem;
-  font-weight: 600;
+  font-family: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif, Georgia,
+    "Times New Roman", serif;
+  font-size: 0.76rem;
+  font-weight: 200;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   white-space: nowrap;
-  opacity: 0.92;
+  opacity: 1;
 }
 
 @keyframes marquee {

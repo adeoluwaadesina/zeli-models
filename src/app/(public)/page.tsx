@@ -1,6 +1,7 @@
 import { FeaturedModelsSection } from "@/components/FeaturedModelsSection";
 import { Hero } from "@/components/Hero";
 import { MarqueeBar } from "@/components/MarqueeBar";
+import { OurStorySection } from "@/components/OurStorySection";
 import { OurValuesSection } from "@/components/OurValuesSection";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SplashScreen } from "@/components/SplashScreen";
@@ -20,6 +21,7 @@ export default async function HomePage() {
         <Hero />
         <MarqueeBar categories={settings.marqueeCategories} />
         <FeaturedModelsSection models={models} />
+        <OurStorySection />
         <WhatWeDoCarousel items={settings.whatWeDo} />
         <OurValuesSection values={settings.ourValues} />
         <SiteFooter showAdminLink />

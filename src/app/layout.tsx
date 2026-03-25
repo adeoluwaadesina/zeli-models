@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Cormorant, Cormorant_Garamond, Montserrat, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
+import { Cormorant, Cormorant_Garamond, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -9,11 +10,14 @@ const playfair = Playfair_Display({
   weight: ["400", "500", "600", "700"]
 });
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
+/** Glacial Indifference (OFL) — UI / small copy site-wide via --font-zeli-sans */
+const glacialIndifference = localFont({
+  src: [
+    { path: "./fonts/GlacialIndifference-Regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/GlacialIndifference-Bold.woff2", weight: "700", style: "normal" }
+  ],
   variable: "--font-zeli-sans",
-  display: "swap",
-  weight: ["400", "500", "600", "700"]
+  display: "swap"
 });
 
 /** Thin classical serifs — closer to Belfast TS / Solaire than Playfair until licensed WOFF2 are added. */
@@ -47,7 +51,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${montserrat.variable} ${heroCormorant.variable} ${heroCormorantGaramond.variable}`}
+      className={`${playfair.variable} ${glacialIndifference.variable} ${heroCormorant.variable} ${heroCormorantGaramond.variable}`}
     >
       <body
         style={{

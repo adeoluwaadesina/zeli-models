@@ -23,7 +23,7 @@ export function FeaturedModelsSection({ models }: { models: ZeliModel[] }) {
             </h2>
           </div>
           <p className={styles.blurb}>
-            Handpicked talent representing the pinnacle of modern beauty and versatility.
+            A glimpse of our talent
           </p>
         </div>
 
@@ -32,23 +32,36 @@ export function FeaturedModelsSection({ models }: { models: ZeliModel[] }) {
             Featured models will appear here once marked in the admin portal.
           </p>
         ) : (
-          <div className={styles.grid}>
-            {featured.map((m) => {
-              const cover = coverSrc(m);
-              return (
-                <Link key={m.id} href={`/models/${m.id}`} className={styles.card} aria-label={m.name}>
-                  <div className={styles.media}>
-                    {cover ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={cover} alt="" className={styles.img} />
-                    ) : (
-                      <div className={styles.placeholder} aria-hidden="true" />
-                    )}
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <>
+            <div className={styles.grid}>
+              {featured.map((m) => {
+                const cover = coverSrc(m);
+                return (
+                  <Link
+                    key={m.id}
+                    href={`/models/${m.id}`}
+                    className={styles.card}
+                    aria-label={m.name}
+                  >
+                    <div className={styles.media}>
+                      {cover ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={cover} alt="" className={styles.img} />
+                      ) : (
+                        <div className={styles.placeholder} aria-hidden="true" />
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            <div className={styles.ctaRow}>
+              <Link className={styles.ctaButton} href="/women">
+                View full roster
+              </Link>
+            </div>
+          </>
         )}
       </div>
     </section>

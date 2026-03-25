@@ -7,9 +7,8 @@ const EMAIL = "Zelimodels@gmail.com";
 const FOOTER_ADDRESS_LINES = ["Lagos", "Nigeria"];
 
 const BUSINESS_HOURS_LINES = [
-  "Mon - Fri: 9:00 AM - 6:00 PM",
-  "Saturday: 10:00 AM - 4:00 PM",
-  "Sunday: Closed"
+  "Mon - Saturday: 9:00-5:00pm",
+  "Sunday: 10:00-5:00pm"
 ];
 
 function IconPin({ className }: { className?: string }) {
