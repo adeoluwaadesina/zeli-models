@@ -17,13 +17,13 @@ export function FeaturedModelsSection({ models }: { models: ZeliModel[] }) {
       <div className="container">
         <div className={styles.headerRow}>
           <div>
-            <p className={styles.kicker}>Our roster</p>
+            <p className={styles.kicker}>Our Roster</p>
             <h2 id="featured-heading" className={styles.title}>
-              Featured models
+              Featured Models
             </h2>
           </div>
           <p className={styles.blurb}>
-            A glimpse of our talent
+            A Glimpse Of Our Talent
           </p>
         </div>
 
@@ -58,7 +58,7 @@ export function FeaturedModelsSection({ models }: { models: ZeliModel[] }) {
 
             <div className={styles.ctaRow}>
               <Link className={styles.ctaButton} href="/women">
-                View full roster
+                View Full Roster
               </Link>
             </div>
           </>

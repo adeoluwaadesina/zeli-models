@@ -3,98 +3,132 @@
   background: var(--zeli-bg);
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 0.95fr;
-  gap: 42px;
-  align-items: start;
+.headingStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .kicker {
   margin: 0 0 14px 0;
-  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
+  font-family: var(--font-zeli-kicker);
   font-size: 0.66rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  font-weight: 200;
+  font-weight: 600;
   color: var(--zeli-muted);
 }
 
 .title {
-  margin: 0 0 18px 0;
-  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 3.6vw, 3.05rem);
+  margin: 0;
+  font-family: var(--font-zeli-section-title);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
   font-weight: 200;
-  line-height: 1.06;
+  line-height: 1.12;
   letter-spacing: -0.02em;
   color: var(--zeli-ink);
 }
 
+.titleLine {
+  display: inline;
+  font-family: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+/* Same face as Hero “Modern” in Redefining Modern Beauty */
+.titleElegance {
+  display: inline;
+  font-family: "Zeli Adobe Jenson", var(--font-hero-cormorant-garamond), var(--font-zeli-serif), ui-serif,
+    Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-style: italic;
+  letter-spacing: -0.01em;
+}
+
+.hairlineWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 16px 0 22px 0;
+}
+
 .body {
-  margin: 0 0 26px 0;
+  margin: 0 auto 28px;
+  max-width: 44rem;
+  text-align: center;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
   font-size: 1rem;
   line-height: 1.75;
   letter-spacing: 0.01em;
   color: var(--zeli-muted);
-  max-width: 44rem;
 }
 
-.items {
+.cards {
   display: grid;
-  gap: 16px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
+  align-items: start;
+  gap: clamp(24px, 5vw, 44px);
+  width: 100%;
 }
 
-.item {
+@media (min-width: 1024px) {
+  .cards {
+    gap: clamp(16px, 3vw, 26px);
+  }
+}
+
+.card {
+  box-sizing: border-box;
+  /* Square tile, capped so it doesn’t stretch into a wide rectangle on large screens */
+  width: min(100%, 240px);
+  aspect-ratio: 1;
+  min-width: 0;
+  background: var(--zeli-surface);
+  border: 1px solid var(--zeli-line);
+  border-radius: 4px;
+  box-shadow: var(--zeli-card-shadow);
+  padding: clamp(14px, 3vw, 22px) clamp(12px, 2.5vw, 18px);
   display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
 }
 
-.icon {
+.cardIcon {
   width: 22px;
   height: 22px;
-  margin-top: 4px;
   color: var(--zeli-accent);
   opacity: 0.95;
   flex-shrink: 0;
 }
 
-.itemTextWrap {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.itemLabel {
+.cardTitle {
   margin: 0;
-  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
-  font-size: 1.1rem;
+  width: 100%;
+  font-family: var(--font-zeli-section-title);
+  font-size: clamp(0.88rem, 2.4vw, 1.05rem);
   font-weight: 200;
+  line-height: 1.2;
   color: var(--zeli-ink);
+  text-align: center;
 }
 
-.itemText {
+.cardText {
   margin: 0;
+  width: 100%;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  line-height: 1.45;
+  letter-spacing: 0.01em;
   color: var(--zeli-muted);
-}
-
-.right {
-  min-height: 420px;
-  border: 1px solid var(--zeli-line);
-  background: linear-gradient(140deg, rgba(166, 124, 91, 0.22), rgba(74, 44, 29, 0.12));
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
-
-  .right {
-    min-height: 240px;
-  }
+  text-align: center;
+  overflow-wrap: break-word;
 }
 

@@ -17,7 +17,7 @@ export function Hero() {
           </h1>
           <p className={styles.sub}>
             A modeling agency representing a curated roster of talent for campaigns and creative
-            projects, reflecting the evolving face of modern beauty
+            projects, reflecting the evolving face of modern beauty.
           </p>
           <div className={styles.ctas}>
             <Link className={styles.btnPrimary} href="/women">

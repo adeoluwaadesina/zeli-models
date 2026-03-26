@@ -46,8 +46,8 @@
   margin: 0 0 clamp(16px, 2.5vw, 22px) 0;
   /* Fluid type: lifts phones/tablets (rem + vw) without a low cap on small screens */
   font-size: clamp(3.2rem, 2.15rem + 5.75vw, 6.25rem);
-  letter-spacing: 0.06em;
-  word-spacing: 0.05em;
+  letter-spacing: 0.02em;
+  word-spacing: 0.02em;
   color: var(--zeli-ink);
   line-height: 1;
 }
@@ -65,7 +65,7 @@
 .headlineDefining {
   font-family: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif, Georgia,
     "Times New Roman", serif;
-  font-weight: 200;
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -73,7 +73,7 @@
 .headlineModern {
   font-family: "Zeli Adobe Jenson", var(--font-hero-cormorant-garamond), var(--font-zeli-serif), ui-serif,
     Georgia, "Times New Roman", serif;
-  font-weight: 300;
+  font-weight: 500;
   font-style: italic;
 }
 
@@ -81,7 +81,7 @@
 .headlineBeauty {
   font-family: "Zeli WT Solaire Display", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif,
     Georgia, "Times New Roman", serif;
-  font-weight: 300;
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -109,7 +109,7 @@
   justify-content: center;
   min-height: 50px;
   padding: 0 clamp(24px, 3.5vw, 32px);
-  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--font-zeli-kicker);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.24em;

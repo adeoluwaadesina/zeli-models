@@ -57,6 +57,7 @@
 
 .tagline {
   margin: 0;
+  font-family: var(--font-zeli-kicker);
   font-size: 13px;
   letter-spacing: 2.8px;
   text-transform: uppercase;

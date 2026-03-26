@@ -68,9 +68,9 @@ export function ContactLeadForm() {
     <section className={styles.section} id="contact" aria-labelledby="contact-heading">
       <div className={styles.deco} aria-hidden="true" />
       <div className="container">
-        <p className={styles.kicker}>Get in touch</p>
+        <p className={styles.kicker}>Get In Touch</p>
         <h2 id="contact-heading" className={styles.title}>
-          Ready to <em>elevate your next</em> campaign?
+          Ready To <em>Elevate Your Next</em> Campaign?
         </h2>
         <p className={styles.sub}>
           Connect with our team to discuss casting, booking, and partnership opportunities.

@@ -7,9 +7,9 @@ export function OurValuesSection({ values }: { values: OurValueItem[] }) {
   return (
     <section className={styles.section} id="values" aria-labelledby="values-heading">
       <div className="container">
-        <p className={styles.kicker}>Our values</p>
+        <p className={styles.kicker}>Our Values</p>
         <h2 id="values-heading" className={styles.title}>
-          How we work
+          How We Work
         </h2>
         <div className={styles.grid}>
           {values.map((v) => (

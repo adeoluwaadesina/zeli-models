@@ -61,6 +61,14 @@
   --container: 1120px;
   /* Wider column for men/women boards (Beth-style wide grid band) */
   --container-portfolio: 1400px;
+
+  /* Same stack as Featured Models / Hero “Redefining”: Belfast → Cormorant → Playfair */
+  --font-zeli-section-title: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif,
+    Georgia, "Times New Roman", serif;
+
+  /* Small uppercase labels (kickers, overlines) — Glacial Indifference, same fallbacks as body */
+  --font-zeli-kicker: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
 * {

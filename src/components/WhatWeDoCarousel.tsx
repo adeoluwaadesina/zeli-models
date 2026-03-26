@@ -41,13 +41,13 @@ export function WhatWeDoCarousel({ items }: { items: WhatWeDoItem[] }) {
   return (
     <section className={styles.section} id="what-we-do" aria-labelledby="wwd-heading">
       <div className="container">
-        <p className={styles.kicker}>What we do</p>
+        <p className={styles.kicker}>What We Do</p>
         <h2 id="wwd-heading" className={styles.title}>
-          Our services
+          Our Services
         </h2>
 
         {n > 1 ? (
-          <p className={styles.swipeHint}>Swipe the card to browse services</p>
+          <p className={styles.swipeHint}>Swipe The Card To Browse Services</p>
         ) : null}
 
         <div className={styles.carousel}>

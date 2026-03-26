@@ -10,6 +10,7 @@
 }
 
 .back {
+  font-family: var(--font-zeli-kicker);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.18em;

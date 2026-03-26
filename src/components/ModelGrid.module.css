@@ -12,9 +12,11 @@
 }
 
 .title {
-  font-family: var(--font-zeli-serif), Georgia, "Times New Roman", serif;
-  font-weight: 700;
-  font-size: clamp(44px, 4.2vw, 62px);
+  font-family: var(--font-zeli-section-title);
+  font-weight: 200;
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 

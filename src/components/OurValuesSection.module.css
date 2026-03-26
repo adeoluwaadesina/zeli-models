@@ -6,19 +6,19 @@
 .kicker {
   margin: 0 0 10px 0;
   text-align: center;
-  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
+  font-family: var(--font-zeli-kicker);
   font-size: 0.66rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  font-weight: 200;
+  font-weight: 600;
   color: var(--zeli-muted);
 }
 
 .title {
   margin: 0 0 36px 0;
   text-align: center;
-  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 3.6vw, 2.6rem);
+  font-family: var(--font-zeli-section-title);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
   font-weight: 200;
   line-height: 1.1;
   letter-spacing: -0.02em;
@@ -28,42 +28,64 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 22px;
+  justify-items: center;
+  align-items: start;
+  gap: clamp(24px, 5vw, 44px);
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .grid {
+    gap: clamp(16px, 3vw, 26px);
+  }
 }
 
 .card {
-  background: var(--zeli-surface);
+  box-sizing: border-box;
+  width: min(100%, 240px);
+  aspect-ratio: 1;
+  min-width: 0;
+  /* Same as section — outline only, no fill or lift */
+  background: transparent;
   border: 1px solid var(--zeli-line);
   border-radius: 4px;
-  padding: 28px 24px;
-  min-height: 228px;
+  box-shadow: none;
+  padding: clamp(14px, 3vw, 22px) clamp(12px, 2.5vw, 18px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
 }
 
 .cardTitle {
-  margin: 0 0 12px 0;
-  font-family: "Zeli Belfast TS", var(--font-zeli-serif), ui-serif, Georgia, "Times New Roman", serif;
-  font-size: 1.42rem;
-  font-weight: 200;
+  margin: 0;
+  width: 100%;
+  /* Same stack + weight as Hero “Redefining” */
+  font-family: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif, Georgia,
+    "Times New Roman", serif;
+  font-size: clamp(1.02rem, 2.75vw, 1.2rem);
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: var(--zeli-ink);
+  text-align: center;
 }
 
 .cardText {
   margin: 0;
+  width: 100%;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: 0.86rem;
-  line-height: 1.55;
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  line-height: 1.45;
   letter-spacing: 0.01em;
   color: var(--zeli-muted);
-
-  /* Reduce writing to keep box height consistent with the reference */
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
+  text-align: center;
+  overflow-wrap: break-word;
   overflow: hidden;
-}
-
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
-  }
+  display: -webkit-box;
+  -webkit-line-clamp: 6;
+  -webkit-box-orient: vertical;
 }

@@ -52,7 +52,7 @@ export function SiteFooter({ showAdminLink = false }: { showAdminLink?: boolean 
     <footer id="footer" className={styles.footer}>
       <div className={`container ${styles.footInner}`}>
         <div className={styles.contactBlock}>
-          <h2 className={styles.contactHeading}>Contact info</h2>
+          <h2 className={styles.contactHeading}>Contact Info</h2>
 
           <ul className={styles.contactList}>
             <li className={styles.contactRow}>
@@ -80,7 +80,7 @@ export function SiteFooter({ showAdminLink = false }: { showAdminLink?: boolean 
           </ul>
 
           <div className={styles.hoursBlock}>
-            <h3 className={styles.hoursHeading}>Business hours</h3>
+            <h3 className={styles.hoursHeading}>Business Hours</h3>
             <ul className={styles.hoursList}>
               {BUSINESS_HOURS_LINES.map((line) => (
                 <li key={line}>{line}</li>

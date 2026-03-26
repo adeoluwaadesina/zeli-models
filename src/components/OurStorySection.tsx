@@ -23,42 +23,58 @@ function IconStar(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+function IconDiamond(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" {...props}>
+      <path fill="currentColor" d="M12 2 22 12 12 22 2 12 12 2z" />
+    </svg>
+  );
+}
+
 export function OurStorySection() {
   return (
-    <section className={styles.section} id="our-story" aria-label="Our story">
+    <section className={styles.section} id="our-story" aria-label="Our Story">
       <div className="container">
-        <div className={styles.grid}>
-          <div className={styles.left}>
-            <p className={styles.kicker}>Our story</p>
-            <h2 className={styles.title}>Where vision meets elegance</h2>
+        <div className={styles.headingStack}>
+          <p className={styles.kicker}>Our Story</p>
+          <h2 className={styles.title}>
+            <span className={styles.titleLine}>Where Vision Meets </span>
+            <span className={styles.titleElegance}>Elegance</span>
+          </h2>
+          <div className={styles.hairlineWrap}>
+            <div className="hairline" />
+          </div>
+        </div>
 
-            <p className={styles.body}>
-              At Zeli Models, we bring creativity and sophistication to every project. Each model
-              brings unique energy and style, shaping campaigns with a distinct identity. From
-              concept to final image, we partner closely with clients to craft experiences and
-              visuals that are memorable and fully aligned with your vision.
+        <p className={styles.body}>
+          At Zeli Models, we bring creativity and sophistication to every project. Each model brings
+          unique energy and style, shaping campaigns with a distinct identity. From concept to
+          final image, we partner closely with clients to craft experiences and visuals that are
+          memorable and fully aligned with your vision.
+        </p>
+
+        <div className={styles.cards}>
+          <div className={styles.card}>
+            <IconEye className={styles.cardIcon} aria-hidden="true" />
+            <p className={styles.cardTitle}>Vision</p>
+            <p className={styles.cardText}>
+              We see the potential in every idea and bring it to life.
             </p>
-
-            <div className={styles.items}>
-              <div className={styles.item}>
-                <IconEye className={styles.icon} />
-                <div className={styles.itemTextWrap}>
-                  <p className={styles.itemLabel}>Vision</p>
-                  <p className={styles.itemText}>We see the potential in every idea and bring it to life</p>
-                </div>
-              </div>
-
-              <div className={styles.item}>
-                <IconStar className={styles.icon} />
-                <div className={styles.itemTextWrap}>
-                  <p className={styles.itemLabel}>Impact</p>
-                  <p className={styles.itemText}>Our work leaves a lasting impression on every audience</p>
-                </div>
-              </div>
-            </div>
           </div>
 
-          <div className={styles.right} aria-hidden="true" />
+          <div className={styles.card}>
+            <IconStar className={styles.cardIcon} aria-hidden="true" />
+            <p className={styles.cardTitle}>Impact</p>
+            <p className={styles.cardText}>
+              Our work leaves a lasting impression on every audience.
+            </p>
+          </div>
+
+          <div className={styles.card}>
+            <IconDiamond className={styles.cardIcon} aria-hidden="true" />
+            <p className={styles.cardTitle}>Placeholder</p>
+            <p className={styles.cardText}>Third pillar — swap this copy when ready.</p>
+          </div>
         </div>
       </div>
     </section>

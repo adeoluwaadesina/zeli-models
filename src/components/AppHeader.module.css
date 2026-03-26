@@ -39,7 +39,7 @@
 }
 
 .navLink {
-  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-family: var(--font-zeli-kicker);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.24em;
@@ -189,6 +189,7 @@
 }
 
 .overlayLink {
+  font-family: var(--font-zeli-kicker);
   font-size: 0.85rem;
   letter-spacing: 0.28em;
   text-transform: uppercase;
@@ -214,6 +215,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  font-family: var(--font-zeli-kicker);
   font-size: 0.75rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

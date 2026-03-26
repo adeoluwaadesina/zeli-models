@@ -42,7 +42,7 @@ export function ApplyModelForm() {
 
   return (
     <form className={styles.form} onSubmit={(e) => void onSubmit(e)}>
-      <h2 className={styles.h2}>Personal information</h2>
+      <h2 className={styles.h2}>Personal Information</h2>
       <div className={styles.grid2}>
         <label className={styles.field}>
           <span className={styles.lab}>
@@ -129,7 +129,7 @@ export function ApplyModelForm() {
         </label>
       </div>
 
-      <h2 className={styles.h2}>Physical attributes</h2>
+      <h2 className={styles.h2}>Physical Attributes</h2>
       <div className={styles.grid2}>
         <label className={styles.field}>
           <span className={styles.lab}>
@@ -163,7 +163,7 @@ export function ApplyModelForm() {
         </label>
       </div>
 
-      <h2 className={styles.h2}>Portfolio &amp; interests</h2>
+      <h2 className={styles.h2}>Portfolio &amp; Interests</h2>
       <label className={`${styles.field} ${styles.full}`}>
         <span className={styles.lab}>Portfolio link</span>
         <input className={styles.input} name="portfolioLink" type="url" placeholder="https://…" />
