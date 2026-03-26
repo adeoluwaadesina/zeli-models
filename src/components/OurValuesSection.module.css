@@ -28,35 +28,31 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  justify-items: center;
+  justify-items: stretch;
   align-items: start;
-  gap: clamp(24px, 5vw, 44px);
+  gap: 22px;
   width: 100%;
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    gap: clamp(16px, 3vw, 26px);
-  }
 }
 
 .card {
   box-sizing: border-box;
-  width: min(100%, 240px);
-  aspect-ratio: 1;
+  width: 100%;
   min-width: 0;
-  /* Same as section — outline only, no fill or lift */
+  /* Landscape tile: wider than tall */
+  aspect-ratio: 1.85 / 1;
+  /* Transparent fill, outline retained */
   background: transparent;
   border: 1px solid var(--zeli-line);
   border-radius: 4px;
   box-shadow: none;
-  padding: clamp(14px, 3vw, 22px) clamp(12px, 2.5vw, 18px);
+  padding: 14px 18px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 10px;
+  gap: 8px;
+  overflow: hidden;
 }
 
 .cardTitle {
@@ -78,14 +74,24 @@
   margin: 0;
   width: 100%;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: clamp(0.72rem, 2vw, 0.82rem);
-  line-height: 1.45;
+  font-size: 0.82rem;
+  line-height: 1.4;
   letter-spacing: 0.01em;
   color: var(--zeli-muted);
   text-align: center;
   overflow-wrap: break-word;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    aspect-ratio: 2.1 / 1;
+  }
 }
