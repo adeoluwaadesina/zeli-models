@@ -8,7 +8,7 @@ export default function AdminLoginPage({
 }: {
   searchParams?: { error?: string; next?: string };
 }) {
-  const nextPath = searchParams?.next ?? "/admin";
+  const nextPath = searchParams?.next ?? "/admin/models";
   const showError = searchParams?.error === "1";
 
   return (

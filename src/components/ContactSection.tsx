@@ -32,7 +32,7 @@ export function ContactSection() {
 
         <div className={styles.footerLine} />
         <div className={styles.adminRow}>
-          <a className={styles.adminLink} href="/admin">
+          <a className={styles.adminLink} href="/admin/models">
             Admin
           </a>
         </div>

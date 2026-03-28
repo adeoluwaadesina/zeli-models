@@ -91,7 +91,7 @@ export function SiteFooter({ showAdminLink = false }: { showAdminLink?: boolean 
 
         {showAdminLink ? (
           <div className={styles.adminRow}>
-            <a className={styles.adminLink} href="/admin">
+            <a className={styles.adminLink} href="/admin/models">
               Admin
             </a>
           </div>

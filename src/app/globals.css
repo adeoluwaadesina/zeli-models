@@ -1,12 +1,10 @@
-/* Hero: Canva stack (Belfast TS XLight, Adobe Jenson Light Italic Display, WT Solaire Display Light).
-   Drop licensed WOFF2 into public/fonts/ using the filenames below, or rely on local() + Google fallbacks. */
+/* Hero: Canva stack — local font names only (no hosted WOFF2). Falls back to system / Google stack where used. */
 @font-face {
   font-family: "Zeli Belfast TS";
   src:
     local("Belfast TS XLight"),
     local("Belfast TS Extralight"),
-    local("TS Belfast XLight"),
-    url("/fonts/BelfastTS-XLight.woff2") format("woff2");
+    local("TS Belfast XLight");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -17,8 +15,7 @@
   src:
     local("Adobe Jenson Pro Light Italic"),
     local("Adobe Jenson Pro Lt It"),
-    local("Adobe Jenson Pro Display Light Italic"),
-    url("/fonts/AdobeJensonPro-LightItalic.woff2") format("woff2");
+    local("Adobe Jenson Pro Display Light Italic");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -26,10 +23,7 @@
 
 @font-face {
   font-family: "Zeli WT Solaire Display";
-  src:
-    local("WT Solaire Display Light"),
-    local("WT Solaire Display"),
-    url("/fonts/WTSolaireDisplay-Light.woff2") format("woff2");
+  src: local("WT Solaire Display Light"), local("WT Solaire Display");
   font-weight: 300;
   font-style: normal;
   font-display: swap;

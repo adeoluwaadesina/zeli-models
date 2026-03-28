@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
@@ -78,13 +77,16 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
       <header className={styles.header}>
         <div className={`container ${styles.inner}`}>
           <Link href="/" className={styles.logo} aria-label="Zeli home">
-            <Image
+            {/* Plain img: next/image warns when CSS max-width/max-height scales the logo */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src="/logo.jpg"
               alt=""
               width={296}
               height={74}
               className={styles.logoImg}
-              priority
+              fetchPriority="high"
+              decoding="async"
             />
           </Link>
 
@@ -143,12 +145,14 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
         >
           <div className={styles.overlayTop}>
             <span className={styles.overlayLogo}>
-              <Image
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
                 src="/logo.jpg"
                 alt=""
                 width={160}
                 height={44}
                 className={styles.overlayLogoImg}
+                decoding="async"
               />
             </span>
             <button
