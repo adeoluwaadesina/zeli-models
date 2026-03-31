@@ -66,7 +66,9 @@ export function mergeSiteSettings(partial: Partial<SiteSettings>): SiteSettings 
       Array.isArray(partial.ourValues) && partial.ourValues.length
         ? normalizeOurValues(partial.ourValues)
         : base.ourValues,
-    instagramUrl: typeof partial.instagramUrl === "string" ? partial.instagramUrl : base.instagramUrl
+    instagramUrl: typeof partial.instagramUrl === "string" ? partial.instagramUrl : base.instagramUrl,
+    tiktokUrl: typeof partial.tiktokUrl === "string" ? partial.tiktokUrl : base.tiktokUrl,
+    twitterUrl: typeof partial.twitterUrl === "string" ? partial.twitterUrl : base.twitterUrl
   };
 }
 
@@ -75,12 +77,16 @@ function rowToSettings(r: {
   what_we_do: unknown;
   our_values: unknown;
   instagram_url: string | null;
+  tiktok_url?: string | null;
+  twitter_url?: string | null;
 }): SiteSettings {
   return mergeSiteSettings({
     marqueeCategories: Array.isArray(r.marquee_categories) ? r.marquee_categories : undefined,
     whatWeDo: normalizeWhatWeDo(r.what_we_do),
     ourValues: normalizeOurValues(r.our_values),
-    instagramUrl: r.instagram_url ?? ""
+    instagramUrl: r.instagram_url ?? "",
+    tiktokUrl: r.tiktok_url ?? "",
+    twitterUrl: r.twitter_url ?? ""
   });
 }
 
@@ -89,7 +95,7 @@ export async function readSiteSettings(): Promise<SiteSettings> {
   if (supabase) {
     const { data, error } = await supabase
       .from("site_settings")
-      .select("marquee_categories,what_we_do,our_values,instagram_url")
+      .select("marquee_categories,what_we_do,our_values,instagram_url,tiktok_url,twitter_url")
       .eq("id", 1)
       .maybeSingle();
 
@@ -105,7 +111,9 @@ export async function readSiteSettings(): Promise<SiteSettings> {
       marqueeCategories: o.marqueeCategories as string[] | undefined,
       whatWeDo: o.whatWeDo as WhatWeDoItem[] | undefined,
       ourValues: o.ourValues as OurValueItem[] | undefined,
-      instagramUrl: o.instagramUrl as string | undefined
+      instagramUrl: o.instagramUrl as string | undefined,
+      tiktokUrl: o.tiktokUrl as string | undefined,
+      twitterUrl: o.twitterUrl as string | undefined
     });
   } catch {
     return { ...DEFAULT_SITE_SETTINGS };
@@ -122,6 +130,8 @@ export async function writeSiteSettings(settings: SiteSettings): Promise<void> {
         what_we_do: settings.whatWeDo,
         our_values: settings.ourValues,
         instagram_url: settings.instagramUrl,
+        tiktok_url: settings.tiktokUrl,
+        twitter_url: settings.twitterUrl,
         updated_at: new Date().toISOString()
       },
       { onConflict: "id" }

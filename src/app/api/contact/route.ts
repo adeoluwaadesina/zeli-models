@@ -9,6 +9,8 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
+const ALLOWED_GENDER_PREF = new Set(["no_preference", "female", "male", "other"]);
+
 export async function POST(req: Request) {
   let body: unknown;
   try {
@@ -18,15 +20,29 @@ export async function POST(req: Request) {
   }
 
   const o = body as Record<string, unknown>;
+  const intentRaw = String(o.intent ?? "contact").trim().toLowerCase();
+  const isBookIntent = intentRaw === "book";
   const fullName = String(o.fullName ?? "").trim();
   const email = String(o.email ?? "").trim();
   const phoneRaw = String(o.phone ?? "").trim();
   const phone = digitsOnly(phoneRaw);
   const company = String(o.company ?? "").trim();
   const message = String(o.message ?? "").trim();
+  const termsAccepted = o.termsAccepted === true;
+  const genderPreference = String(o.genderPreference ?? "").trim() || "no_preference";
+  const rawTotal = o.modelCountTotal;
+  const modelCountTotal =
+    typeof rawTotal === "number" && Number.isInteger(rawTotal)
+      ? rawTotal
+      : typeof rawTotal === "string" && rawTotal.trim() !== ""
+        ? Number.parseInt(rawTotal, 10)
+        : NaN;
 
   if (!fullName || !email || !phoneRaw || !message) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+  }
+  if (isBookIntent && !termsAccepted) {
+    return NextResponse.json({ error: "You must accept the terms and conditions." }, { status: 400 });
   }
   if (!isValidPhoneDigits(phoneRaw)) {
     return NextResponse.json(
@@ -40,6 +56,17 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+  if (isBookIntent) {
+    if (!Number.isInteger(modelCountTotal) || modelCountTotal < 1 || modelCountTotal > 999) {
+      return NextResponse.json(
+        { error: "Enter total models needed as a whole number (1–999)." },
+        { status: 400 }
+      );
+    }
+    if (!ALLOWED_GENDER_PREF.has(genderPreference)) {
+      return NextResponse.json({ error: "Invalid gender preference" }, { status: 400 });
+    }
+  }
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {
@@ -49,13 +76,33 @@ export async function POST(req: Request) {
     );
   }
 
-  const { error } = await supabase.from("contact_submissions").insert({
-    full_name: fullName,
-    email,
-    phone: phone,
-    company,
-    message
-  });
+  const insertRow = isBookIntent
+    ? {
+        full_name: fullName,
+        email,
+        phone: phone,
+        company,
+        message,
+        gender_preference: genderPreference,
+        model_count_total: modelCountTotal,
+        model_count_female: null,
+        model_count_male: null,
+        terms_accepted: true
+      }
+    : {
+        full_name: fullName,
+        email,
+        phone: phone,
+        company,
+        message,
+        gender_preference: null,
+        model_count_total: null,
+        model_count_female: null,
+        model_count_male: null,
+        terms_accepted: false
+      };
+
+  const { error } = await supabase.from("contact_submissions").insert(insertRow);
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });

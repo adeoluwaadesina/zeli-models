@@ -32,6 +32,10 @@ debug-*.log
 .DS_Store
 Thumbs.db
 .vscode
+.idea
 
 # uploaded media (local dev only)
 public/uploads
+
+# Cursor / local tooling (keep out of repo)
+.cursor/

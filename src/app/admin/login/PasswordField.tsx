@@ -22,12 +22,14 @@ export function PasswordField({
         type={show ? "text" : "password"}
         autoComplete="current-password"
         required
+        suppressHydrationWarning
       />
       <button
         className={toggleClassName}
         type="button"
         onClick={() => setShow((s) => !s)}
         aria-label={show ? "Hide password" : "Show password"}
+        suppressHydrationWarning
       >
         {show ? (
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">

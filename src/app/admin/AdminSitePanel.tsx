@@ -173,6 +173,32 @@ export function AdminSitePanel() {
       </div>
 
       <div className={styles.field}>
+        <label className={styles.label} htmlFor="tiktok-url">
+          TikTok URL (optional)
+        </label>
+        <input
+          id="tiktok-url"
+          className={styles.input}
+          value={settings.tiktokUrl}
+          onChange={(e) => setSettings((s) => (s ? { ...s, tiktokUrl: e.target.value } : s))}
+          placeholder="https://www.tiktok.com/@… (falls back to site default if empty)"
+        />
+      </div>
+
+      <div className={styles.field}>
+        <label className={styles.label} htmlFor="twitter-url">
+          X (Twitter) URL (optional)
+        </label>
+        <input
+          id="twitter-url"
+          className={styles.input}
+          value={settings.twitterUrl}
+          onChange={(e) => setSettings((s) => (s ? { ...s, twitterUrl: e.target.value } : s))}
+          placeholder="https://x.com/… (leave empty for “coming soon” button)"
+        />
+      </div>
+
+      <div className={styles.field}>
         <label className={styles.label} htmlFor="marquee-lines">
           Marquee categories (one per line)
         </label>

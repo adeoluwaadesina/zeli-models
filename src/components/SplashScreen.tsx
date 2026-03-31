@@ -43,11 +43,15 @@ export function SplashScreen({ oncePerSession = true, minDurationMs = 900 }: Pro
       aria-hidden="true"
     >
       <div className={styles.center}>
-        <div className={styles.mark}>
-          <div className={styles.markInner} />
-        </div>
-        <p className={styles.tagline}>Exclusive • Portfolio</p>
-        <h1 className={styles.title}>Zeli Models</h1>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.jpg"
+          alt=""
+          width={280}
+          height={70}
+          className={styles.logoImg}
+          decoding="async"
+        />
         <div className={styles.loader}>
           <div className={styles.bar} />
         </div>

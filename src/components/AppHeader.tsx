@@ -11,7 +11,7 @@ const NAV: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/women", label: "Female" },
   { href: "/men", label: "Male" },
-  { href: "/become-a-model", label: "Book a model" },
+  { href: "/book-a-model", label: "Book a model" },
   { href: "/#footer", label: "Contact" }
 ];
 
@@ -40,7 +40,37 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
-export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" width={22} height={22} aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.71 2.89 2.89 0 0 1 2.31-4.64V7.05a6.32 6.32 0 1 0 5.33 6.23V8.36a8.16 8.16 0 0 0 4.78 1.54V6.69h-.0z"
+      />
+    </svg>
+  );
+}
+
+function TwitterIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" width={22} height={22} aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
+      />
+    </svg>
+  );
+}
+
+export function AppHeader({
+  instagramUrl,
+  tiktokUrl,
+  twitterHref
+}: {
+  instagramUrl: string;
+  tiktokUrl: string;
+  twitterHref: string;
+}) {
   const pathname = usePathname();
   const [open, setOpen] = React.useState(false);
   const [routeHash, setRouteHash] = React.useState("");
@@ -106,17 +136,43 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
           </nav>
 
           <div className={styles.mobileBar}>
-            {showIg ? (
+            <div className={styles.mobileSocial} aria-label="Social links">
+              {showIg ? (
+                <a
+                  className={styles.socialIconBtn}
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <InstagramIcon />
+                </a>
+              ) : null}
               <a
-                className={styles.igBtn}
-                href={instagramUrl}
+                className={styles.socialIconBtn}
+                href={tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
+                aria-label="TikTok"
               >
-                <InstagramIcon />
+                <TikTokIcon />
               </a>
-            ) : null}
+              {twitterHref ? (
+                <a
+                  className={styles.socialIconBtn}
+                  href={twitterHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="X (Twitter)"
+                >
+                  <TwitterIcon />
+                </a>
+              ) : (
+                <button type="button" className={styles.socialIconBtn} aria-label="Twitter (coming soon)">
+                  <TwitterIcon />
+                </button>
+              )}
+            </div>
             <button
               type="button"
               className={styles.menuBtn}
@@ -178,18 +234,43 @@ export function AppHeader({ instagramUrl }: { instagramUrl: string }) {
               );
             })}
           </nav>
-          {showIg ? (
-            <div className={styles.overlayFooter}>
+          <div className={styles.overlaySocial} aria-label="Social links">
+            {showIg ? (
               <a
-                className={styles.overlayIg}
+                className={styles.overlaySocialBtn}
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Instagram"
               >
-                <InstagramIcon /> Instagram
+                <InstagramIcon />
               </a>
-            </div>
-          ) : null}
+            ) : null}
+            <a
+              className={styles.overlaySocialBtn}
+              href={tiktokUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="TikTok"
+            >
+              <TikTokIcon />
+            </a>
+            {twitterHref ? (
+              <a
+                className={styles.overlaySocialBtn}
+                href={twitterHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="X (Twitter)"
+              >
+                <TwitterIcon />
+              </a>
+            ) : (
+              <button type="button" className={styles.overlaySocialBtn} aria-label="Twitter (coming soon)">
+                <TwitterIcon />
+              </button>
+            )}
+          </div>
         </div>
       ) : null}
     </>

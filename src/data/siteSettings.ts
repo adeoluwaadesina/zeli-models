@@ -17,6 +17,8 @@ export type SiteSettings = {
   whatWeDo: WhatWeDoItem[];
   ourValues: OurValueItem[];
   instagramUrl: string;
+  tiktokUrl: string;
+  twitterUrl: string;
 };
 
 export const DEFAULT_SITE_SETTINGS: SiteSettings = {
@@ -71,5 +73,7 @@ export const DEFAULT_SITE_SETTINGS: SiteSettings = {
       text: "Curating faces and stories that elevate every campaign."
     }
   ],
-  instagramUrl: ""
+  instagramUrl: "",
+  tiktokUrl: "",
+  twitterUrl: ""
 };

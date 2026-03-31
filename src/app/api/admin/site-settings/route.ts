@@ -18,7 +18,9 @@ function isSiteSettings(x: unknown): x is SiteSettings {
     s.marqueeCategories.every((t) => typeof t === "string") &&
     Array.isArray(s.whatWeDo) &&
     Array.isArray(s.ourValues) &&
-    typeof s.instagramUrl === "string"
+    typeof s.instagramUrl === "string" &&
+    typeof s.tiktokUrl === "string" &&
+    typeof s.twitterUrl === "string"
   );
 }
 

@@ -62,7 +62,30 @@
 .mobileBar {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+}
+
+.mobileSocial {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.socialIconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--zeli-ink);
+  padding: 8px;
+  opacity: 0.9;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.socialIconBtn:hover {
+  opacity: 1;
 }
 
 @media (min-width: 960px) {
@@ -81,15 +104,6 @@
     max-height: 74px;
     max-width: min(296px, 32vw);
   }
-}
-
-.igBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--zeli-ink);
-  padding: 8px;
-  opacity: 0.9;
 }
 
 .menuBtn {
@@ -205,22 +219,29 @@
   border-bottom-color: currentColor;
 }
 
-.overlayFooter {
+.overlaySocial {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 12px;
   padding-top: 24px;
 }
 
-.overlayIg {
+.overlaySocialBtn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-zeli-kicker);
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  justify-content: center;
   color: inherit;
-  opacity: 0.9;
+  opacity: 0.92;
+  padding: 10px;
+  line-height: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.overlaySocialBtn:hover {
+  opacity: 1;
 }
 
 @media (min-width: 960px) {

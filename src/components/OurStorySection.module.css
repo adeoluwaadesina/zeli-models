@@ -70,24 +70,33 @@
 .cards {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  justify-items: center;
-  align-items: start;
-  gap: clamp(24px, 5vw, 44px);
+  align-items: stretch;
+  gap: clamp(16px, 3vw, 28px);
   width: 100%;
+  max-width: min(920px, 100%);
+  margin: 0 auto;
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 767px) {
   .cards {
-    gap: clamp(16px, 3vw, 26px);
+    grid-template-columns: 1fr;
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 100%;
   }
 }
 
 .card {
   box-sizing: border-box;
-  /* Square tile, capped so it doesn’t stretch into a wide rectangle on large screens */
-  width: min(100%, 240px);
-  aspect-ratio: 1;
+  width: 100%;
   min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1;
   background: var(--zeli-surface);
   border: 1px solid var(--zeli-line);
   border-radius: 4px;

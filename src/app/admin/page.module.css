@@ -123,7 +123,7 @@
   font-size: 13px;
 }
 
-.btn:hover {
+.btn:not(.btnPrimary):not(.btnSecondary):hover {
   background: rgba(74, 44, 29, 0.04);
 }
 
@@ -134,7 +134,10 @@
 }
 
 .btnPrimary:hover {
-  filter: brightness(1.06);
+  background: var(--zeli-ink);
+  color: var(--zeli-bg);
+  border-color: var(--zeli-ink);
+  filter: brightness(1.08);
 }
 
 .btnSecondary {
@@ -381,11 +384,17 @@
   margin-bottom: 12px;
 }
 
+.inboxTabsStack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
 .inboxViewTabs {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 14px;
 }
 
 .inboxViewTab {
@@ -401,20 +410,22 @@
   color: var(--zeli-muted);
 }
 
-.inboxViewTab:hover {
-  background: rgba(74, 44, 29, 0.04);
+.inboxViewTab:not(.inboxViewTabActive):hover {
+  background: rgba(74, 44, 29, 0.06);
   color: var(--zeli-ink);
 }
 
 .inboxViewTabActive {
   border-color: var(--zeli-ink);
   background: var(--zeli-ink);
-  color: var(--zeli-bg);
+  color: #fffcf8;
 }
 
 .inboxViewTabActive:hover {
-  filter: brightness(1.05);
-  color: var(--zeli-bg);
+  background: var(--zeli-ink);
+  color: #fffcf8;
+  border-color: var(--zeli-ink);
+  filter: brightness(1.08);
 }
 
 .inboxArchivePolicy {
@@ -467,14 +478,13 @@
   gap: 10px;
 }
 
-.inboxGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+.inboxTablePanel {
   margin-top: 12px;
+  width: 100%;
+  min-width: 0;
 }
 
-.inboxCol h3 {
+.inboxTablePanel h3 {
   margin: 0 0 10px 0;
   font-size: 1rem;
 }
@@ -666,10 +676,6 @@
 }
 
 @media (max-width: 900px) {
-  .inboxGrid {
-    grid-template-columns: 1fr;
-  }
-
   .inboxFieldRow {
     grid-template-columns: 1fr;
     gap: 4px;
@@ -797,5 +803,107 @@
 
 .copyEmailBtn:hover {
   background: rgba(74, 44, 29, 0.06);
+}
+
+.inboxTableScroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 8px;
+  border: 1px solid rgba(74, 44, 29, 0.18);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.inboxSheet {
+  width: 100%;
+  min-width: max(100%, 640px);
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  color: var(--zeli-ink);
+  table-layout: auto;
+}
+
+.inboxSheet th {
+  text-align: left;
+  padding: 10px 12px;
+  background: rgba(74, 44, 29, 0.07);
+  border-bottom: 2px solid rgba(74, 44, 29, 0.14);
+  border-right: 1px solid rgba(74, 44, 29, 0.12);
+  font-weight: 650;
+  white-space: nowrap;
+  color: var(--zeli-ink);
+}
+
+.inboxSheet th:last-child {
+  border-right: none;
+}
+
+.inboxSheet td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(74, 44, 29, 0.08);
+  border-right: 1px solid rgba(74, 44, 29, 0.1);
+  vertical-align: top;
+}
+
+.inboxSheet td:last-child {
+  border-right: none;
+}
+
+.inboxSheetRowAlt {
+  background: rgba(74, 44, 29, 0.025);
+}
+
+.inboxSheetRowUnread {
+  box-shadow: inset 3px 0 0 var(--zeli-accent);
+}
+
+.inboxSheetRowRead {
+  box-shadow: inset 3px 0 0 rgba(21, 128, 61, 0.45);
+}
+
+.inboxSheetMono {
+  font-variant-numeric: tabular-nums;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.78rem;
+}
+
+.inboxSheetPreview {
+  max-width: 200px;
+  color: var(--zeli-muted);
+  line-height: 1.35;
+}
+
+.inboxSheetActions {
+  white-space: nowrap;
+  width: 1%;
+}
+
+.inboxSheetBtn {
+  padding: 6px 12px;
+  min-height: 36px;
+  font-size: 0.78rem;
+}
+
+.inboxSheetDetailRow td {
+  padding: 0;
+  border-bottom: 1px solid rgba(74, 44, 29, 0.12);
+  background: rgba(74, 44, 29, 0.03);
+}
+
+.inboxSheetDetailInner {
+  padding: 14px 16px 18px;
+  border-top: 1px solid rgba(74, 44, 29, 0.1);
+}
+
+.inboxBookingTag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(30, 64, 175, 0.12);
+  color: rgb(30, 64, 175);
 }
 

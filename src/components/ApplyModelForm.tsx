@@ -1,7 +1,6 @@
 "use client";
 
 import { digitsOnly, isValidPhoneDigits, PHONE_DIGITS_MAX } from "@/lib/formValidation";
-import { MODELING_INTEREST_OPTIONS } from "@/lib/modelingInterests";
 import * as React from "react";
 import styles from "./ApplyModelForm.module.css";
 
@@ -42,19 +41,19 @@ export function ApplyModelForm() {
 
   return (
     <form className={styles.form} onSubmit={(e) => void onSubmit(e)}>
-      <h2 className={styles.h2}>Personal Information</h2>
+      <h2 className={styles.h2}>Your details</h2>
       <div className={styles.grid2}>
         <label className={styles.field}>
           <span className={styles.lab}>
             First name <span className={styles.req}>*</span>
           </span>
-          <input className={styles.input} name="firstName" required placeholder="Your first name" />
+          <input className={styles.input} name="firstName" required placeholder="First name" />
         </label>
         <label className={styles.field}>
           <span className={styles.lab}>
-            Last name <span className={styles.req}>*</span>
+            Surname <span className={styles.req}>*</span>
           </span>
-          <input className={styles.input} name="lastName" required placeholder="Your last name" />
+          <input className={styles.input} name="lastName" required placeholder="Surname" />
         </label>
         <label className={styles.field}>
           <span className={styles.lab}>
@@ -88,105 +87,48 @@ export function ApplyModelForm() {
         </label>
         <label className={styles.field}>
           <span className={styles.lab}>
-            Date of birth <span className={styles.req}>*</span>
-          </span>
-          <input className={styles.input} name="dob" type="date" required />
-        </label>
-        <label className={styles.field}>
-          <span className={styles.lab}>
-            Gender <span className={styles.req}>*</span>
-          </span>
-          <select className={styles.input} name="gender" required defaultValue="">
-            <option value="" disabled>
-              Select gender
-            </option>
-            <option value="female">Female</option>
-            <option value="male">Male</option>
-            <option value="other">Other / prefer not to say</option>
-          </select>
-        </label>
-      </div>
-
-      <h2 className={styles.h2}>Location</h2>
-      <div className={styles.grid2}>
-        <label className={styles.field}>
-          <span className={styles.lab}>
-            Country <span className={styles.req}>*</span>
-          </span>
-          <input className={styles.input} name="country" required placeholder="Country" />
-        </label>
-        <label className={styles.field}>
-          <span className={styles.lab}>
-            State / region <span className={styles.req}>*</span>
-          </span>
-          <input className={styles.input} name="state" required placeholder="State" />
-        </label>
-        <label className={`${styles.field} ${styles.full}`}>
-          <span className={styles.lab}>
-            City <span className={styles.req}>*</span>
-          </span>
-          <input className={styles.input} name="city" required placeholder="City" />
-        </label>
-      </div>
-
-      <h2 className={styles.h2}>Physical Attributes</h2>
-      <div className={styles.grid2}>
-        <label className={styles.field}>
-          <span className={styles.lab}>
-            Height (feet) <span className={styles.req}>*</span>
+            Age <span className={styles.req}>*</span>
           </span>
           <input
             className={styles.input}
-            name="heightFeet"
+            name="age"
+            type="number"
+            required
+            min={16}
+            max={99}
+            inputMode="numeric"
+            placeholder="e.g. 22"
+          />
+        </label>
+        <label className={styles.field}>
+          <span className={styles.lab}>
+            Height (ft) <span className={styles.req}>*</span>
+          </span>
+          <input
+            className={styles.input}
+            name="heightFt"
             type="number"
             required
             min={3}
             max={8}
-            inputMode="numeric"
-            placeholder="e.g. 5"
+            step={0.01}
+            inputMode="decimal"
+            placeholder="e.g. 5.75 (5′9″)"
           />
+          <span className={styles.hint}>Decimal feet, e.g. 5.9 for 5′9″.</span>
         </label>
-        <label className={styles.field}>
+        <label className={`${styles.field} ${styles.full}`}>
           <span className={styles.lab}>
-            Height (inches) <span className={styles.req}>*</span>
+            Address <span className={styles.req}>*</span>
           </span>
           <input
             className={styles.input}
-            name="heightInches"
-            type="number"
+            name="applicantAddress"
             required
-            min={0}
-            max={11}
-            inputMode="numeric"
-            placeholder="e.g. 9"
+            placeholder="e.g. Victoria Island, Lagos"
           />
         </label>
       </div>
-
-      <h2 className={styles.h2}>Portfolio &amp; Interests</h2>
-      <label className={`${styles.field} ${styles.full}`}>
-        <span className={styles.lab}>Portfolio link</span>
-        <input className={styles.input} name="portfolioLink" type="url" placeholder="https://…" />
-      </label>
-
-      <fieldset className={styles.fieldset}>
-        <legend className={styles.legend}>
-          Modeling interests <span className={styles.req}>*</span>
-        </legend>
-        <p className={styles.hint}>Select all that apply and/or describe in Other.</p>
-        <div className={styles.checkGrid}>
-          {MODELING_INTEREST_OPTIONS.map((opt) => (
-            <label key={opt.key} className={styles.check}>
-              <input type="checkbox" name={`interest_${opt.key}`} value="yes" />
-              <span>{opt.label}</span>
-            </label>
-          ))}
-        </div>
-        <label className={styles.field}>
-          <span className={styles.lab}>Other (please specify)</span>
-          <input className={styles.input} name="interestsOther" placeholder="Other categories" />
-        </label>
-      </fieldset>
 
       <h2 className={styles.h2}>Photos</h2>
       <label className={`${styles.field} ${styles.full}`}>

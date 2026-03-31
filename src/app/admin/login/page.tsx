@@ -24,7 +24,12 @@ export default function AdminLoginPage({
           Enter the owner credentials to access the admin panel.
         </p>
 
-        <form className={styles.form} method="post" action="/api/admin/login">
+        <form
+          className={styles.form}
+          method="post"
+          action="/api/admin/login"
+          suppressHydrationWarning
+        >
           <input type="hidden" name="next" value={nextPath} />
 
           <div className={styles.field}>
@@ -37,6 +42,7 @@ export default function AdminLoginPage({
               name="username"
               autoComplete="username"
               required
+              suppressHydrationWarning
             />
           </div>
 
@@ -53,7 +59,11 @@ export default function AdminLoginPage({
 
           <div className={styles.actions}>
             <span className={styles.hint}>Protected area</span>
-            <button className={`${styles.btn} ${styles.btnPrimary}`} type="submit">
+            <button
+              className={`${styles.btn} ${styles.btnPrimary}`}
+              type="submit"
+              suppressHydrationWarning
+            >
               Sign in
             </button>
           </div>

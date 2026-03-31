@@ -17,9 +17,12 @@
 .text {
   flex-shrink: 0;
   padding-right: 4rem;
-  font-family: var(--font-zeli-kicker);
+  /* Match Hero “Redefining” headline stack */
+  font-family: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif, Georgia,
+    "Times New Roman", serif;
   font-size: 0.76rem;
-  font-weight: 400;
+  font-weight: 500;
+  font-style: normal;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   white-space: nowrap;

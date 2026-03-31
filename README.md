@@ -58,6 +58,8 @@ Vercel serverless doesn’t persist file writes, so for production you should us
    - `supabase/migrations/002_site_and_submissions.sql`
    - `supabase/migrations/003_featured_image.sql` (`featured_image_url` for featured-card images)
    - `supabase/migrations/004_inbox_archive.sql` (`archived_at` on submissions; auto-purge after 30 days in admin API)
+   - `supabase/migrations/005_forms_and_booking.sql` (simplified applications: age + address; book-a-model fields on contact submissions)
+   - `supabase/migrations/006_site_social_urls.sql` (`tiktok_url`, `twitter_url` on `site_settings` for admin-editable social links)
 3. Create a **public** Storage bucket named `model-images` (or set `SUPABASE_STORAGE_BUCKET`)
 4. Add these env vars to Vercel (Project → Settings → Environment Variables):
    - `SUPABASE_URL`
@@ -69,7 +71,7 @@ Once set, the app will read/write models from Supabase and upload images to the 
 
 ### About the migration files
 
-Keep the **`supabase/migrations/`** SQL files in the repo. They are **not** redundant after you run them once: they document the schema, let new environments apply the same changes in order, and are the source of truth for what the app expects. **Do not delete them** after running on production; new clones and databases still need `001` → `002` → `003` → `004` (as applicable).
+Keep the **`supabase/migrations/`** SQL files in the repo. They are **not** redundant after you run them once: they document the schema, let new environments apply the same changes in order, and are the source of truth for what the app expects. **Do not delete them** after running on production; new clones and databases still need `001` through `006` (as applicable).
 
 **Contact and “Become a model” submissions** require Supabase with migration `002` applied (tables `contact_submissions` and `model_applications`). Without the service role key, those APIs return 503.
 

@@ -1,0 +1,222 @@
+.section {
+  position: relative;
+  padding: 88px 0 96px;
+  background: var(--zeli-hero-2);
+  color: rgba(255, 250, 245, 0.92);
+  overflow: hidden;
+}
+
+.deco {
+  position: absolute;
+  width: min(70vw, 480px);
+  height: min(70vw, 480px);
+  border-radius: 50%;
+  right: -15%;
+  top: -25%;
+  background: radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.06), transparent 65%);
+  pointer-events: none;
+}
+
+.kicker {
+  margin: 0 0 14px 0;
+  text-align: center;
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.66rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.title {
+  margin: 0 0 16px 0;
+  text-align: center;
+  font-family: var(--font-zeli-section-title);
+  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-weight: 200;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 200;
+}
+
+.sub {
+  margin: 0 auto 40px;
+  max-width: 520px;
+  text-align: center;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  opacity: 0.78;
+}
+
+.form {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 20px;
+  margin-bottom: 22px;
+}
+
+@media (max-width: 640px) {
+  .fieldRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  margin-bottom: 0;
+}
+
+.fieldRow .field {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid rgba(255, 250, 245, 0.35);
+  background: transparent;
+  color: inherit;
+  font-size: 0.95rem;
+  padding: 10px 0;
+  outline: none;
+  border-radius: 0;
+}
+
+select.input {
+  cursor: pointer;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: rgba(255, 250, 245, 0.35);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.countsBlock {
+  margin: 28px 0 22px 0;
+  padding: 0;
+  border: none;
+}
+
+.countsLabel {
+  margin: 0 0 12px 0;
+  padding: 0;
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.termsRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 20px 0 16px 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.termsRow input {
+  margin-top: 4px;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--zeli-accent);
+}
+
+.termsLink {
+  color: rgba(255, 250, 245, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.termsLink:hover {
+  opacity: 0.9;
+}
+
+.submit {
+  margin-top: 12px;
+  min-height: 48px;
+  padding: 0 32px;
+  border: 1px solid rgba(255, 250, 245, 0.45);
+  background: rgba(255, 250, 245, 0.1);
+  color: inherit;
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease;
+}
+
+.submit:hover:not(:disabled) {
+  background: rgba(255, 250, 245, 0.16);
+}
+
+.submit:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.success {
+  margin: 0 0 12px 0;
+  font-size: 0.9rem;
+  color: rgba(180, 255, 200, 0.95);
+}
+
+.error {
+  margin: 0 0 12px 0;
+  font-size: 0.9rem;
+  color: #ffb4b4;
+}
+
+.hint {
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  opacity: 0.75;
+  font-size: 0.72rem;
+}
+
+.wordCount {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.72rem;
+  opacity: 0.85;
+}
+
+.wordCountBad {
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  font-size: 0.72rem;
+  color: #ffc9c9;
+}

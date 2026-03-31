@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import crypto from "node:crypto";
 import { digitsOnly, isValidPhoneDigits } from "@/lib/formValidation";
-import { MODELING_INTEREST_OPTIONS } from "@/lib/modelingInterests";
 import { getStorageBucket, getSupabaseAdmin } from "@/lib/supabase";
 
 export const runtime = "nodejs";
@@ -9,14 +8,20 @@ export const runtime = "nodejs";
 const MAX_PHOTOS = 6;
 const MAX_BYTES = 6 * 1024 * 1024;
 
-const ALLOWED_GENDER = new Set(["female", "male", "other"]);
-
-const INTEREST_KEYS = new Set(MODELING_INTEREST_OPTIONS.map((o) => o.key));
-
 function extFromName(name: string) {
   const e = (name.split(".").pop() || "jpg").slice(0, 6).toLowerCase();
   if (!/^[a-z0-9]+$/.test(e)) return "jpg";
   return e;
+}
+
+/** Single height field in feet (e.g. 5.75) -> feet + inches for DB columns. */
+function heightFromFeetDecimal(ft: number): { heightFeet: number; heightInches: number } | null {
+  if (!Number.isFinite(ft) || ft < 3 || ft > 8) return null;
+  const totalInches = Math.round(ft * 12);
+  const heightFeet = Math.floor(totalInches / 12);
+  const heightInches = totalInches % 12;
+  if (heightFeet < 3 || heightFeet > 8) return null;
+  return { heightFeet, heightInches };
 }
 
 export async function POST(req: Request) {
@@ -40,24 +45,15 @@ export async function POST(req: Request) {
   const email = String(form.get("email") ?? "").trim();
   const phoneRaw = String(form.get("phone") ?? "").trim();
   const phone = digitsOnly(phoneRaw);
-  const dob = String(form.get("dob") ?? "").trim();
-  const gender = String(form.get("gender") ?? "").trim();
-  const country = String(form.get("country") ?? "").trim();
-  const state = String(form.get("state") ?? "").trim();
-  const city = String(form.get("city") ?? "").trim();
-  const heightFeet = Number(String(form.get("heightFeet") ?? "").trim());
-  const heightInches = Number(String(form.get("heightInches") ?? "").trim());
-  const portfolioLink = String(form.get("portfolioLink") ?? "").trim();
-  const interestsOther = String(form.get("interestsOther") ?? "").trim();
+  const ageRaw = Number(String(form.get("age") ?? "").trim());
+  const address = String(form.get("applicantAddress") ?? "").trim();
+  const heightFtRaw = Number(String(form.get("heightFt") ?? "").trim().replace(",", "."));
 
-  const interests: string[] = [];
-  for (const key of INTEREST_KEYS) {
-    const v = form.get(`interest_${key}`);
-    if (v === "yes" || v === "on" || v === "true" || v === "1") interests.push(key);
-  }
-
-  if (!firstName || !lastName || !email || !phoneRaw || !dob || !gender || !country || !state || !city) {
+  if (!firstName || !lastName || !email || !phoneRaw || !address) {
     return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+  }
+  if (!Number.isInteger(ageRaw) || ageRaw < 16 || ageRaw > 99) {
+    return NextResponse.json({ error: "Enter a valid age (16–99)." }, { status: 400 });
   }
   if (!isValidPhoneDigits(phoneRaw)) {
     return NextResponse.json(
@@ -65,18 +61,15 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
-  if (!ALLOWED_GENDER.has(gender)) {
-    return NextResponse.json({ error: "Invalid gender" }, { status: 400 });
+
+  const heightParts = heightFromFeetDecimal(heightFtRaw);
+  if (!heightParts) {
+    return NextResponse.json(
+      { error: "Enter height in feet (e.g. 5.9 for 5′9″), between 3 and 8." },
+      { status: 400 }
+    );
   }
-  if (!Number.isInteger(heightFeet) || heightFeet < 3 || heightFeet > 8) {
-    return NextResponse.json({ error: "Invalid height (feet)" }, { status: 400 });
-  }
-  if (!Number.isInteger(heightInches) || heightInches < 0 || heightInches > 11) {
-    return NextResponse.json({ error: "Invalid height (inches)" }, { status: 400 });
-  }
-  if (interests.length === 0 && !interestsOther) {
-    return NextResponse.json({ error: "Select at least one modeling interest or describe in Other" }, { status: 400 });
-  }
+  const { heightFeet, heightInches } = heightParts;
 
   const rawPhotos = form.getAll("photos");
   const files = rawPhotos.filter((x): x is File => x instanceof File && x.size > 0);
@@ -124,18 +117,20 @@ export async function POST(req: Request) {
     last_name: lastName,
     email,
     phone,
-    dob,
-    gender,
-    country,
-    state,
-    city,
+    dob: null,
+    gender: "other",
+    country: "",
+    state: "",
+    city: "",
     height_feet: heightFeet,
     height_inches: heightInches,
-    portfolio_link: portfolioLink,
-    interests,
-    interests_other: interestsOther,
+    portfolio_link: "",
+    interests: [] as string[],
+    interests_other: "",
     photo_urls: photoUrls,
-    status: "new"
+    status: "new",
+    applicant_age: ageRaw,
+    applicant_address: address
   });
 
   if (insErr) {

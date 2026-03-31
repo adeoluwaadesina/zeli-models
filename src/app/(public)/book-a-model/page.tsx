@@ -1,4 +1,4 @@
-import { ContactLeadForm } from "@/components/ContactLeadForm";
+import { BookModelForm } from "@/components/BookModelForm";
 import { SiteFooter } from "@/components/SiteFooter";
 import type { Metadata } from "next";
 import styles from "./page.module.css";
@@ -21,7 +21,7 @@ export default function BookAModelPage() {
           </p>
         </header>
       </div>
-      <ContactLeadForm />
+      <BookModelForm />
       <SiteFooter />
     </main>
   );

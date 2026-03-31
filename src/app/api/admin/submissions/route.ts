@@ -35,14 +35,16 @@ export async function GET(req: NextRequest) {
 
   let contactQuery = supabase
     .from("contact_submissions")
-    .select("id,full_name,email,phone,company,message,read_flag,created_at,archived_at")
+    .select(
+      "id,full_name,email,phone,company,message,read_flag,gender_preference,model_count_total,model_count_female,model_count_male,terms_accepted,created_at,archived_at"
+    )
     .order("created_at", { ascending: false })
     .limit(200);
 
   let appQuery = supabase
     .from("model_applications")
     .select(
-      "id,first_name,last_name,email,phone,dob,gender,country,state,city,height_feet,height_inches,portfolio_link,interests,interests_other,photo_urls,status,created_at,archived_at"
+      "id,first_name,last_name,email,phone,dob,applicant_age,applicant_address,gender,country,state,city,height_feet,height_inches,portfolio_link,interests,interests_other,photo_urls,status,created_at,archived_at"
     )
     .order("created_at", { ascending: false })
     .limit(200);
