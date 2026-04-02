@@ -45,10 +45,10 @@ export function SplashScreen({ oncePerSession = true, minDurationMs = 900 }: Pro
       <div className={styles.center}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/logo.jpg"
+          src="/zeli-logo-light-transparent.png"
           alt=""
-          width={280}
-          height={70}
+          width={420}
+          height={268}
           className={styles.logoImg}
           decoding="async"
         />

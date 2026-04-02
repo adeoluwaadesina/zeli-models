@@ -10,6 +10,12 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 export const runtime = "nodejs";
 
 const ALLOWED_GENDER_PREF = new Set(["no_preference", "female", "male", "other"]);
+const ALLOWED_PROJECT_USAGE = new Set([
+  "Website",
+  "Social media",
+  "Billboard",
+  "Other"
+]);
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -30,6 +36,12 @@ export async function POST(req: Request) {
   const message = String(o.message ?? "").trim();
   const termsAccepted = o.termsAccepted === true;
   const genderPreference = String(o.genderPreference ?? "").trim() || "no_preference";
+  const projectType = String(o.projectType ?? "").trim();
+  const budgetRange = String(o.budgetRange ?? "").trim();
+  const projectDate = String(o.projectDate ?? "").trim();
+  const projectLocation = String(o.projectLocation ?? "").trim();
+  const projectDuration = String(o.projectDuration ?? "").trim();
+  const projectUsage = String(o.projectUsage ?? "").trim();
   const rawTotal = o.modelCountTotal;
   const modelCountTotal =
     typeof rawTotal === "number" && Number.isInteger(rawTotal)
@@ -66,6 +78,26 @@ export async function POST(req: Request) {
     if (!ALLOWED_GENDER_PREF.has(genderPreference)) {
       return NextResponse.json({ error: "Invalid gender preference" }, { status: 400 });
     }
+    if (!projectType || !budgetRange || !projectDate || !projectLocation || !projectUsage) {
+      return NextResponse.json(
+        { error: "Please complete project type, budget, date, location, and usage." },
+        { status: 400 }
+      );
+    }
+    if (!ALLOWED_PROJECT_USAGE.has(projectUsage)) {
+      return NextResponse.json({ error: "Invalid usage selection." }, { status: 400 });
+    }
+    const lenCap = 240;
+    if (
+      projectType.length > lenCap ||
+      budgetRange.length > lenCap ||
+      projectDate.length > 32 ||
+      projectLocation.length > lenCap ||
+      projectDuration.length > lenCap ||
+      projectUsage.length > lenCap
+    ) {
+      return NextResponse.json({ error: "A project field is too long." }, { status: 400 });
+    }
   }
 
   const supabase = getSupabaseAdmin();
@@ -87,7 +119,13 @@ export async function POST(req: Request) {
         model_count_total: modelCountTotal,
         model_count_female: null,
         model_count_male: null,
-        terms_accepted: true
+        terms_accepted: true,
+        project_type: projectType,
+        budget_range: budgetRange,
+        project_date: projectDate,
+        project_location: projectLocation,
+        project_duration: projectDuration ? projectDuration : null,
+        project_usage: projectUsage
       }
     : {
         full_name: fullName,

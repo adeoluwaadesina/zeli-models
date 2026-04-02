@@ -29,12 +29,10 @@
 
 .logoImg {
   display: block;
-  width: min(280px, 78vw);
+  width: min(272px, 85vw);
   height: auto;
   object-fit: contain;
-  filter: grayscale(1) brightness(1.45) contrast(1.15);
-  mix-blend-mode: screen;
-  opacity: 0.94;
+  opacity: 0.98;
 }
 
 .loader {

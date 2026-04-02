@@ -18,6 +18,12 @@ type ContactRow = {
   model_count_female: number | null;
   model_count_male: number | null;
   terms_accepted: boolean;
+  project_type: string | null;
+  budget_range: string | null;
+  project_date: string | null;
+  project_location: string | null;
+  project_duration: string | null;
+  project_usage: string | null;
   created_at: string;
   archived_at: string | null;
 };
@@ -160,6 +166,31 @@ function formatGenderPref(v: string | null | undefined): string {
   return m[k] ?? displayText(v);
 }
 
+/** Book-a-model sends YYYY-MM-DD; display in locale without timezone shifting the calendar day. */
+function formatProjectDateDisplay(raw: string | null | undefined): string {
+  const t = (raw ?? "").trim();
+  if (!t) return "";
+  const iso = /^\d{4}-\d{2}-\d{2}$/.test(t) ? `${t}T12:00:00` : t;
+  const d = new Date(iso);
+  if (!Number.isNaN(d.getTime())) {
+    return d.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "numeric"
+    });
+  }
+  return t;
+}
+
+function bookingProjectSummary(c: ContactRow): string {
+  const parts = [
+    (c.project_type ?? "").trim(),
+    formatProjectDateDisplay(c.project_date),
+    (c.project_location ?? "").trim()
+  ].filter(Boolean);
+  return parts.length ? parts.join(" · ") : "";
+}
+
 function isBookingLead(c: ContactRow): boolean {
   return c.model_count_total != null && Number(c.model_count_total) >= 1;
 }
@@ -244,14 +275,26 @@ function ContactDetailBody({
       </InboxSection>
       {booking ? (
         <InboxSection title="Booking inquiry">
+          <LabeledField label="Project type">{displayText(c.project_type)}</LabeledField>
+          <LabeledField label="Budget range">{displayText(c.budget_range)}</LabeledField>
+          <LabeledField label="Project date">
+            {formatProjectDateDisplay(c.project_date) || displayText(c.project_date)}
+          </LabeledField>
+          <LabeledField label="Location">{displayText(c.project_location)}</LabeledField>
+          <LabeledField label="Duration">{displayText(c.project_duration)}</LabeledField>
+          <LabeledField label="Usage">{displayText(c.project_usage)}</LabeledField>
           <LabeledField label="Gender preference">{formatGenderPref(c.gender_preference)}</LabeledField>
-          <LabeledField label="Models (total)">{c.model_count_total}</LabeledField>
-          <LabeledField label="Female count">
-            {c.model_count_female != null ? String(c.model_count_female) : "—"}
-          </LabeledField>
-          <LabeledField label="Male count">
-            {c.model_count_male != null ? String(c.model_count_male) : "—"}
-          </LabeledField>
+          <LabeledField label="Total models">{c.model_count_total ?? "—"}</LabeledField>
+          {c.model_count_female != null || c.model_count_male != null ? (
+            <>
+              <LabeledField label="Female count">
+                {c.model_count_female != null ? String(c.model_count_female) : "—"}
+              </LabeledField>
+              <LabeledField label="Male count">
+                {c.model_count_male != null ? String(c.model_count_male) : "—"}
+              </LabeledField>
+            </>
+          ) : null}
           <LabeledField label="Terms accepted">{c.terms_accepted ? "Yes" : "No"}</LabeledField>
         </InboxSection>
       ) : null}
@@ -465,6 +508,12 @@ function normalizeContactRow(row: Record<string, unknown>): ContactRow {
     model_count_female: toNullableInt(r.model_count_female),
     model_count_male: toNullableInt(r.model_count_male),
     terms_accepted: Boolean(r.terms_accepted),
+    project_type: r.project_type != null ? String(r.project_type) : null,
+    budget_range: r.budget_range != null ? String(r.budget_range) : null,
+    project_date: r.project_date != null ? String(r.project_date) : null,
+    project_location: r.project_location != null ? String(r.project_location) : null,
+    project_duration: r.project_duration != null ? String(r.project_duration) : null,
+    project_usage: r.project_usage != null ? String(r.project_usage) : null,
     created_at: String(r.created_at ?? ""),
     archived_at: normalizeRowArchivedAt(r.archived_at)
   };
@@ -582,7 +631,7 @@ export function AdminInboxPanel() {
     void load();
   };
 
-  const contactColCount = showArchived ? 9 : 8;
+  const contactColCount = showArchived ? 10 : 9;
 
   return (
     <section className={styles.siteSection} aria-label="Inbox">
@@ -666,6 +715,7 @@ export function AdminInboxPanel() {
                     <th scope="col">Date</th>
                     <th scope="col">Read</th>
                     <th scope="col">Booking</th>
+                    <th scope="col">Project</th>
                     <th scope="col">Preview</th>
                     {showArchived ? <th scope="col">Archived</th> : null}
                     <th scope="col"> </th>
@@ -677,6 +727,10 @@ export function AdminInboxPanel() {
                     const booking = isBookingLead(c);
                     const open = openContactId === c.id;
                     const preview = truncateCell(c.message ?? "");
+                    const projectSummary =
+                      booking && bookingProjectSummary(c)
+                        ? truncateCell(bookingProjectSummary(c), 72)
+                        : "";
                     const arch = c.archived_at;
                     const rowClass = `${styles.inboxSheetRow} ${i % 2 ? styles.inboxSheetRowAlt : ""} ${
                       showArchived ? "" : c.read_flag ? styles.inboxSheetRowRead : styles.inboxSheetRowUnread
@@ -706,6 +760,7 @@ export function AdminInboxPanel() {
                             )}
                           </td>
                           <td>{booking ? <span className={styles.inboxBookingTag}>Book</span> : "—"}</td>
+                          <td className={styles.inboxSheetPreview}>{projectSummary || "—"}</td>
                           <td className={styles.inboxSheetPreview}>{preview || "—"}</td>
                           {showArchived && arch ? (
                             <td>

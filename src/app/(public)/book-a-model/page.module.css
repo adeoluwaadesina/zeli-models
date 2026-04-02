@@ -1,17 +1,17 @@
 .main {
-  padding: 48px 0 0;
+  padding: 40px 0 0;
   background: var(--zeli-bg);
   min-height: 70vh;
 }
 
 .intro {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .header {
   text-align: center;
   max-width: 560px;
-  margin: 0 auto 8px;
+  margin: 0 auto 20px;
 }
 
 .title {

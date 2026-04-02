@@ -14,7 +14,9 @@ export default function BookAModelPage() {
     <main className={styles.main}>
       <div className={`container ${styles.intro}`}>
         <header className={styles.header}>
-          <h1 className={styles.title}>Book A Model</h1>
+          <h1 id="book-model-heading" className={styles.title}>
+            Book A Model
+          </h1>
           <p className={styles.sub}>
             Tell us about your project — casting, campaigns, and partnerships. Our team will follow
             up with you.

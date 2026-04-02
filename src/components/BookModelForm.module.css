@@ -1,9 +1,11 @@
 .section {
   position: relative;
-  padding: 88px 0 96px;
+  padding: 48px 0 96px;
   background: var(--zeli-hero-2);
   color: rgba(255, 250, 245, 0.92);
   overflow: hidden;
+  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
 .deco {
@@ -17,44 +19,29 @@
   pointer-events: none;
 }
 
-.kicker {
-  margin: 0 0 14px 0;
-  text-align: center;
-  font-family: var(--font-zeli-kicker);
-  font-size: 0.66rem;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.75;
-}
-
-.title {
-  margin: 0 0 16px 0;
-  text-align: center;
-  font-family: var(--font-zeli-section-title);
-  font-size: clamp(2rem, 3.8vw, 2.75rem);
-  font-weight: 200;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.title em {
-  font-style: italic;
-  font-weight: 200;
-}
-
-.sub {
-  margin: 0 auto 40px;
-  max-width: 520px;
-  text-align: center;
-  font-size: 0.92rem;
-  line-height: 1.65;
-  opacity: 0.78;
-}
-
 .form {
   max-width: 640px;
   margin: 0 auto;
+  font-family: inherit;
+}
+
+.formBlock {
+  margin-bottom: 32px;
+}
+
+.formBlock:last-of-type {
+  margin-bottom: 0;
+}
+
+.formBlockTitle {
+  margin: 0 0 16px 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  opacity: 0.92;
 }
 
 .fieldRow {
@@ -62,6 +49,10 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px 20px;
   margin-bottom: 22px;
+}
+
+.fieldRow:last-child {
+  margin-bottom: 0;
 }
 
 @media (max-width: 640px) {
@@ -81,11 +72,12 @@
 .label {
   display: block;
   margin-bottom: 8px;
+  font-family: inherit;
   font-size: 0.62rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.8;
+  font-weight: 700;
+  opacity: 0.85;
 }
 
 .input,
@@ -95,7 +87,9 @@
   border-bottom: 1px solid rgba(255, 250, 245, 0.35);
   background: transparent;
   color: inherit;
+  font-family: inherit;
   font-size: 0.95rem;
+  font-weight: 400;
   padding: 10px 0;
   outline: none;
   border-radius: 0;
@@ -103,6 +97,23 @@
 
 select.input {
   cursor: pointer;
+  appearance: none;
+  /* Closed control: light text on tinted field (dark section bg) */
+  color: rgba(255, 250, 245, 0.95);
+  background-color: rgba(14, 8, 6, 0.35);
+  border-radius: 6px;
+  padding-left: 10px;
+  padding-right: 26px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba%28255,248,245,0.55%29' d='M3 4.5 6 8l3-3.5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* Native dropdown uses a light surface; inherited cream `color` → invisible text on Windows/Chrome */
+select.input option,
+select.input optgroup {
+  color: var(--zeli-ink-deep);
+  background-color: var(--zeli-surface);
 }
 
 .input::placeholder,
@@ -110,25 +121,18 @@ select.input {
   color: rgba(255, 250, 245, 0.35);
 }
 
+input.input[type="date"] {
+  color-scheme: dark;
+}
+
+input.input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.9) opacity(0.65);
+  cursor: pointer;
+}
+
 .textarea {
   resize: vertical;
   min-height: 100px;
-}
-
-.countsBlock {
-  margin: 28px 0 22px 0;
-  padding: 0;
-  border: none;
-}
-
-.countsLabel {
-  margin: 0 0 12px 0;
-  padding: 0;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  font-weight: 600;
-  opacity: 0.85;
 }
 
 .termsRow {
@@ -136,6 +140,7 @@ select.input {
   align-items: flex-start;
   gap: 12px;
   margin: 20px 0 16px 0;
+  font-family: inherit;
   font-size: 0.9rem;
   line-height: 1.45;
   cursor: pointer;
@@ -166,9 +171,9 @@ select.input {
   border: 1px solid rgba(255, 250, 245, 0.45);
   background: rgba(255, 250, 245, 0.1);
   color: inherit;
-  font-family: var(--font-zeli-kicker);
+  font-family: inherit;
   font-size: 0.65rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
   cursor: pointer;
@@ -219,4 +224,15 @@ select.input {
   text-transform: none;
   font-size: 0.72rem;
   color: #ffc9c9;
+}
+
+.field input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.field input[type="number"]::-webkit-outer-spin-button,
+.field input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
 }

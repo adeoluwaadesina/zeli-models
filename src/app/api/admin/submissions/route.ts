@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
   let contactQuery = supabase
     .from("contact_submissions")
     .select(
-      "id,full_name,email,phone,company,message,read_flag,gender_preference,model_count_total,model_count_female,model_count_male,terms_accepted,created_at,archived_at"
+      "id,full_name,email,phone,company,message,read_flag,gender_preference,model_count_total,model_count_female,model_count_male,terms_accepted,project_type,budget_range,project_date,project_location,project_duration,project_usage,created_at,archived_at"
     )
     .order("created_at", { ascending: false })
     .limit(200);

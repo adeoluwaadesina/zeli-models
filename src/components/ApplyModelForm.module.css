@@ -2,6 +2,8 @@
   max-width: 720px;
   margin: 0 auto;
   padding: 0 0 48px;
+  font-family: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
 .h2 {
@@ -35,7 +37,7 @@
 }
 
 .lab {
-  font-family: var(--font-zeli-kicker);
+  font-family: inherit;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -52,6 +54,7 @@
   border: 1px solid var(--zeli-line);
   border-radius: 4px;
   padding: 10px 12px;
+  font-family: inherit;
   font-size: 0.95rem;
   background: var(--zeli-surface);
   color: var(--zeli-ink);
@@ -68,7 +71,7 @@
 }
 
 .legend {
-  font-family: var(--font-zeli-kicker);
+  font-family: inherit;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -79,6 +82,7 @@
 
 .hint {
   margin: 6px 0 12px 0;
+  font-family: inherit;
   font-size: 0.82rem;
   color: var(--zeli-muted);
 }
@@ -94,6 +98,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  font-family: inherit;
   font-size: 0.9rem;
   color: var(--zeli-ink);
 }
@@ -111,7 +116,7 @@
   border-radius: 4px;
   background: var(--zeli-ink);
   color: var(--zeli-bg);
-  font-family: var(--font-zeli-kicker);
+  font-family: inherit;
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -126,12 +131,14 @@
 
 .success {
   margin-top: 16px;
+  font-family: inherit;
   color: #2a6a3a;
   font-size: 0.95rem;
 }
 
 .error {
   margin-top: 16px;
+  font-family: inherit;
   color: #b44;
   font-size: 0.95rem;
 }

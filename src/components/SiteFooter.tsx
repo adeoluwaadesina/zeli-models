@@ -96,10 +96,15 @@ export async function SiteFooter({ showAdminLink = false }: { showAdminLink?: bo
       <div className={`container ${styles.grid}`}>
         <div className={styles.left}>
           <Link href="/" className={styles.logoLink} aria-label="Zeli Models home">
-            <span className={styles.wordmark}>
-              <span className={styles.wordmarkTop}>Zeli</span>
-              <span className={styles.wordmarkBottom}>Models</span>
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- raster wordmark with blend on footer gradient */}
+            <img
+              src="/zeli-logo-light-transparent.png"
+              alt=""
+              width={420}
+              height={268}
+              className={styles.logoImgLight}
+              decoding="async"
+            />
           </Link>
           <p className={styles.about}>{FOOTER_ABOUT}</p>
           <div className={styles.social}>
