@@ -23,8 +23,8 @@ export function Hero() {
             <Link className={styles.btnPrimary} href="/women">
               Discover talent
             </Link>
-            <Link className={styles.btnGhost} href="/become-a-model">
-              Become a model
+            <Link className={styles.btnGhost} href="/book-a-model">
+              Book a model
             </Link>
           </div>
         </div>

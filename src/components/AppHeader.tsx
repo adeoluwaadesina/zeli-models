@@ -11,7 +11,7 @@ const NAV: NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/women", label: "Female" },
   { href: "/men", label: "Male" },
-  { href: "/book-a-model", label: "Book a model" },
+  { href: "/become-a-model", label: "Become a model" },
   { href: "/#footer", label: "Contact" }
 ];
 

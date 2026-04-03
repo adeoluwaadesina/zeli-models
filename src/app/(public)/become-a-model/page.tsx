@@ -22,7 +22,7 @@ export default function BecomeAModelPage() {
         </header>
         <ApplyModelForm />
       </div>
-      <SiteFooter />
+      <SiteFooter showAdminLink />
     </main>
   );
 }

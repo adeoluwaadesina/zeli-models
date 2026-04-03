@@ -24,7 +24,7 @@ export default async function HomePage() {
         <OurStorySection />
         <WhatWeDoCarousel items={settings.whatWeDo} />
         <OurValuesSection values={settings.ourValues} />
-        <SiteFooter showAdminLink />
+        <SiteFooter />
       </main>
     </>
   );

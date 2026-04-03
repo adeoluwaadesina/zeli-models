@@ -8,7 +8,8 @@ import { IconWhatsapp } from "./icons";
 
 export function WhatsappButton() {
   const pathname = usePathname();
-  const showOnPath = pathname === "/" || pathname === "/become-a-model";
+  const showOnPath =
+    pathname === "/" || pathname === "/become-a-model" || pathname === "/book-a-model";
   if (!showOnPath) {
     return null;
   }

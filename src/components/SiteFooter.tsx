@@ -52,7 +52,7 @@ function IconMail({ className }: { className?: string }) {
 
 function InstagramGlyph({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" width={22} height={22} aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" width={19} height={19} aria-hidden="true">
       <path
         fill="currentColor"
         d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8A3.6 3.6 0 0 0 7.6 20h8.8A3.6 3.6 0 0 0 20 16.4V7.6A3.6 3.6 0 0 0 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"
@@ -63,7 +63,7 @@ function InstagramGlyph({ className }: { className?: string }) {
 
 function TikTokGlyph({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" width={22} height={22} aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" width={19} height={19} aria-hidden="true">
       <path
         fill="currentColor"
         d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 1 1-5.2-1.71 2.89 2.89 0 0 1 2.31-4.64V7.05a6.32 6.32 0 1 0 5.33 6.23V8.36a8.16 8.16 0 0 0 4.78 1.54V6.69h-.0z"
@@ -74,7 +74,7 @@ function TikTokGlyph({ className }: { className?: string }) {
 
 function TwitterGlyph({ className }: { className?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" width={22} height={22} aria-hidden="true">
+    <svg className={className} viewBox="0 0 24 24" width={19} height={19} aria-hidden="true">
       <path
         fill="currentColor"
         d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"
@@ -95,54 +95,56 @@ export async function SiteFooter({ showAdminLink = false }: { showAdminLink?: bo
     <footer id="footer" className={styles.footer}>
       <div className={`container ${styles.grid}`}>
         <div className={styles.left}>
-          <Link href="/" className={styles.logoLink} aria-label="Zeli Models home">
-            {/* eslint-disable-next-line @next/next/no-img-element -- raster wordmark with blend on footer gradient */}
-            <img
-              src="/zeli-logo-light-transparent.png"
-              alt=""
-              width={420}
-              height={268}
-              className={styles.logoImgLight}
-              decoding="async"
-            />
-          </Link>
-          <p className={styles.about}>{FOOTER_ABOUT}</p>
-          <div className={styles.social}>
-            {instagramUrl ? (
+          <div className={styles.leftStack}>
+            <Link href="/" className={styles.logoLink} aria-label="Zeli Models home">
+              {/* eslint-disable-next-line @next/next/no-img-element -- raster wordmark with blend on footer gradient */}
+              <img
+                src="/zeli-logo-light-transparent.png"
+                alt=""
+                width={230}
+                height={147}
+                className={styles.logoImgLight}
+                decoding="async"
+              />
+            </Link>
+            <p className={styles.about}>{FOOTER_ABOUT}</p>
+            <div className={styles.social}>
+              {instagramUrl ? (
+                <a
+                  className={styles.socialBtn}
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                >
+                  <InstagramGlyph />
+                </a>
+              ) : null}
               <a
                 className={styles.socialBtn}
-                href={instagramUrl}
+                href={tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Instagram"
+                aria-label="TikTok"
               >
-                <InstagramGlyph />
+                <TikTokGlyph />
               </a>
-            ) : null}
-            <a
-              className={styles.socialBtn}
-              href={tiktokUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TikTok"
-            >
-              <TikTokGlyph />
-            </a>
-            {twitterHref ? (
-              <a
-                className={styles.socialBtn}
-                href={twitterHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="X (Twitter)"
-              >
-                <TwitterGlyph />
-              </a>
-            ) : (
-              <button type="button" className={styles.socialBtn} aria-label="Twitter (coming soon)">
-                <TwitterGlyph />
-              </button>
-            )}
+              {twitterHref ? (
+                <a
+                  className={styles.socialBtn}
+                  href={twitterHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="X (Twitter)"
+                >
+                  <TwitterGlyph />
+                </a>
+              ) : (
+                <button type="button" className={styles.socialBtn} aria-label="Twitter (coming soon)">
+                  <TwitterGlyph />
+                </button>
+              )}
+            </div>
           </div>
         </div>
 
@@ -195,7 +197,9 @@ export async function SiteFooter({ showAdminLink = false }: { showAdminLink?: bo
           </p>
         </div>
         <div className={styles.legal}>
-          <span className={styles.legalMuted}>Privacy (coming soon)</span>
+          <Link className={styles.legalLink} href="/privacy">
+            Privacy policy
+          </Link>
           <Link className={styles.legalLink} href="/terms">
             Terms and conditions
           </Link>

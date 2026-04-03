@@ -42,7 +42,7 @@
 @media (min-width: 720px) {
   .grid {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: start;
+    align-items: stretch;
     justify-items: center;
     column-gap: clamp(4.5rem, 20vw, 11rem);
     text-align: left;
@@ -51,6 +51,20 @@
   .left {
     justify-self: end;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  /* Fills the lower half of the cell so logo + copy + social sit in the upper area */
+  .left::after {
+    content: "";
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .leftStack {
+    flex: 0 0 auto;
   }
 
   .right {
@@ -59,11 +73,18 @@
   }
 }
 
+.leftStack {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: inherit;
+}
+
 .logoLink {
   display: block;
   color: inherit;
   line-height: 0;
-  width: min(289px, 100%);
+  width: min(172px, 88%);
   margin-inline: auto;
   text-decoration: none;
   transition: opacity 0.15s ease;
@@ -76,6 +97,7 @@
 @media (min-width: 720px) {
   .logoLink {
     margin-inline: 0;
+    width: min(168px, 100%);
   }
 }
 
@@ -88,19 +110,19 @@
 }
 
 .about {
-  margin: 0.75rem 0 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  margin: 0.4rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.48;
   color: rgba(255, 255, 255, 0.75);
-  max-width: 36ch;
+  max-width: 32ch;
 }
 
 .social {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  margin-top: 1.15rem;
+  gap: 0.45rem;
+  margin-top: 0.6rem;
   flex-wrap: wrap;
 }
 
@@ -114,8 +136,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.06);
@@ -254,6 +276,13 @@
   gap: 1rem;
   flex-wrap: wrap;
   align-items: center;
+}
+
+/* Reserve space for fixed WhatsApp CTA (≈200px + inset) so links stay clear on laptop */
+@media (min-width: 720px) {
+  .legal {
+    padding-inline-end: max(1rem, 216px);
+  }
 }
 
 .legalMuted {

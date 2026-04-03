@@ -72,8 +72,8 @@ export function OurStorySection() {
 
           <div className={styles.card}>
             <IconDiamond className={styles.cardIcon} aria-hidden="true" />
-            <p className={styles.cardTitle}>Placeholder</p>
-            <p className={styles.cardText}>Third pillar — swap this copy when ready.</p>
+            <p className={styles.cardTitle}>Talent</p>
+            <p className={styles.cardText}>Our models stand out effortlessly.</p>
           </div>
         </div>
       </div>

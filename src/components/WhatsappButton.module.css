@@ -1,8 +1,14 @@
 .wrap {
   position: fixed;
-  right: 18px;
-  bottom: 18px;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
   z-index: 50;
+}
+
+@media (min-width: 720px) {
+  .wrap {
+    bottom: max(22px, env(safe-area-inset-bottom));
+  }
 }
 
 .btn {
