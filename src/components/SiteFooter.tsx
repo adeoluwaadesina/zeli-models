@@ -198,10 +198,10 @@ export async function SiteFooter({ showAdminLink = false }: { showAdminLink?: bo
         </div>
         <div className={styles.legal}>
           <Link className={styles.legalLink} href="/privacy">
-            Privacy policy
+            Privacy Policy
           </Link>
           <Link className={styles.legalLink} href="/terms">
-            Terms and conditions
+            Terms and Conditions
           </Link>
         </div>
       </div>
