@@ -2,11 +2,11 @@
 
 Public agency site with portfolio, forms, and admin:
 
-- **Home** (`/`) — hero, category marquee, featured models, services carousel, values; hero links to **Become a model**
-- **Female** (`/women`) and **Male** (`/men`) — grids → **Model profile** (`/models/[id]`)
-- **Book a model** (`/book-a-model`) — client inquiry form (nav); **Become a model** (`/become-a-model`) — application form (hero CTA only)
-- **WhatsApp** floating CTA — shown only on **home** and **become a model** (not on portfolio grids)
-- **Admin** (`/admin`) — models, site copy, inbox
+- **Home** (`/`) - hero, category marquee, featured models, services carousel, values; hero links to **Become a model**
+- **Female** (`/women`) and **Male** (`/men`) - grids → **Model profile** (`/models/[id]`)
+- **Book a model** (`/book-a-model`) - client inquiry form (nav); **Become a model** (`/become-a-model`) - application form (hero CTA only)
+- **WhatsApp** floating CTA - shown only on **home** and **become a model** (not on portfolio grids)
+- **Admin** (`/admin`) - models, site copy, inbox
 
 ## Run locally
 

@@ -14,7 +14,7 @@ export function WhatsappButton() {
     return null;
   }
 
-  const message = encodeURIComponent("Hi Zeli Models — I’d like to make an inquiry.");
+  const message = encodeURIComponent("Hi Zeli Models - I'd like to make an inquiry.");
 
   const href = `https://wa.me/${whatsappNumberE164}?text=${message}`;
 

@@ -236,7 +236,7 @@ export function Carousel({
       dragging: false,
       didDrag: false
     };
-    // Do NOT setPointerCapture here — it would steal pointerup from the button so click never fires.
+    // Do NOT setPointerCapture here - it would steal pointerup from the button so click never fires.
     // We only capture once we've passed the drag threshold (in onPointerMove).
   };
 

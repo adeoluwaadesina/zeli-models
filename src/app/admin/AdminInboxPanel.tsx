@@ -58,7 +58,7 @@ function normalizeAppStatus(s: string): "new" | "reviewed" {
 
 function displayText(value: string | null | undefined): string {
   const t = (value ?? "").trim();
-  return t.length > 0 ? t : "—";
+  return t.length > 0 ? t : "-";
 }
 
 function formatAbsolute(iso: string): string {
@@ -143,7 +143,7 @@ function sortByArchivedAtDesc<T extends { archived_at: string | null }>(rows: T[
 
 function formatDob(isoOrStr: string | null | undefined): string {
   const t = (isoOrStr ?? "").trim();
-  if (!t) return "—";
+  if (!t) return "-";
   const d = new Date(t);
   if (!Number.isNaN(d.getTime())) {
     return d.toLocaleDateString(undefined, {
@@ -212,7 +212,7 @@ function formatHeight(a: AppRow): string {
   ) {
     return `${hf}'${hi}"`;
   }
-  return "—";
+  return "-";
 }
 
 function LabeledField({ label, children }: { label: string; children: React.ReactNode }) {
@@ -284,14 +284,14 @@ function ContactDetailBody({
           <LabeledField label="Duration">{displayText(c.project_duration)}</LabeledField>
           <LabeledField label="Usage">{displayText(c.project_usage)}</LabeledField>
           <LabeledField label="Gender preference">{formatGenderPref(c.gender_preference)}</LabeledField>
-          <LabeledField label="Total models">{c.model_count_total ?? "—"}</LabeledField>
+          <LabeledField label="Total models">{c.model_count_total ?? "-"}</LabeledField>
           {c.model_count_female != null || c.model_count_male != null ? (
             <>
               <LabeledField label="Female count">
-                {c.model_count_female != null ? String(c.model_count_female) : "—"}
+                {c.model_count_female != null ? String(c.model_count_female) : "-"}
               </LabeledField>
               <LabeledField label="Male count">
-                {c.model_count_male != null ? String(c.model_count_male) : "—"}
+                {c.model_count_male != null ? String(c.model_count_male) : "-"}
               </LabeledField>
             </>
           ) : null}
@@ -359,9 +359,9 @@ function ApplicationDetailBody({
   const archivedAt = a.archived_at;
   const heightStr = formatHeight(a);
   const hasLegacyLocation =
-    displayText(a.city) !== "—" ||
-    displayText(a.state) !== "—" ||
-    displayText(a.country) !== "—";
+    displayText(a.city) !== "-" ||
+    displayText(a.state) !== "-" ||
+    displayText(a.country) !== "-";
 
   return (
     <>
@@ -374,7 +374,7 @@ function ApplicationDetailBody({
       <InboxSection title="Identity">
         <LabeledField label="First name">{displayText(a.first_name)}</LabeledField>
         <LabeledField label="Last name">{displayText(a.last_name)}</LabeledField>
-        <LabeledField label="Age">{a.applicant_age != null ? String(a.applicant_age) : "—"}</LabeledField>
+        <LabeledField label="Age">{a.applicant_age != null ? String(a.applicant_age) : "-"}</LabeledField>
         {a.dob ? <LabeledField label="Date of birth (legacy)">{formatDob(a.dob)}</LabeledField> : null}
         <LabeledField label="Gender">{displayText(a.gender)}</LabeledField>
         {showArchivedView && archivedAt ? (
@@ -401,7 +401,7 @@ function ApplicationDetailBody({
         <LabeledField label="Height">{heightStr}</LabeledField>
         <LabeledField label="Interests">
           {interests.length === 0 ? (
-            "—"
+            "-"
           ) : (
             <div className={styles.inboxChipRow}>
               {interests.map((tag) => (
@@ -419,13 +419,13 @@ function ApplicationDetailBody({
               {portfolio} ↗
             </a>
           ) : (
-            "—"
+            "-"
           )}
         </LabeledField>
       </InboxSection>
       <InboxSection title="Photos">
         {photos.length === 0 ? (
-          <p className={styles.inboxFieldValue}>—</p>
+          <p className={styles.inboxFieldValue}>-</p>
         ) : (
           <div className={styles.inboxThumbGrid}>
             {photos.map((u, i) => (
@@ -748,7 +748,7 @@ export function AdminInboxPanel() {
                           </td>
                           <td>
                             {showArchived ? (
-                              "—"
+                              "-"
                             ) : (
                               <span
                                 className={`${styles.readBadge} ${
@@ -759,9 +759,9 @@ export function AdminInboxPanel() {
                               </span>
                             )}
                           </td>
-                          <td>{booking ? <span className={styles.inboxBookingTag}>Book</span> : "—"}</td>
-                          <td className={styles.inboxSheetPreview}>{projectSummary || "—"}</td>
-                          <td className={styles.inboxSheetPreview}>{preview || "—"}</td>
+                          <td>{booking ? <span className={styles.inboxBookingTag}>Book</span> : "-"}</td>
+                          <td className={styles.inboxSheetPreview}>{projectSummary || "-"}</td>
+                          <td className={styles.inboxSheetPreview}>{preview || "-"}</td>
                           {showArchived && arch ? (
                             <td>
                               <time dateTime={arch} title={formatAbsolute(arch)}>
@@ -769,7 +769,7 @@ export function AdminInboxPanel() {
                               </time>
                             </td>
                           ) : showArchived ? (
-                            <td>—</td>
+                            <td>-</td>
                           ) : null}
                           <td className={styles.inboxSheetActions}>
                             <button
@@ -844,7 +844,7 @@ export function AdminInboxPanel() {
                             {displayText(a.first_name)} {displayText(a.last_name)}
                           </td>
                           <td className={styles.inboxSheetMono}>{displayText(a.email)}</td>
-                          <td>{a.applicant_age != null ? a.applicant_age : "—"}</td>
+                          <td>{a.applicant_age != null ? a.applicant_age : "-"}</td>
                           <td className={styles.inboxSheetPreview}>{truncateCell(a.applicant_address ?? "", 40)}</td>
                           <td>{formatHeight(a)}</td>
                           <td>{photos.length}</td>
@@ -869,7 +869,7 @@ export function AdminInboxPanel() {
                               </time>
                             </td>
                           ) : showArchived ? (
-                            <td>—</td>
+                            <td>-</td>
                           ) : null}
                           <td className={styles.inboxSheetActions}>
                             <button

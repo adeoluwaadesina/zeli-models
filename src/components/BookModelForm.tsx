@@ -434,7 +434,7 @@ export function BookModelForm() {
 
           {status === "ok" ? (
             <p className={styles.success} role="status">
-              Thank you — we&apos;ll be in touch shortly.
+              Thank you - we&apos;ll be in touch shortly.
             </p>
           ) : null}
           {status === "err" ? (

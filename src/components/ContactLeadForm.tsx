@@ -161,7 +161,7 @@ export function ContactLeadForm() {
 
           {status === "ok" ? (
             <p className={styles.success} role="status">
-              Thank you — we&apos;ll be in touch soon.
+              Thank you - we&apos;ll be in touch soon.
             </p>
           ) : null}
           {status === "err" ? (

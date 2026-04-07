@@ -3,7 +3,7 @@ import localFont from "next/font/local";
 import { Cormorant, Cormorant_Garamond, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-/** No link preload — avoids Chrome “preloaded but not used” noise; fonts still load via @font-face + swap. */
+/** No link preload - avoids Chrome "preloaded but not used" noise; fonts still load via @font-face + swap. */
 const playfair = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-zeli-serif",
@@ -12,7 +12,7 @@ const playfair = Playfair_Display({
   preload: false
 });
 
-/** Glacial Indifference (OFL) — UI / small copy site-wide via --font-zeli-sans */
+/** Glacial Indifference (OFL) - UI / small copy site-wide via --font-zeli-sans */
 const glacialIndifference = localFont({
   src: [
     { path: "./fonts/GlacialIndifference-Regular.woff2", weight: "400", style: "normal" },
@@ -23,7 +23,7 @@ const glacialIndifference = localFont({
   preload: false
 });
 
-/** Thin classical serifs — closer to Belfast TS / Solaire than Playfair until licensed WOFF2 are added. */
+/** Thin classical serifs - closer to Belfast TS / Solaire than Playfair until licensed WOFF2 are added. */
 const heroCormorant = Cormorant({
   subsets: ["latin"],
   variable: "--font-hero-cormorant",
@@ -32,7 +32,7 @@ const heroCormorant = Cormorant({
   preload: false
 });
 
-/** Light italic — Jenson-like fallback for “Modern”. */
+/** Light italic - Jenson-like fallback for "Modern". */
 const heroCormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-hero-cormorant-garamond",

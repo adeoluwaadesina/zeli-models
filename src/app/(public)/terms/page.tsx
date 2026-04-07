@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Terms and conditions — Zeli Models"
+  title: "Terms and conditions - Zeli Models"
 };
 
 export default function TermsPage() {
@@ -13,7 +13,7 @@ export default function TermsPage() {
       <div className={`container ${styles.inner}`}>
         <header className={styles.header}>
           <p className={styles.kicker}>Legal</p>
-          <h1 className={styles.title}>Zeli Models — Terms and conditions</h1>
+          <h1 className={styles.title}>Zeli Models - Terms and conditions</h1>
           <p className={styles.effective}>
             <strong>Effective date:</strong> February 7, 2026
           </p>

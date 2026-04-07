@@ -4,7 +4,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
-  title: "Privacy policy — Zeli Models"
+  title: "Privacy policy - Zeli Models"
 };
 
 export default function PrivacyPage() {
@@ -13,7 +13,7 @@ export default function PrivacyPage() {
       <div className={`container ${styles.inner}`}>
         <header className={styles.header}>
           <p className={styles.kicker}>Legal</p>
-          <h1 className={styles.title}>Zeli Models — Privacy policy</h1>
+          <h1 className={styles.title}>Zeli Models - Privacy policy</h1>
           <p className={styles.effective}>
             <strong>Effective date:</strong> February 7, 2026
           </p>

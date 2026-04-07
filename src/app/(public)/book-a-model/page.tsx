@@ -18,7 +18,7 @@ export default function BookAModelPage() {
             Book A Model
           </h1>
           <p className={styles.sub}>
-            Tell us about your project — casting, campaigns, and partnerships. Our team will follow
+            Tell us about your project - casting, campaigns, and partnerships. Our team will follow
             up with you.
           </p>
         </header>

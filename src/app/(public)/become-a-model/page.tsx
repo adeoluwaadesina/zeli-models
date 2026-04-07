@@ -16,7 +16,7 @@ export default function BecomeAModelPage() {
         <header className={styles.header}>
           <h1 className={styles.title}>Become A Model</h1>
           <p className={styles.sub}>
-            Take the first step toward working with Zeli Models. Complete the form below — our team
+            Take the first step toward working with Zeli Models. Complete the form below - our team
             reviews every application.
           </p>
         </header>

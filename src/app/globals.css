@@ -1,4 +1,4 @@
-/* Hero: Canva stack — local font names only (no hosted WOFF2). Falls back to system / Google stack where used. */
+/* Hero: Canva stack - local font names only (no hosted WOFF2). Falls back to system / Google stack where used. */
 @font-face {
   font-family: "Zeli Belfast TS";
   src:
@@ -60,7 +60,7 @@
   --font-zeli-section-title: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif,
     Georgia, "Times New Roman", serif;
 
-  /* Small uppercase labels (kickers, overlines) — Glacial Indifference, same fallbacks as body */
+  /* Small uppercase labels (kickers, overlines) - Glacial Indifference, same fallbacks as body */
   --font-zeli-kicker: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
     sans-serif;
 }
