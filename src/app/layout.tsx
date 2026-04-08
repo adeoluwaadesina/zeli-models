@@ -43,6 +43,7 @@ const heroCormorantGaramond = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.zelimodels.com"),
   title: "Zeli Models",
   description:
     "Representing the most talented and versatile models. Premium management for runway, editorial, and commercial projects."
