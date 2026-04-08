@@ -50,6 +50,7 @@ function parseModelPayload(x: unknown): ZeliModel | null {
     tags,
     chest: typeof m.chest === "string" ? m.chest : "",
     waist: typeof m.waist === "string" ? m.waist : "",
+    hips: typeof m.hips === "string" ? m.hips : "",
     shoe: typeof m.shoe === "string" ? m.shoe : "",
     eyes: typeof m.eyes === "string" ? m.eyes : "",
     hair: typeof m.hair === "string" ? m.hair : "",

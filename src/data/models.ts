@@ -12,6 +12,7 @@ export type ZeliModel = {
   tags: string[];
   chest: string;
   waist: string;
+  hips: string;
   shoe: string;
   eyes: string;
   hair: string;
@@ -42,6 +43,7 @@ export function normalizeModel(partial: Partial<ZeliModel> & Pick<ZeliModel, "id
     tags: Array.isArray(partial.tags) ? partial.tags : [],
     chest: partial.chest ?? "",
     waist: partial.waist ?? "",
+    hips: partial.hips ?? "",
     shoe: partial.shoe ?? "",
     eyes: partial.eyes ?? "",
     hair: partial.hair ?? "",

@@ -29,6 +29,7 @@ export default async function ModelDetailPage({ params }: Props) {
     { label: "Height", value: model.heightCm ? `${model.height} / ${model.heightCm}` : model.height },
     { label: "Chest", value: model.chest },
     { label: "Waist", value: model.waist },
+    { label: "Hips", value: model.hips },
     { label: "Shoe", value: model.shoe },
     { label: "Eyes", value: model.eyes },
     { label: "Hair", value: model.hair }

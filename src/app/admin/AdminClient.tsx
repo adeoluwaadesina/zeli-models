@@ -418,6 +418,7 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
       tags,
       chest: draft.chest.trim(),
       waist: draft.waist.trim(),
+      hips: draft.hips.trim(),
       shoe: draft.shoe.trim(),
       eyes: draft.eyes.trim(),
       hair: draft.hair.trim(),
@@ -778,6 +779,18 @@ export function AdminClient({ initial }: { initial: ZeliModel[] }) {
                     value={draft.waist}
                     onChange={(e) => setDraft((d) => ({ ...d, waist: e.target.value }))}
                     placeholder='e.g. 24"'
+                  />
+                </div>
+                <div className={styles.field}>
+                  <label className={styles.label} htmlFor="m-hips">
+                    Hips
+                  </label>
+                  <input
+                    id="m-hips"
+                    className={styles.input}
+                    value={draft.hips}
+                    onChange={(e) => setDraft((d) => ({ ...d, hips: e.target.value }))}
+                    placeholder='e.g. 32"'
                   />
                 </div>
                 <div className={styles.field}>

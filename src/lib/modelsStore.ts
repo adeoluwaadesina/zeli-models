@@ -45,6 +45,7 @@ function fromRow(r: Record<string, unknown>): ZeliModel {
     tags,
     chest: typeof r.chest === "string" ? r.chest : "",
     waist: typeof r.waist === "string" ? r.waist : "",
+    hips: typeof r.hips === "string" ? r.hips : "",
     shoe: typeof r.shoe === "string" ? r.shoe : "",
     eyes: typeof r.eyes === "string" ? r.eyes : "",
     hair: typeof r.hair === "string" ? r.hair : "",
@@ -68,6 +69,7 @@ function toRow(m: ZeliModel, position: number) {
     tags: m.tags,
     chest: m.chest,
     waist: m.waist,
+    hips: m.hips,
     shoe: m.shoe,
     eyes: m.eyes,
     hair: m.hair,
@@ -83,7 +85,7 @@ export async function readModels(): Promise<ZeliModel[]> {
     const { data, error } = await supabase
       .from("models")
       .select(
-        "id,name,height,bio,images,position,gender,featured,featured_order,tags,chest,waist,shoe,eyes,hair,height_cm,featured_image_url"
+        "id,name,height,bio,images,position,gender,featured,featured_order,tags,chest,waist,hips,shoe,eyes,hair,height_cm,featured_image_url"
       )
       .order("position", { ascending: true });
 
@@ -109,6 +111,7 @@ export async function readModels(): Promise<ZeliModel[]> {
       tags: Array.isArray((m as ZeliModel).tags) ? (m as ZeliModel).tags : [],
       chest: (m as ZeliModel).chest ?? "",
       waist: (m as ZeliModel).waist ?? "",
+      hips: (m as ZeliModel).hips ?? "",
       shoe: (m as ZeliModel).shoe ?? "",
       eyes: (m as ZeliModel).eyes ?? "",
       hair: (m as ZeliModel).hair ?? "",
