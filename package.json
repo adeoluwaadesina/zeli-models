@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "favicon": "node scripts/make-favicon.mjs"
   },
   "keywords": [],
   "author": "",
@@ -27,6 +28,7 @@
     "@types/react": "^19.2.10",
     "@types/react-dom": "^19.2.3",
     "eslint": "^9.39.2",
+    "sharp": "^0.34.5",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.54.0"
   }
