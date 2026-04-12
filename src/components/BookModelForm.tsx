@@ -13,31 +13,29 @@ import * as React from "react";
 import styles from "./BookModelForm.module.css";
 
 const GENDER_PREF = [
-  { value: "no_preference", label: "No preference" },
+  { value: "", label: "Select gender" },
   { value: "female", label: "Female" },
   { value: "male", label: "Male" },
-  { value: "other", label: "Other / mixed" }
+  { value: "mixed", label: "Mixed" }
 ] as const;
 
 const PROJECT_TYPES = [
   "",
-  "Makeup Shoot",
-  "Brand Campaign",
-  "Commercial Campaigns",
-  "Bridal Shoots",
-  "Editorial Shoot",
-  "Event Coverage",
+  "Beauty shoot",
+  "Brand campaign",
+  "Commercials",
+  "Bridal shoot",
+  "Editorial",
   "Other"
 ] as const;
 
 const BUDGET_RANGES = [
   "",
-  "₦50,000 - ₦500,000",
-  "₦500,000 - ₦2,000,000",
-  "₦2,000,000 - ₦5,000,000",
-  "₦5,000,000 - ₦10,000,000",
-  "₦10,000,000+",
-  "Discuss Budget"
+  "₦100,000 – ₦500,000",
+  "₦500,000 – ₦1,000,000",
+  "₦1,000,000 – ₦2,500,000",
+  "₦2,500,000 – ₦5,000,000",
+  "₦5,000,000+"
 ] as const;
 
 const USAGE_OPTIONS = ["", "Website", "Social media", "Billboard", "Other"] as const;
@@ -53,7 +51,7 @@ export function BookModelForm() {
   const [projectLocation, setProjectLocation] = React.useState("");
   const [projectDuration, setProjectDuration] = React.useState("");
   const [projectUsage, setProjectUsage] = React.useState("");
-  const [genderPreference, setGenderPreference] = React.useState("no_preference");
+  const [genderPreference, setGenderPreference] = React.useState("");
   const [modelCountTotal, setModelCountTotal] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [termsAccepted, setTermsAccepted] = React.useState(false);
@@ -85,6 +83,7 @@ export function BookModelForm() {
     projectDate.trim() &&
     projectLocation.trim() &&
     projectUsage.trim() &&
+    (genderPreference === "female" || genderPreference === "male" || genderPreference === "mixed") &&
     isWithinWordLimit(message, CONTACT_MESSAGE_MAX_WORDS) &&
     totalParsed !== null &&
     totalParsed >= 1;
@@ -111,6 +110,11 @@ export function BookModelForm() {
     ) {
       setStatus("err");
       setErrMsg("Please complete project type, budget, date, location, and usage.");
+      return;
+    }
+    if (genderPreference !== "female" && genderPreference !== "male" && genderPreference !== "mixed") {
+      setStatus("err");
+      setErrMsg("Please select a gender.");
       return;
     }
     if (!isWithinWordLimit(message, CONTACT_MESSAGE_MAX_WORDS)) {
@@ -164,7 +168,7 @@ export function BookModelForm() {
       setProjectLocation("");
       setProjectDuration("");
       setProjectUsage("");
-      setGenderPreference("no_preference");
+      setGenderPreference("");
       setModelCountTotal("");
       setMessage("");
       setTermsAccepted(false);
@@ -275,7 +279,7 @@ export function BookModelForm() {
               </div>
               <div className={styles.field}>
                 <label className={styles.label} htmlFor="book-budget">
-                  Budget range *
+                  Budget range (₦) *
                 </label>
                 <select
                   id="book-budget"
@@ -317,7 +321,7 @@ export function BookModelForm() {
                   value={projectLocation}
                   onChange={(e) => setProjectLocation(e.target.value)}
                   required
-                  placeholder="Lagos, Abuja, Port Harcourt…"
+                  placeholder="e.g. Victoria Island, Yaba, Gbagada"
                 />
               </div>
             </div>
@@ -357,13 +361,14 @@ export function BookModelForm() {
             <div className={styles.fieldRow}>
               <div className={styles.field}>
                 <label className={styles.label} htmlFor="book-gender-pref">
-                  Gender preference
+                  Gender *
                 </label>
                 <select
                   id="book-gender-pref"
                   className={styles.input}
                   value={genderPreference}
                   onChange={(e) => setGenderPreference(e.target.value)}
+                  required
                 >
                   {GENDER_PREF.map((o) => (
                     <option key={o.value} value={o.value}>

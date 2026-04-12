@@ -157,9 +157,10 @@ function formatDob(isoOrStr: string | null | undefined): string {
 
 function formatGenderPref(v: string | null | undefined): string {
   const m: Record<string, string> = {
-    no_preference: "No preference",
     female: "Female",
     male: "Male",
+    mixed: "Mixed",
+    no_preference: "No preference",
     other: "Other / mixed"
   };
   const k = (v ?? "").trim();

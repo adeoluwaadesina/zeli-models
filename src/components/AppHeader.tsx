@@ -200,17 +200,22 @@ export function AppHeader({
           aria-label="Menu"
         >
           <div className={styles.overlayTop}>
-            <span className={styles.overlayLogo}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+            <Link
+              href="/"
+              className={styles.overlayLogo}
+              onClick={() => setOpen(false)}
+              aria-label="Zeli Models home"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element -- same light wordmark as SiteFooter */}
               <img
-                src="/logo.jpg"
+                src="/zeli-logo-light-transparent.png"
                 alt=""
-                width={160}
-                height={44}
+                width={230}
+                height={147}
                 className={styles.overlayLogoImg}
                 decoding="async"
               />
-            </span>
+            </Link>
             <button
               type="button"
               className={styles.closeBtn}

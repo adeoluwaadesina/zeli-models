@@ -9,7 +9,7 @@ import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
-const ALLOWED_GENDER_PREF = new Set(["no_preference", "female", "male", "other"]);
+const ALLOWED_GENDER_PREF = new Set(["female", "male", "mixed"]);
 const ALLOWED_PROJECT_USAGE = new Set([
   "Website",
   "Social media",
@@ -35,7 +35,7 @@ export async function POST(req: Request) {
   const company = String(o.company ?? "").trim();
   const message = String(o.message ?? "").trim();
   const termsAccepted = o.termsAccepted === true;
-  const genderPreference = String(o.genderPreference ?? "").trim() || "no_preference";
+  const genderPreference = String(o.genderPreference ?? "").trim();
   const projectType = String(o.projectType ?? "").trim();
   const budgetRange = String(o.budgetRange ?? "").trim();
   const projectDate = String(o.projectDate ?? "").trim();

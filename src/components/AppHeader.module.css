@@ -160,18 +160,22 @@
   margin-bottom: 48px;
 }
 
-/* Outer pill uses the same white as typical logo JPEG mats so it doesn’t read as a second color */
+/* Same light transparent wordmark as SiteFooter — no white mat on dark overlay */
 .overlayLogo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   line-height: 0;
-  padding: 0;
-  background: #fff;
-  border-radius: 10px;
-  overflow: hidden;
+  flex-shrink: 0;
+  max-width: 168px;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
 }
 
+.overlayLogo:hover {
+  opacity: 0.92;
+}
+
+/* Match previous /logo.jpg overlay size (≈40px tall, ~66px wide) */
 .overlayLogoImg {
   display: block;
   max-height: 40px;
