@@ -23,10 +23,15 @@ debug-*.log
 # TypeScript incremental
 *.tsbuildinfo
 
-# local env files (secrets)
+# Environment variables
 .env
 .env.local
-.env.*.local
+.env*.local
+.env.development
+.env.production
+
+# Never commit these even if they exist
+.env.example  ← DO NOT add this — see note below
 
 # OS / editor
 .DS_Store
