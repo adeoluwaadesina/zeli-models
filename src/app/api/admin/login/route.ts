@@ -1,7 +1,7 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-import { ADMIN_COOKIE } from "@/lib/adminAuth";
+import { ADMIN_COOKIE, ADMIN_SESSION_MAX_AGE, createAdminSession } from "@/lib/adminAuth";
 
 export async function POST(req: NextRequest) {
   const form = await req.formData();
@@ -24,15 +24,16 @@ export async function POST(req: NextRequest) {
   }
 
   // Same idea: after POST, redirect to the admin page with a GET.
+  const sessionToken = await createAdminSession();
   const res = NextResponse.redirect(new URL(nextPath, req.url), 303);
   res.cookies.set({
     name: ADMIN_COOKIE,
-    value: "1",
+    value: sessionToken,
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 12
+    maxAge: ADMIN_SESSION_MAX_AGE
   });
   return res;
 }

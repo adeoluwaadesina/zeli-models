@@ -44,3 +44,8 @@ public/uploads
 
 # Cursor / local tooling (keep out of repo)
 .cursor/
+
+# internal trackers (never commit)
+PROJECT_LOG.md
+*HANDOVER*.md
+SECURITY*.md

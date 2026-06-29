@@ -1,4 +1,4 @@
-import { ADMIN_COOKIE } from "@/lib/adminAuth";
+import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/adminAuth";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { getStorageBucket, getSupabaseAdmin } from "@/lib/supabase";
@@ -6,8 +6,8 @@ import crypto from "node:crypto";
 
 export const runtime = "nodejs";
 
-function isAuthed(req: NextRequest) {
-  return req.cookies.get(ADMIN_COOKIE)?.value === "1";
+async function isAuthed(req: NextRequest) {
+  return verifyAdminSession(req.cookies.get(ADMIN_COOKIE)?.value);
 }
 
 async function ensureBucketExists(supabase: ReturnType<typeof getSupabaseAdmin>, bucketId: string) {
@@ -33,7 +33,7 @@ function safeSegment(input: string) {
 }
 
 export async function POST(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
     const supabase = getSupabaseAdmin();

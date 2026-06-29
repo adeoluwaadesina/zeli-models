@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE } from "@/lib/adminAuth";
+import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/adminAuth";
 
-export function middleware(req: NextRequest) {
+export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
   // Protect /admin (except login).
   if (pathname.startsWith("/admin") && !pathname.startsWith("/admin/login")) {
-    const authed = req.cookies.get(ADMIN_COOKIE)?.value === "1";
+    const authed = await verifyAdminSession(req.cookies.get(ADMIN_COOKIE)?.value);
     if (!authed) {
       const loginUrl = req.nextUrl.clone();
       loginUrl.pathname = "/admin/login";

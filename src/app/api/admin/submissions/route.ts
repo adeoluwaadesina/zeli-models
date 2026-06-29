@@ -1,14 +1,14 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE } from "@/lib/adminAuth";
+import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/adminAuth";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
 const ARCHIVE_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
-function isAuthed(req: NextRequest) {
-  return req.cookies.get(ADMIN_COOKIE)?.value === "1";
+async function isAuthed(req: NextRequest) {
+  return verifyAdminSession(req.cookies.get(ADMIN_COOKIE)?.value);
 }
 
 async function purgeExpiredArchived(supabase: NonNullable<ReturnType<typeof getSupabaseAdmin>>) {
@@ -22,7 +22,7 @@ async function purgeExpiredArchived(supabase: NonNullable<ReturnType<typeof getS
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {
@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {
