@@ -91,10 +91,12 @@ function SortableRow({
           <span className={styles.dragDots} aria-hidden="true" />
         </button>
         <div>
-          <div className={styles.name}>{model.name}</div>
+          <div className={styles.name}>
+            {model.name}
+            {model.featured ? <span className={styles.featuredChip}>Featured</span> : null}
+          </div>
           <div className={styles.meta}>
-            {model.gender === "male" ? "Male" : "Female"} • {model.featured ? "Featured" : "-"} •{" "}
-            {model.height} • {model.images.length} img
+            {model.gender === "male" ? "Male" : "Female"} • {model.height} • {model.images.length} img
           </div>
         </div>
       </div>

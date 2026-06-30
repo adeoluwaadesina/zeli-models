@@ -72,6 +72,8 @@
 .navLinkActive {
   background: rgba(166, 124, 91, 0.14);
   border-color: rgba(74, 44, 29, 0.1);
+  box-shadow: inset 3px 0 0 var(--zeli-accent);
+  font-weight: 600;
 }
 
 .navLinkActive:hover {

@@ -9,6 +9,7 @@ export default async function AdminSitePage() {
     <div className={styles.page}>
       <div className={styles.pageIntro}>
         <div className="container">
+          <p className={styles.kicker}>Homepage</p>
           <h1 className={styles.title}>Site content</h1>
           <p className={styles.subtitle}>
             Marquee line, What we do carousel, values, and other homepage copy and imagery.
