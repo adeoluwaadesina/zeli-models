@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE } from "@/lib/adminAuth";
+import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/adminAuth";
 import type { SiteSettings } from "@/data/siteSettings";
 import { mergeSiteSettings, readSiteSettings, writeSiteSettings } from "@/lib/siteSettingsStore";
 
 export const runtime = "nodejs";
 
-function isAuthed(req: NextRequest) {
-  return req.cookies.get(ADMIN_COOKIE)?.value === "1";
+async function isAuthed(req: NextRequest) {
+  return verifyAdminSession(req.cookies.get(ADMIN_COOKIE)?.value);
 }
 
 function isSiteSettings(x: unknown): x is SiteSettings {
@@ -25,13 +25,13 @@ function isSiteSettings(x: unknown): x is SiteSettings {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const settings = await readSiteSettings();
   return NextResponse.json({ settings });
 }
 
 export async function PUT(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = (await req.json()) as unknown;
   const incoming = (body as { settings?: unknown })?.settings;
   if (!isSiteSettings(incoming)) {

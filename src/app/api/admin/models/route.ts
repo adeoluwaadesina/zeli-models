@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import { ADMIN_COOKIE } from "@/lib/adminAuth";
+import { ADMIN_COOKIE, verifyAdminSession } from "@/lib/adminAuth";
 import { normalizeModel, type ModelGender, type ZeliModel } from "@/data/models";
 import { readModels, writeModels } from "@/lib/modelsStore";
 
 export const runtime = "nodejs";
 
-function isAuthed(req: NextRequest) {
-  return req.cookies.get(ADMIN_COOKIE)?.value === "1";
+async function isAuthed(req: NextRequest) {
+  return verifyAdminSession(req.cookies.get(ADMIN_COOKIE)?.value);
 }
 
 function isZeliModelBase(x: unknown): boolean {
@@ -76,13 +76,13 @@ function validateFeatured(models: ZeliModel[]): string | null {
 }
 
 export async function GET(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const models = await readModels();
   return NextResponse.json({ models });
 }
 
 export async function PUT(req: NextRequest) {
-  if (!isAuthed(req)) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!(await isAuthed(req))) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = (await req.json()) as unknown;
   const raw = (body as { models?: unknown })?.models;
   if (!Array.isArray(raw)) {
