@@ -1,97 +1,95 @@
 .section {
-  padding: 72px 0 64px;
+  padding: clamp(72px, 10vw, 120px) 0 clamp(72px, 10vw, 120px);
   background: var(--zeli-bg-soft);
 }
 
+.headerRow {
+  margin-bottom: clamp(32px, 5vw, 52px);
+}
+
 .kicker {
-  margin: 0 0 10px 0;
-  text-align: center;
+  margin: 0 0 12px;
   font-family: var(--font-zeli-kicker);
   font-size: 0.66rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--zeli-muted);
 }
 
 .title {
-  margin: 0 0 36px 0;
-  text-align: center;
+  margin: 0;
   font-family: var(--font-zeli-section-title);
-  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 200;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
   color: var(--zeli-ink);
 }
 
+.titleItalic {
+  font-family: var(--font-zeli-italic);
+  font-style: italic;
+}
+
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  justify-items: stretch;
-  align-items: start;
-  gap: 22px;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 0;
-  /* Landscape tile: wider than tall */
-  aspect-ratio: 1.85 / 1;
-  /* Transparent fill, outline retained */
-  background: transparent;
-  border: 1px solid var(--zeli-line);
-  border-radius: 4px;
-  box-shadow: none;
-  padding: 14px 18px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 8px;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: 64px minmax(140px, 240px) minmax(0, 1fr);
+  gap: clamp(14px, 3vw, 32px);
+  align-items: baseline;
+  padding: clamp(20px, 3vw, 30px) 0;
+  border-top: 1px solid var(--zeli-line);
+}
+
+.card:last-child {
+  border-bottom: 1px solid var(--zeli-line);
+}
+
+.card:hover .cardIndex {
+  color: var(--zeli-ink);
+}
+
+.cardIndex {
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+  color: var(--zeli-accent);
+  transition: color var(--dur-quick) var(--ease-out-soft);
 }
 
 .cardTitle {
   margin: 0;
-  width: 100%;
-  /* Same stack + weight as Hero “Redefining” */
-  font-family: "Zeli Belfast TS", var(--font-hero-cormorant), var(--font-zeli-serif), ui-serif, Georgia,
-    "Times New Roman", serif;
-  font-size: clamp(1.02rem, 2.75vw, 1.2rem);
-  font-weight: 500;
-  font-style: normal;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+  font-family: var(--font-zeli-section-title);
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: 0.01em;
   color: var(--zeli-ink);
-  text-align: center;
 }
 
 .cardText {
   margin: 0;
-  width: 100%;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: 0.82rem;
-  line-height: 1.4;
-  letter-spacing: 0.01em;
+  font-size: 0.96rem;
+  line-height: 1.7;
   color: var(--zeli-muted);
-  text-align: center;
-  overflow-wrap: break-word;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
+  max-width: 40rem;
 }
 
-@media (max-width: 900px) {
-  .grid {
-    grid-template-columns: 1fr;
+@media (max-width: 720px) {
+  .card {
+    grid-template-columns: 44px minmax(0, 1fr);
+    row-gap: 6px;
   }
 
-  .card {
-    aspect-ratio: 2.1 / 1;
+  .cardText {
+    grid-column: 2;
   }
 }

@@ -1,22 +1,39 @@
 .section {
-  padding: 48px 0 80px;
+  padding: clamp(48px, 7vw, 88px) 0 clamp(80px, 10vw, 120px);
   background: var(--zeli-bg);
   min-height: 50vh;
 }
 
 .header {
-  margin-bottom: clamp(36px, 5vw, 52px);
+  margin-bottom: clamp(40px, 6vw, 64px);
+  padding-bottom: clamp(20px, 3vw, 30px);
+  border-bottom: 1px solid var(--zeli-line);
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(12px, 2vw, 20px);
 }
 
 .title {
-  margin: 0 0 10px 0;
+  margin: 0 0 10px;
   font-family: var(--font-zeli-section-title);
-  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-size: clamp(3rem, 8vw, 6.4rem);
   font-weight: 200;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  text-transform: none;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
   color: var(--zeli-ink);
+}
+
+.count {
+  font-family: var(--font-zeli-kicker);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  font-variant-numeric: tabular-nums;
+  color: var(--zeli-accent);
+  padding-top: clamp(10px, 1.5vw, 18px);
 }
 
 .sub {
@@ -34,25 +51,25 @@
   color: var(--zeli-muted);
 }
 
-/* Beth-style board: 4-up, narrow column gutters, larger row rhythm, 4:5 portraits */
+/* Agency board: 4-up, tight gutters, 4:5 portraits */
 .grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  column-gap: 22px;
-  row-gap: 46px;
+  column-gap: clamp(14px, 1.6vw, 22px);
+  row-gap: clamp(40px, 4vw, 54px);
 }
 
 .cell {
   display: block;
   color: inherit;
-  text-align: center;
+  text-align: left;
 }
 
 .imgWrap {
   position: relative;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   background: rgba(74, 44, 29, 0.04);
 }
 
@@ -61,6 +78,11 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.9s var(--ease-out-soft);
+}
+
+.cell:hover .img {
+  transform: scale(1.045);
 }
 
 .ph {
@@ -69,19 +91,53 @@
   background: linear-gradient(160deg, rgba(166, 124, 91, 0.2), rgba(74, 44, 29, 0.06));
 }
 
+.viewTag {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 16px;
+  background: rgba(42, 24, 16, 0.72);
+  color: var(--zeli-surface);
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(100%);
+  transition:
+    opacity 0.35s var(--ease-out-soft),
+    transform 0.35s var(--ease-out-soft);
+  backdrop-filter: blur(6px);
+}
+
+.cell:hover .viewTag,
+.cell:focus-visible .viewTag {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: none) {
+  .viewTag {
+    display: none;
+  }
+}
+
 .name {
-  margin: 0 0 2px 0;
+  margin: 0 0 2px;
   font-family: var(--font-zeli-kicker);
   font-size: clamp(14px, 1.05vw, 16px);
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
   line-height: 1.25;
   text-transform: uppercase;
   color: var(--zeli-ink);
 }
 
 .tags {
-  margin: 6px 0 0 0;
+  margin: 6px 0 0;
   font-family: var(--font-zeli-kicker);
   font-size: 11px;
   font-weight: 500;
@@ -94,27 +150,19 @@
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 20px;
-    row-gap: 42px;
   }
 }
 
 @media (max-width: 720px) {
   .grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: 18px;
-    row-gap: 40px;
+    column-gap: 14px;
+    row-gap: 38px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 400px) {
   .grid {
     grid-template-columns: 1fr;
-    column-gap: 0;
-    row-gap: 38px;
-  }
-
-  .imgWrap {
-    margin-bottom: 11px;
   }
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ZeliModel } from "@/data/models";
-import { getFeaturedModels } from "@/data/models";
+import { getFeaturedModels, tagsDisplayLine } from "@/data/models";
+import { portfolioDisplayName } from "@/lib/displayName";
 import styles from "./FeaturedModelsSection.module.css";
 
 function coverSrc(m: ZeliModel): string | null {
@@ -15,16 +16,19 @@ export function FeaturedModelsSection({ models }: { models: ZeliModel[] }) {
   return (
     <section className={styles.section} id="featured" aria-labelledby="featured-heading">
       <div className="container">
-        <div className={styles.headerRow}>
+        <div className={styles.headerRow} data-reveal>
           <div>
-            <p className={styles.kicker}>Our Roster</p>
+            <p className={styles.kicker}>Our roster</p>
             <h2 id="featured-heading" className={styles.title}>
-              Featured Models
+              Featured <span className={styles.titleItalic}>models</span>
             </h2>
           </div>
-          <p className={styles.blurb}>
-            A Glimpse Of Our Talent
-          </p>
+          <Link className={styles.rosterLink} href="/women">
+            View full roster
+            <span className={styles.rosterArrow} aria-hidden="true">
+              →
+            </span>
+          </Link>
         </div>
 
         {featured.length === 0 ? (
@@ -32,36 +36,37 @@ export function FeaturedModelsSection({ models }: { models: ZeliModel[] }) {
             Featured models will appear here once marked in the admin portal.
           </p>
         ) : (
-          <>
-            <div className={styles.grid}>
-              {featured.map((m) => {
-                const cover = coverSrc(m);
-                return (
-                  <Link
-                    key={m.id}
-                    href={`/models/${m.id}`}
-                    className={styles.card}
-                    aria-label={m.name}
-                  >
-                    <div className={styles.media}>
-                      {cover ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img src={cover} alt="" className={styles.img} />
-                      ) : (
-                        <div className={styles.placeholder} aria-hidden="true" />
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-
-            <div className={styles.ctaRow}>
-              <Link className={styles.ctaButton} href="/women">
-                View Full Roster
-              </Link>
-            </div>
-          </>
+          <div className={styles.grid}>
+            {featured.map((m, idx) => {
+              const cover = coverSrc(m);
+              const tags = tagsDisplayLine(m.tags);
+              return (
+                <Link
+                  key={m.id}
+                  href={`/models/${m.id}`}
+                  className={styles.card}
+                  data-reveal
+                  style={{ ["--reveal-delay" as string]: `${idx * 0.08}s` }}
+                >
+                  <div className={styles.media}>
+                    {cover ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={cover} alt={m.name} className={styles.img} />
+                    ) : (
+                      <div className={styles.placeholder} aria-hidden="true" />
+                    )}
+                    <span className={styles.index} aria-hidden="true">
+                      {String(idx + 1).padStart(2, "0")}
+                    </span>
+                  </div>
+                  <div className={styles.caption}>
+                    <span className={styles.name}>{portfolioDisplayName(m.name)}</span>
+                    {tags ? <span className={styles.tags}>{tags}</span> : null}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         )}
       </div>
     </section>

@@ -41,14 +41,23 @@ export function WhatWeDoCarousel({ items }: { items: WhatWeDoItem[] }) {
   return (
     <section className={styles.section} id="what-we-do" aria-labelledby="wwd-heading">
       <div className="container">
-        <p className={styles.kicker}>What We Do</p>
-        <h2 id="wwd-heading" className={styles.title}>
-          Our Services
-        </h2>
+        <div className={styles.headerRow} data-reveal>
+          <div>
+            <p className={styles.kicker}>What we do</p>
+            <h2 id="wwd-heading" className={styles.title}>
+              Our <span className={styles.titleItalic}>services</span>
+            </h2>
+          </div>
+          {n > 1 ? (
+            <p className={styles.counter} aria-hidden="true">
+              {String((((i % n) + n) % n) + 1).padStart(2, "0")}
+              <span className={styles.counterSep}> / </span>
+              {String(n).padStart(2, "0")}
+            </p>
+          ) : null}
+        </div>
 
-        {n > 1 ? (
-          <p className={styles.swipeHint}>Swipe The Card To Browse Services</p>
-        ) : null}
+        {n > 1 ? <p className={styles.swipeHint}>Swipe the card to browse services</p> : null}
 
         <div className={styles.carousel}>
           <button type="button" className={styles.arrow} onClick={prev} aria-label="Previous">

@@ -1,89 +1,111 @@
 .section {
-  padding: 72px 0 64px;
+  padding: clamp(72px, 10vw, 120px) 0 clamp(64px, 9vw, 104px);
   background: var(--zeli-surface);
-  border-top: 1px solid var(--zeli-line);
   border-bottom: 1px solid var(--zeli-line);
 }
 
+.headerRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
 .kicker {
-  margin: 0 0 10px 0;
-  text-align: center;
+  margin: 0 0 12px;
   font-family: var(--font-zeli-kicker);
   font-size: 0.66rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--zeli-muted);
 }
 
 .title {
-  margin: 0 0 40px 0;
-  text-align: center;
+  margin: 0;
   font-family: var(--font-zeli-section-title);
-  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-size: clamp(2.4rem, 5vw, 4rem);
   font-weight: 200;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.02;
+  letter-spacing: -0.01em;
   color: var(--zeli-ink);
 }
 
-.swipeHint {
-  display: none;
-  margin: 0;
-  padding: 0 16px;
-  text-align: center;
-  font-family: var(--font-zeli-kicker);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--zeli-muted);
-  line-height: 1.45;
+.titleItalic {
+  font-family: var(--font-zeli-italic);
+  font-style: italic;
 }
 
-@media (max-width: 600px) {
-  .title {
-    margin-bottom: 10px;
-  }
+.counter {
+  margin: 0;
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  font-variant-numeric: tabular-nums;
+  color: var(--zeli-ink);
+  white-space: nowrap;
+}
+
+.counterSep {
+  color: var(--zeli-muted);
+}
+
+.swipeHint {
+  margin: 0 0 18px;
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--zeli-muted);
+}
+
+@media (min-width: 761px) {
   .swipeHint {
-    display: block;
-    margin-bottom: 22px;
+    display: none;
   }
 }
 
 .carousel {
+  position: relative;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: 12px;
   align-items: center;
-  max-width: 720px;
-  margin: 0 auto;
+  gap: clamp(10px, 2vw, 22px);
 }
 
 .arrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid var(--zeli-line);
-  background: var(--zeli-bg);
+  background: transparent;
   color: var(--zeli-ink);
   font-size: 1.5rem;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition:
+    background var(--dur-quick) var(--ease-out-soft),
+    color var(--dur-quick) var(--ease-out-soft),
+    border-color var(--dur-quick) var(--ease-out-soft);
 }
 
 .arrow:hover {
-  background: rgba(74, 44, 29, 0.05);
+  background: var(--zeli-ink);
+  border-color: var(--zeli-ink);
+  color: var(--zeli-bg);
 }
 
 .card {
   position: relative;
-  aspect-ratio: 1;
-  border-radius: 4px;
+  min-height: clamp(340px, 48vw, 520px);
   overflow: hidden;
-  border: 1px solid var(--zeli-line);
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
+  background: var(--zeli-hero-2);
+  touch-action: pan-y;
 }
 
 .bg {
@@ -91,72 +113,80 @@
   inset: 0;
   background-size: cover;
   background-position: center;
+  transform: scale(1.02);
 }
 
 .overlay {
   position: absolute;
   inset: 0;
-  background: rgba(58, 31, 20, 0.48);
+  background: linear-gradient(
+    to top,
+    rgba(42, 24, 16, 0.82) 0%,
+    rgba(42, 24, 16, 0.32) 46%,
+    rgba(42, 24, 16, 0.08) 100%
+  );
 }
 
 .content {
   position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 24px;
-  color: rgba(255, 255, 255, 0.95);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: clamp(24px, 4vw, 48px);
+  max-width: 44rem;
 }
 
 .cardTitle {
-  margin: 0 0 12px 0;
+  margin: 0 0 12px;
   font-family: var(--font-zeli-section-title);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.8rem, 3.6vw, 2.9rem);
   font-weight: 200;
+  line-height: 1.05;
+  letter-spacing: 0;
+  color: var(--zeli-surface);
 }
 
 .cardDesc {
   margin: 0;
-  max-width: 400px;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: 0.92rem;
-  line-height: 1.68;
-  letter-spacing: 0.01em;
-  opacity: 0.92;
+  font-size: clamp(0.92rem, 1.2vw, 1.02rem);
+  line-height: 1.7;
+  color: rgba(255, 252, 248, 0.85);
 }
 
 .dots {
   display: flex;
   justify-content: center;
-  gap: 8px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 24px;
 }
 
 .dot,
 .dotActive {
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  border: none;
+  width: 34px;
+  height: 2px;
   padding: 0;
-  cursor: pointer;
+  border: none;
+  border-radius: 0;
   background: var(--zeli-line);
+  cursor: pointer;
+  transition: background var(--dur-quick) var(--ease-out-soft);
+}
+
+.dot:hover {
+  background: var(--zeli-accent);
 }
 
 .dotActive {
   background: var(--zeli-ink);
 }
 
-@media (max-width: 600px) {
-  .carousel {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-top: 8px;
-  }
+@media (max-width: 760px) {
   .arrow {
     display: none;
+  }
+
+  .carousel {
+    grid-template-columns: 1fr;
   }
 }

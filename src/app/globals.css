@@ -63,6 +63,15 @@
   /* Small uppercase labels (kickers, overlines) - Glacial Indifference, same fallbacks as body */
   --font-zeli-kicker: var(--font-zeli-sans), system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
     sans-serif;
+
+  /* Italic serif accents (pull-words inside display headlines) */
+  --font-zeli-italic: "Zeli Adobe Jenson", var(--font-hero-cormorant-garamond), var(--font-zeli-serif),
+    ui-serif, Georgia, "Times New Roman", serif;
+
+  /* Motion */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-quick: 0.25s;
+  --dur-slow: 0.8s;
 }
 
 * {
@@ -106,6 +115,44 @@ a {
   background: var(--zeli-accent);
   opacity: 0.9;
   border-radius: 999px;
+}
+
+::selection {
+  background: rgba(166, 124, 91, 0.35);
+  color: var(--zeli-ink-deep);
+}
+
+:focus-visible {
+  outline: 2px solid var(--zeli-accent);
+  outline-offset: 3px;
+}
+
+/* Scroll-reveal primitives — ScrollReveals.tsx flips .is-revealed on entry */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-soft),
+    transform var(--dur-slow) var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  html,
+  body {
+    scroll-behavior: auto;
+  }
 }
 
 .sr-only {

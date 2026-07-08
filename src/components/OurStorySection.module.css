@@ -1,140 +1,106 @@
+/* Dark editorial interlude — deep brown from the Zeli palette, not a foreign black */
 .section {
-  padding: 72px 0 80px;
-  background: var(--zeli-bg);
+  padding: clamp(80px, 11vw, 140px) 0;
+  background: var(--zeli-hero-1);
+  color: var(--zeli-bg);
 }
 
-.headingStack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
 }
 
 .kicker {
-  margin: 0 0 14px 0;
+  margin: 0 0 16px;
   font-family: var(--font-zeli-kicker);
   font-size: 0.66rem;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   font-weight: 600;
-  color: var(--zeli-muted);
+  color: rgba(242, 236, 230, 0.6);
 }
 
 .title {
   margin: 0;
   font-family: var(--font-zeli-section-title);
-  font-size: clamp(2rem, 3.8vw, 2.75rem);
+  font-size: clamp(2.6rem, 5.4vw, 4.4rem);
   font-weight: 200;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
-  color: var(--zeli-ink);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  color: var(--zeli-bg);
+  text-wrap: balance;
 }
 
 .titleLine {
-  display: inline;
-  font-family: inherit;
-  font-weight: inherit;
-  font-style: inherit;
-  letter-spacing: inherit;
-  color: inherit;
+  display: block;
 }
 
-/* Same face as Hero “Modern” in Redefining Modern Beauty */
 .titleElegance {
-  display: inline;
-  font-family: "Zeli Adobe Jenson", var(--font-hero-cormorant-garamond), var(--font-zeli-serif), ui-serif,
-    Georgia, "Times New Roman", serif;
-  font-weight: 500;
+  font-family: var(--font-zeli-italic);
   font-style: italic;
-  letter-spacing: -0.01em;
+  color: var(--zeli-accent);
 }
 
-.hairlineWrap {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin: 16px 0 22px 0;
+.bodyCol {
+  padding-top: clamp(4px, 1vw, 12px);
 }
 
 .body {
-  margin: 0 auto 28px;
-  max-width: 44rem;
-  text-align: center;
+  margin: 0 0 clamp(36px, 5vw, 52px);
+  max-width: 36rem;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: 1rem;
-  line-height: 1.75;
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.8;
   letter-spacing: 0.01em;
-  color: var(--zeli-muted);
+  color: rgba(242, 236, 230, 0.82);
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  align-items: stretch;
-  gap: clamp(8px, 2.5vw, 28px);
-  width: 100%;
-  max-width: min(920px, 100%);
-  margin: 0 auto;
-}
-
-/* Smaller squares on laptop / tablet landscape; roomier on wide desktops */
-@media (min-width: 640px) and (max-width: 1399.98px) {
-  .cards {
-    max-width: min(700px, 100%);
-    gap: clamp(10px, 2vw, 22px);
-  }
-}
-
-.card {
-  container-type: inline-size;
-  container-name: story-card;
-  box-sizing: border-box;
-  width: 100%;
-  min-width: 0;
-  min-height: 0;
-  aspect-ratio: 1;
-  background: var(--zeli-surface);
-  border: 1px solid var(--zeli-line);
-  border-radius: 4px;
-  box-shadow: var(--zeli-card-shadow);
-  padding: clamp(5px, 0.35rem + 2.2cqi, 22px) clamp(4px, 0.3rem + 1.8cqi, 18px);
+.pillars {
+  margin: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: clamp(4px, 0.28rem + 1.2cqi, 10px);
-  overflow: hidden;
 }
 
-.cardIcon {
-  width: clamp(15px, 12cqi + 0.35rem, 22px);
-  height: clamp(15px, 12cqi + 0.35rem, 22px);
-  color: var(--zeli-accent);
-  opacity: 0.95;
-  flex-shrink: 0;
+.pillar {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: clamp(18px, 2.5vw, 26px) 0;
+  border-top: 1px solid rgba(242, 236, 230, 0.16);
 }
 
-.cardTitle {
+.pillar:last-child {
+  border-bottom: 1px solid rgba(242, 236, 230, 0.16);
+}
+
+.pillarTitle {
   margin: 0;
-  width: 100%;
   font-family: var(--font-zeli-section-title);
-  font-size: clamp(0.52rem, 0.4rem + 5.2cqi, 1.05rem);
-  font-weight: 200;
-  line-height: 1.18;
-  color: var(--zeli-ink);
-  text-align: center;
+  font-size: clamp(1.3rem, 2vw, 1.7rem);
+  font-weight: 300;
+  letter-spacing: 0.02em;
+  color: var(--zeli-bg);
 }
 
-.cardText {
+.pillarText {
   margin: 0;
-  width: 100%;
   font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: clamp(0.46rem, 0.34rem + 4.5cqi, 0.82rem);
-  line-height: 1.38;
-  letter-spacing: 0.01em;
-  color: var(--zeli-muted);
-  text-align: center;
-  overflow-wrap: break-word;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(242, 236, 230, 0.68);
 }
 
+@media (max-width: 860px) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .pillar {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

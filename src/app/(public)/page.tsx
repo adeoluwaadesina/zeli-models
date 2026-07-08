@@ -18,7 +18,7 @@ export default async function HomePage() {
     <>
       <SplashScreen />
       <main>
-        <Hero />
+        <Hero models={models} />
         <MarqueeBar categories={settings.marqueeCategories} />
         <FeaturedModelsSection models={models} />
         <OurStorySection />

@@ -39,6 +39,7 @@
 }
 
 .navLink {
+  position: relative;
   font-family: var(--font-zeli-kicker);
   font-size: 0.7rem;
   font-weight: 500;
@@ -46,17 +47,37 @@
   text-transform: uppercase;
   color: var(--zeli-ink);
   opacity: 0.88;
+  padding-bottom: 4px;
   transition: opacity 0.15s ease;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s var(--ease-out-soft);
 }
 
 .navLink:hover {
   opacity: 1;
 }
 
+.navLink:hover::after {
+  transform: scaleX(1);
+}
+
 .navActive {
   opacity: 1;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 2px;
+}
+
+.navActive::after {
+  transform: scaleX(1);
 }
 
 .mobileBar {

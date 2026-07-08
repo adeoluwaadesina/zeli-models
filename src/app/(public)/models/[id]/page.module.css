@@ -4,7 +4,7 @@
 }
 
 .toolbar {
-  padding: 16px 0;
+  padding: 18px 0;
   border-bottom: 1px solid var(--zeli-line);
   background: var(--zeli-bg);
 }
@@ -16,6 +16,7 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--zeli-muted);
+  transition: color var(--dur-quick) var(--ease-out-soft);
 }
 
 .back:hover {
@@ -24,31 +25,37 @@
 
 .split {
   display: grid;
-  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(300px, 0.42fr) minmax(0, 1fr);
   align-items: stretch;
   min-height: calc(100vh - 120px);
 }
 
 .left {
-  padding: 48px 32px 64px 24px;
-  max-width: 420px;
+  align-self: start;
+  position: sticky;
+  top: 96px;
+  padding: clamp(40px, 5vw, 64px) 36px 64px clamp(24px, 4vw, 48px);
+  max-width: 460px;
 }
 
 .name {
-  margin: 0 0 16px 0;
-  font-family: var(--font-zeli-sans), system-ui, sans-serif;
-  font-size: clamp(1.75rem, 3vw, 2.25rem);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  margin: 0 0 18px;
+  font-family: var(--font-zeli-section-title);
+  font-size: clamp(2.4rem, 4.2vw, 3.6rem);
+  font-weight: 200;
+  letter-spacing: 0;
+  line-height: 1.02;
+  text-transform: none;
   color: var(--zeli-ink);
+  text-wrap: balance;
 }
 
 .bio {
-  margin: 0 0 28px 0;
-  font-size: 0.92rem;
-  line-height: 1.65;
+  margin: 0 0 32px;
+  font-size: 0.95rem;
+  line-height: 1.75;
   color: var(--zeli-muted);
+  max-width: 30rem;
 }
 
 .stats {
@@ -59,20 +66,31 @@
   display: grid;
   grid-template-columns: 100px 1fr;
   gap: 12px 20px;
-  margin-bottom: 12px;
+  padding: 10px 0;
+  margin: 0;
+  border-top: 1px solid var(--zeli-line);
   font-size: 0.88rem;
+}
+
+.statRow:last-child {
+  border-bottom: 1px solid var(--zeli-line);
 }
 
 .statRow dt {
   margin: 0;
-  font-weight: 700;
-  color: var(--zeli-ink);
-  text-align: right;
+  font-family: var(--font-zeli-kicker);
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--zeli-muted);
+  align-self: center;
 }
 
 .statRow dd {
   margin: 0;
-  color: var(--zeli-muted);
+  color: var(--zeli-ink);
+  font-variant-numeric: tabular-nums;
 }
 
 .right {
@@ -89,7 +107,8 @@
     border-top: 1px solid var(--zeli-line);
   }
   .left {
+    position: static;
     max-width: none;
-    padding: 32px 24px 24px;
+    padding: 32px 24px 32px;
   }
 }
