@@ -8,7 +8,8 @@ import styles from "./AdminShell.module.css";
 const NAV = [
   { href: "/admin/models", label: "Models" },
   { href: "/admin/site", label: "Site content" },
-  { href: "/admin/inbox", label: "Inbox" }
+  { href: "/admin/inbox", label: "Inbox" },
+  { href: "/admin/analytics", label: "Analytics" }
 ] as const;
 
 export function AdminShellClient({ children }: { children: React.ReactNode }) {
