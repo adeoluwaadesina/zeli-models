@@ -1,5 +1,6 @@
 import { AppHeader } from "@/components/AppHeader";
 import { FooterHashScroll } from "@/components/FooterHashScroll";
+import { TrackPageView } from "@/components/TrackPageView";
 import { WhatsappButton } from "@/components/WhatsappButton";
 import { resolveInstagramUrl } from "@/lib/instagram";
 import { readSiteSettings } from "@/lib/siteSettingsStore";
@@ -19,6 +20,7 @@ export default async function PublicLayout({
     <>
       <AppHeader instagramUrl={instagramUrl} tiktokUrl={tiktokUrl} twitterHref={twitterHref} />
       <FooterHashScroll />
+      <TrackPageView />
       {children}
       <WhatsappButton />
     </>
